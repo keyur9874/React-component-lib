@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { ThemeProvider } from './theme/ThemeProvider';
+import { ThemeToggle } from './components/ThemeToggle/ThemeToggle';
 import { ButtonDocs } from './components/Button/Button.docs';
 import { AvatarDocs } from './components/Avatar/Avatar.docs';
 import { BadgeDocs } from './components/Badge/Badge.docs';
@@ -17,41 +19,46 @@ function App() {
   const ActiveComponentDoc = components.find(comp => comp.id === activeComponent)?.component || ButtonDocs;
 
   return (
-    <div className="app-container">
-      {/* Sidebar */}
-      <div className="sidebar">
-        <div className="sidebar-header">
-          <h1>React UI Library</h1>
-          <p>Beautiful components with zero dependencies</p>
-        </div>
-        
-        <nav className="sidebar-nav">
-          <div className="nav-section">
-            <div className="nav-section-title">General</div>
-            {components.map(component => (
-              <a
-                key={component.id}
-                href="#"
-                className={`nav-item ${activeComponent === component.id ? 'active' : ''}`}
-                onClick={(e) => {
-                  e.preventDefault();
-                  setActiveComponent(component.id);
-                }}
-              >
-                {component.label}
-              </a>
-            ))}
+    <ThemeProvider>
+      <div className="app-container">
+        {/* Sidebar */}
+        <div className="sidebar">
+          <div className="sidebar-header">
+            <div className="sidebar-header-content">
+              <h1>React UI Library</h1>
+              <p>Beautiful components with zero dependencies</p>
+            </div>
+            <ThemeToggle />
           </div>
-        </nav>
-      </div>
+          
+          <nav className="sidebar-nav">
+            <div className="nav-section">
+              <div className="nav-section-title">General</div>
+              {components.map(component => (
+                <a
+                  key={component.id}
+                  href="#"
+                  className={`nav-item ${activeComponent === component.id ? 'active' : ''}`}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setActiveComponent(component.id);
+                  }}
+                >
+                  {component.label}
+                </a>
+              ))}
+            </div>
+          </nav>
+        </div>
 
-      {/* Main Content */}
-      <div className="main-content">
-        <div className="content-wrapper">
-          <ActiveComponentDoc />
+        {/* Main Content */}
+        <div className="main-content">
+          <div className="content-wrapper">
+            <ActiveComponentDoc />
+          </div>
         </div>
       </div>
-    </div>
+    </ThemeProvider>
   );
 }
 

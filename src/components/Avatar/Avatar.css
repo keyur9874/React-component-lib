@@ -2,24 +2,24 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background-color: #f3f4f6;
-  color: #6b7280;
+  background-color: var(--avatar-default-bg);
+  color: var(--avatar-default-color);
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   font-weight: 500;
   overflow: hidden;
   position: relative;
   flex-shrink: 0;
   box-sizing: border-box;
+  transition: all 0.2s ease-in-out;
 }
 
 .ui-avatar--clickable {
   cursor: pointer;
-  transition: all 0.2s ease-in-out;
 }
 
 .ui-avatar--clickable:hover {
   transform: scale(1.05);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: var(--shadow-lg);
 }
 
 /* Sizes */
@@ -69,28 +69,34 @@
   line-height: 1;
 }
 
-/* Color variations */
+/* Color variations using CSS custom properties */
 .ui-avatar:nth-child(1) {
-  background-color: #fef3c7;
-  color: #d97706;
+  background-color: var(--avatar-bg-1);
+  color: var(--avatar-color-1);
 }
 
 .ui-avatar:nth-child(2) {
-  background-color: #dcfce7;
-  color: #16a34a;
+  background-color: var(--avatar-bg-2);
+  color: var(--avatar-color-2);
 }
 
 .ui-avatar:nth-child(3) {
-  background-color: #dbeafe;
-  color: #2563eb;
+  background-color: var(--avatar-bg-3);
+  color: var(--avatar-color-3);
 }
 
 .ui-avatar:nth-child(4) {
-  background-color: #fce7f3;
-  color: #db2777;
+  background-color: var(--avatar-bg-4);
+  color: var(--avatar-color-4);
 }
 
 .ui-avatar:nth-child(5) {
-  background-color: #f3e8ff;
-  color: #9333ea;
+  background-color: var(--avatar-bg-5);
+  color: var(--avatar-color-5);
+}
+
+/* Fallback for avatars beyond 5th child */
+.ui-avatar:nth-child(n+6) {
+  background-color: var(--avatar-default-bg);
+  color: var(--avatar-default-color);
 }
