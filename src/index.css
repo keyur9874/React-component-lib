@@ -43,6 +43,19 @@
   --border-light: #f0f0f0;
   --border-hover: #40a9ff;
   
+  /* Additional Color Variants */
+  --pink-color: #eb2f96;
+  --pink-hover: #f759ab;
+  --pink-active: #c41d7f;
+  
+  --purple-color: #722ed1;
+  --purple-hover: #9254de;
+  --purple-active: #531dab;
+  
+  --cyan-color: #13c2c2;
+  --cyan-hover: #36cfc9;
+  --cyan-active: #08979c;
+  
   /* Shadow */
   --shadow-sm: 0 2px 0 rgba(0, 0, 0, 0.015);
   --shadow-md: 0 2px 0 rgba(0, 0, 0, 0.045);
@@ -89,6 +102,19 @@
   --info-color: #1890ff;
   --info-hover: #40a9ff;
   --info-active: #096dd9;
+  
+  /* Additional Color Variants for Dark Mode */
+  --pink-color: #eb2f96;
+  --pink-hover: #f759ab;
+  --pink-active: #c41d7f;
+  
+  --purple-color: #722ed1;
+  --purple-hover: #9254de;
+  --purple-active: #531dab;
+  
+  --cyan-color: #13c2c2;
+  --cyan-hover: #36cfc9;
+  --cyan-active: #08979c;
   
   /* Background Colors */
   --bg-color: #141414;

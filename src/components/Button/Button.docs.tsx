@@ -9,6 +9,14 @@ export const ButtonDocs: React.FC = () => {
     setTimeout(() => setLoading(false), 2000);
   };
 
+  const colors: Array<'default' | 'primary' | 'danger' | 'pink' | 'purple' | 'cyan'> = [
+    'default', 'primary', 'danger', 'pink', 'purple', 'cyan'
+  ];
+
+  const variants: Array<'solid' | 'outlined' | 'dashed' | 'filled' | 'text' | 'link'> = [
+    'solid', 'outlined', 'dashed', 'filled', 'text', 'link'
+  ];
+
   return (
     <div className="component-docs">
       <div className="docs-header">
@@ -19,13 +27,21 @@ export const ButtonDocs: React.FC = () => {
       <div className="docs-section">
         <h2>When To Use</h2>
         <p>A button means an operation (or a series of operations). Clicking a button will trigger corresponding business logic.</p>
-        <p>In Ant Design we provide 4 types of button.</p>
+        <p>In our design system we provide 6 variants of button:</p>
         <ul>
-          <li>Primary button: indicate the main action, one primary button at most in one section.</li>
-          <li>Default button: indicate a series of actions without priority.</li>
-          <li>Dashed button: used for adding action commonly.</li>
-          <li>Text button: used for the most secondary action.</li>
-          <li>Link button: used for external links.</li>
+          <li>🔵 <strong>Solid button:</strong> used for the main action, there can be at most one primary button in a section.</li>
+          <li>⚪️ <strong>Outlined button:</strong> used for a series of actions without priority.</li>
+          <li>😶 <strong>Dashed button:</strong> commonly used for adding more actions.</li>
+          <li>🔤 <strong>Filled button:</strong> used for secondary actions with subtle background.</li>
+          <li>🔤 <strong>Text button:</strong> used for the most secondary action.</li>
+          <li>🔗 <strong>Link button:</strong> used for external links.</li>
+        </ul>
+        <p>And 4 other properties additionally:</p>
+        <ul>
+          <li>🔴 <strong>danger:</strong> used for actions of risk, like deletion or authorization.</li>
+          <li>👻 <strong>ghost:</strong> used in situations with complex background, home pages usually.</li>
+          <li>🚫 <strong>disabled:</strong> used when actions are not available.</li>
+          <li>🔃 <strong>loading:</strong> adds a loading spinner in button, avoids multiple submits too.</li>
         </ul>
       </div>
 
@@ -33,58 +49,72 @@ export const ButtonDocs: React.FC = () => {
         <h2>Examples</h2>
         
         <div className="example-container">
-          <h3>Type</h3>
-          <p>There are primary button, default button, dashed button, text button and link button in antd.</p>
+          <h3>Color & Variant Combinations</h3>
+          <p>All color and variant combinations available in the button component.</p>
           <div className="example-demo">
-            <div className="button-group">
-              <Button variant="primary">Primary Button</Button>
-              <Button variant="secondary">Default Button</Button>
-              <Button variant="ghost">Ghost Button</Button>
-              <Button variant="danger">Danger Button</Button>
-            </div>
+            {colors.map(color => (
+              <div key={color} style={{ marginBottom: '16px' }}>
+                <h4 style={{ marginBottom: '8px', textTransform: 'capitalize', fontSize: '14px', color: 'var(--text-secondary)' }}>
+                  {color} Color
+                </h4>
+                <div className="button-group">
+                  {variants.map(variant => (
+                    <Button key={variant} color={color} variant={variant}>
+                      {variant.charAt(0).toUpperCase() + variant.slice(1)}
+                    </Button>
+                  ))}
+                </div>
+              </div>
+            ))}
           </div>
           <div className="example-code">
-            <pre>{`<Button variant="primary">Primary Button</Button>
-<Button variant="secondary">Default Button</Button>
-<Button variant="ghost">Ghost Button</Button>
-<Button variant="danger">Danger Button</Button>`}</pre>
+            <pre>{`<Button color="default" variant="solid">Solid</Button>
+<Button color="default" variant="outlined">Outlined</Button>
+<Button color="default" variant="dashed">Dashed</Button>
+<Button color="default" variant="filled">Filled</Button>
+<Button color="default" variant="text">Text</Button>
+<Button color="default" variant="link">Link</Button>
+
+<Button color="primary" variant="solid">Solid</Button>
+<Button color="primary" variant="outlined">Outlined</Button>
+// ... and so on for all colors`}</pre>
           </div>
         </div>
 
         <div className="example-container">
           <h3>Size</h3>
-          <p>Ant Design supports a default button size as well as a large and small size.</p>
+          <p>Button supports three sizes: small, medium (default), and large.</p>
           <div className="example-demo">
             <div className="button-group">
-              <Button size="large" variant="primary">Large</Button>
-              <Button size="medium" variant="primary">Default</Button>
-              <Button size="small" variant="primary">Small</Button>
+              <Button size="large" color="primary">Large</Button>
+              <Button size="medium" color="primary">Medium</Button>
+              <Button size="small" color="primary">Small</Button>
             </div>
           </div>
           <div className="example-code">
-            <pre>{`<Button size="large" variant="primary">Large</Button>
-<Button size="medium" variant="primary">Default</Button>
-<Button size="small" variant="primary">Small</Button>`}</pre>
+            <pre>{`<Button size="large" color="primary">Large</Button>
+<Button size="medium" color="primary">Medium</Button>
+<Button size="small" color="primary">Small</Button>`}</pre>
           </div>
         </div>
 
         <div className="example-container">
           <h3>Loading</h3>
-          <p>A loading indicator can be added to a button by setting the loading property on the Button.</p>
+          <p>A loading indicator can be added to a button by setting the loading property.</p>
           <div className="example-demo">
             <div className="button-group">
-              <Button loading={loading} variant="primary" onClick={handleLoadingClick}>
+              <Button loading={loading} color="primary" onClick={handleLoadingClick}>
                 {loading ? 'Loading' : 'Click me!'}
               </Button>
-              <Button loading variant="primary">Loading</Button>
+              <Button loading color="primary">Loading</Button>
               <Button loading size="small">Loading</Button>
             </div>
           </div>
           <div className="example-code">
-            <pre>{`<Button loading={loading} variant="primary" onClick={handleLoadingClick}>
+            <pre>{`<Button loading={loading} color="primary" onClick={handleLoadingClick}>
   {loading ? 'Loading' : 'Click me!'}
 </Button>
-<Button loading variant="primary">Loading</Button>
+<Button loading color="primary">Loading</Button>
 <Button loading size="small">Loading</Button>`}</pre>
           </div>
         </div>
@@ -94,28 +124,64 @@ export const ButtonDocs: React.FC = () => {
           <p>To mark a button as disabled, add the disabled property to the Button.</p>
           <div className="example-demo">
             <div className="button-group">
-              <Button variant="primary">Primary</Button>
-              <Button variant="primary" disabled>Primary(disabled)</Button>
-              <Button variant="secondary">Default</Button>
-              <Button variant="secondary" disabled>Default(disabled)</Button>
-              <Button variant="ghost">Ghost</Button>
-              <Button variant="ghost" disabled>Ghost(disabled)</Button>
-              <Button variant="danger">Danger</Button>
-              <Button variant="danger" disabled>Danger(disabled)</Button>
+              <Button color="primary">Primary</Button>
+              <Button color="primary" disabled>Primary(disabled)</Button>
+              <Button color="default">Default</Button>
+              <Button color="default" disabled>Default(disabled)</Button>
+              <Button color="danger">Danger</Button>
+              <Button color="danger" disabled>Danger(disabled)</Button>
             </div>
           </div>
           <div className="example-code">
-            <pre>{`<Button variant="primary">Primary</Button>
-<Button variant="primary" disabled>Primary(disabled)</Button>
-<Button variant="secondary">Default</Button>
-<Button variant="secondary" disabled>Default(disabled)</Button>`}</pre>
+            <pre>{`<Button color="primary">Primary</Button>
+<Button color="primary" disabled>Primary(disabled)</Button>
+<Button color="default">Default</Button>
+<Button color="default" disabled>Default(disabled)</Button>`}</pre>
+          </div>
+        </div>
+
+        <div className="example-container">
+          <h3>Ghost Button</h3>
+          <p>Ghost button has a transparent background and is usually used in colored backgrounds.</p>
+          <div className="example-demo">
+            <div style={{ background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)', padding: '24px', borderRadius: '8px' }}>
+              <div className="button-group">
+                <Button ghost>Ghost</Button>
+                <Button ghost disabled>Ghost(disabled)</Button>
+                <Button ghost color="primary">Primary Ghost</Button>
+                <Button ghost color="danger">Danger Ghost</Button>
+              </div>
+            </div>
+          </div>
+          <div className="example-code">
+            <pre>{`<Button ghost>Ghost</Button>
+<Button ghost disabled>Ghost(disabled)</Button>
+<Button ghost color="primary">Primary Ghost</Button>
+<Button ghost color="danger">Danger Ghost</Button>`}</pre>
+          </div>
+        </div>
+
+        <div className="example-container">
+          <h3>Link Button</h3>
+          <p>Link buttons can be used with href attribute for navigation.</p>
+          <div className="example-demo">
+            <div className="button-group">
+              <Button variant="link" href="https://example.com">External Link</Button>
+              <Button variant="link" color="primary" href="#section">Internal Link</Button>
+              <Button variant="link" color="danger" href="#delete">Delete Link</Button>
+            </div>
+          </div>
+          <div className="example-code">
+            <pre>{`<Button variant="link" href="https://example.com">External Link</Button>
+<Button variant="link" color="primary" href="#section">Internal Link</Button>
+<Button variant="link" color="danger" href="#delete">Delete Link</Button>`}</pre>
           </div>
         </div>
       </div>
 
       <div className="docs-section">
         <h2>API</h2>
-        <p>To get a customized button, just set type/shape/size/loading/disabled.</p>
+        <p>To get a customized button, just set color/variant/size/loading/disabled/ghost.</p>
         
         <table className="api-table">
           <thead>
@@ -129,10 +195,38 @@ export const ButtonDocs: React.FC = () => {
           </thead>
           <tbody>
             <tr>
+              <td>color</td>
+              <td>Set button color</td>
+              <td>default | primary | danger | pink | purple | cyan</td>
+              <td>default</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>variant</td>
+              <td>Set button variant</td>
+              <td>solid | outlined | dashed | filled | text | link</td>
+              <td>solid</td>
+              <td></td>
+            </tr>
+            <tr>
               <td>disabled</td>
               <td>Disabled state of button</td>
               <td>boolean</td>
               <td>false</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>ghost</td>
+              <td>Make background transparent and invert text and border colors</td>
+              <td>boolean</td>
+              <td>false</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>href</td>
+              <td>Redirect url of link button</td>
+              <td>string</td>
+              <td>-</td>
               <td></td>
             </tr>
             <tr>
@@ -150,10 +244,10 @@ export const ButtonDocs: React.FC = () => {
               <td></td>
             </tr>
             <tr>
-              <td>variant</td>
-              <td>Set button type</td>
-              <td>primary | secondary | ghost | danger</td>
-              <td>primary</td>
+              <td>type</td>
+              <td>Set the original html type of button</td>
+              <td>button | submit | reset</td>
+              <td>button</td>
               <td></td>
             </tr>
             <tr>
