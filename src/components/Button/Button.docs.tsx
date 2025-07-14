@@ -12,7 +12,7 @@ export const ButtonDocs: React.FC = () => {
   const colors: Array<'default' | 'primary' | 'danger' | 'pink' | 'purple' | 'cyan'> = [
     'default', 'primary', 'danger', 'pink', 'purple', 'cyan'
   ];
-
+return 
   const variants: Array<'solid' | 'outlined' | 'dashed' | 'filled' | 'text' | 'link'> = [
     'solid', 'outlined', 'dashed', 'filled', 'text', 'link'
   ];
