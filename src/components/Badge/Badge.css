@@ -1,0 +1,182 @@
+.ui-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-weight: 500;
+  line-height: 1;
+  white-space: nowrap;
+  box-sizing: border-box;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  font-size: 12px;
+}
+
+.ui-badge-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.ui-badge-wrapper .ui-badge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  transform: translate(50%, -50%);
+  z-index: 10;
+}
+
+/* Sizes */
+.ui-badge--small {
+  min-width: 16px;
+  height: 16px;
+  padding: 0 4px;
+  font-size: 10px;
+}
+
+.ui-badge--medium {
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  font-size: 12px;
+}
+
+.ui-badge--large {
+  min-width: 24px;
+  height: 24px;
+  padding: 0 8px;
+  font-size: 14px;
+}
+
+/* Variants */
+.ui-badge--primary {
+  background-color: #1890ff;
+  color: white;
+}
+
+.ui-badge--secondary {
+  background-color: #d9d9d9;
+  color: rgba(0, 0, 0, 0.65);
+}
+
+.ui-badge--success {
+  background-color: #52c41a;
+  color: white;
+}
+
+.ui-badge--warning {
+  background-color: #faad14;
+  color: white;
+}
+
+.ui-badge--danger {
+  background-color: #ff4d4f;
+  color: white;
+}
+
+.ui-badge--info {
+  background-color: #1890ff;
+  color: white;
+}
+
+/* Status badges - more subtle styling */
+.ui-badge--success.ui-badge-status {
+  background-color: #f6ffed;
+  color: #52c41a;
+  border: 1px solid #b7eb8f;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ui-badge--warning.ui-badge-status {
+  background-color: #fffbe6;
+  color: #faad14;
+  border: 1px solid #ffe58f;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ui-badge--danger.ui-badge-status {
+  background-color: #fff2f0;
+  color: #ff4d4f;
+  border: 1px solid #ffccc7;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ui-badge--info.ui-badge-status {
+  background-color: #e6f7ff;
+  color: #1890ff;
+  border: 1px solid #91d5ff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ui-badge--secondary.ui-badge-status {
+  background-color: #fafafa;
+  color: rgba(0, 0, 0, 0.65);
+  border: 1px solid #d9d9d9;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ui-badge--primary.ui-badge-status {
+  background-color: #e6f7ff;
+  color: #1890ff;
+  border: 1px solid #91d5ff;
+}
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Dot variant */
+.ui-badge--dot {
+  min-width: 8px;
+  height: 8px;
+  padding: 0;
+  border-radius: 50%;
+}
+
+.ui-badge--dot.ui-badge--small {
+  min-width: 6px;
+  height: 6px;
+}
+
+.ui-badge--dot.ui-badge--large {
+  min-width: 10px;
+  height: 10px;
+}
+
+/* Animation */
+.ui-badge {
+  animation: ui-badge-zoom-in 0.3s ease-out;
+}
+
+@keyframes ui-badge-zoom-in {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.ui-badge-wrapper .ui-badge {
+  animation: ui-badge-zoom-appear 0.3s ease-out;
+}
+
+@keyframes ui-badge-zoom-appear {
+  0% {
+    transform: translate(50%, -50%) scale(0);
+  }
+  100% {
+    transform: translate(50%, -50%) scale(1);
+  }
+}
