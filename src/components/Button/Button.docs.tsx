@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Button } from './Button';
+import { Search, Download, Plus, Heart, Settings, ArrowRight, Loader2 } from 'lucide-react';
 
 export const ButtonDocs: React.FC = () => {
   const [loading, setLoading] = useState(false);
@@ -49,6 +50,84 @@ export const ButtonDocs: React.FC = () => {
         <h2>Examples</h2>
         
         <div className="example-container">
+          <h3>Icon</h3>
+          <p>Button can have an icon to make the action more intuitive.</p>
+          <div className="example-demo">
+            <div className="button-group">
+              <Button color="primary" icon={<Search />}>Search</Button>
+              <Button color="default" icon={<Download />}>Download</Button>
+              <Button color="success" icon={<Plus />}>Add</Button>
+              <Button color="danger" icon={<Heart />}>Like</Button>
+            </div>
+          </div>
+          <div className="example-code">
+            <pre>{`<Button color="primary" icon={<Search />}>Search</Button>
+<Button color="default" icon={<Download />}>Download</Button>
+<Button color="success" icon={<Plus />}>Add</Button>
+<Button color="danger" icon={<Heart />}>Like</Button>`}</pre>
+          </div>
+        </div>
+
+        <div className="example-container">
+          <h3>Icon Position</h3>
+          <p>Icon can be placed at the start or end of the button text.</p>
+          <div className="example-demo">
+            <div className="button-group">
+              <Button color="primary" icon={<Search />} iconPosition="start">Search</Button>
+              <Button color="primary" icon={<ArrowRight />} iconPosition="end">Next</Button>
+              <Button color="default" icon={<Settings />} iconPosition="start">Settings</Button>
+              <Button color="default" icon={<Download />} iconPosition="end">Download</Button>
+            </div>
+          </div>
+          <div className="example-code">
+            <pre>{`<Button color="primary" icon={<Search />} iconPosition="start">Search</Button>
+<Button color="primary" icon={<ArrowRight />} iconPosition="end">Next</Button>
+<Button color="default" icon={<Settings />} iconPosition="start">Settings</Button>
+<Button color="default" icon={<Download />} iconPosition="end">Download</Button>`}</pre>
+          </div>
+        </div>
+
+        <div className="example-container">
+          <h3>Icon Only</h3>
+          <p>Button can be icon-only by omitting the text content.</p>
+          <div className="example-demo">
+            <div className="button-group">
+              <Button color="primary" icon={<Search />} />
+              <Button color="default" icon={<Settings />} />
+              <Button color="danger" icon={<Heart />} />
+              <Button color="success" icon={<Plus />} />
+            </div>
+          </div>
+          <div className="example-code">
+            <pre>{`<Button color="primary" icon={<Search />} />
+<Button color="default" icon={<Settings />} />
+<Button color="danger" icon={<Heart />} />
+<Button color="success" icon={<Plus />} />`}</pre>
+          </div>
+        </div>
+
+        <div className="example-container">
+          <h3>Shape</h3>
+          <p>Button supports three shapes: default, round, and circle.</p>
+          <div className="example-demo">
+            <div className="button-group">
+              <Button color="primary" shape="default">Default</Button>
+              <Button color="primary" shape="round">Round</Button>
+              <Button color="primary" shape="circle" icon={<Plus />} />
+              <Button color="default" shape="circle" icon={<Search />} />
+              <Button color="danger" shape="circle" icon={<Heart />} />
+            </div>
+          </div>
+          <div className="example-code">
+            <pre>{`<Button color="primary" shape="default">Default</Button>
+<Button color="primary" shape="round">Round</Button>
+<Button color="primary" shape="circle" icon={<Plus />} />
+<Button color="default" shape="circle" icon={<Search />} />
+<Button color="danger" shape="circle" icon={<Heart />} />`}</pre>
+          </div>
+        </div>
+
+        <div className="example-container">
           <h3>Color & Variant Combinations</h3>
           <p>All color and variant combinations available in the button component.</p>
           <div className="example-demo">
@@ -89,18 +168,24 @@ export const ButtonDocs: React.FC = () => {
               <Button size="large" color="primary">Large</Button>
               <Button size="medium" color="primary">Medium</Button>
               <Button size="small" color="primary">Small</Button>
+              <Button size="large" color="primary" icon={<Search />}>Large with Icon</Button>
+              <Button size="medium" color="primary" icon={<Search />}>Medium with Icon</Button>
+              <Button size="small" color="primary" icon={<Search />}>Small with Icon</Button>
             </div>
           </div>
           <div className="example-code">
             <pre>{`<Button size="large" color="primary">Large</Button>
 <Button size="medium" color="primary">Medium</Button>
-<Button size="small" color="primary">Small</Button>`}</pre>
+<Button size="small" color="primary">Small</Button>
+<Button size="large" color="primary" icon={<Search />}>Large with Icon</Button>
+<Button size="medium" color="primary" icon={<Search />}>Medium with Icon</Button>
+<Button size="small" color="primary" icon={<Search />}>Small with Icon</Button>`}</pre>
           </div>
         </div>
 
         <div className="example-container">
           <h3>Loading</h3>
-          <p>A loading indicator can be added to a button by setting the loading property.</p>
+          <p>A loading indicator can be added to a button by setting the loading property. You can also customize the loading icon.</p>
           <div className="example-demo">
             <div className="button-group">
               <Button loading={loading} color="primary" onClick={handleLoadingClick}>
@@ -108,6 +193,8 @@ export const ButtonDocs: React.FC = () => {
               </Button>
               <Button loading color="primary">Loading</Button>
               <Button loading size="small">Loading</Button>
+              <Button loading={{ icon: <Loader2 /> }} color="primary">Custom Loading</Button>
+              <Button loading color="primary" icon={<Search />}>Search</Button>
             </div>
           </div>
           <div className="example-code">
@@ -115,7 +202,9 @@ export const ButtonDocs: React.FC = () => {
   {loading ? 'Loading' : 'Click me!'}
 </Button>
 <Button loading color="primary">Loading</Button>
-<Button loading size="small">Loading</Button>`}</pre>
+<Button loading size="small">Loading</Button>
+<Button loading={{ icon: <Loader2 /> }} color="primary">Custom Loading</Button>
+<Button loading color="primary" icon={<Search />}>Search</Button>`}</pre>
           </div>
         </div>
 
@@ -130,13 +219,17 @@ export const ButtonDocs: React.FC = () => {
               <Button color="default" disabled>Default(disabled)</Button>
               <Button color="danger">Danger</Button>
               <Button color="danger" disabled>Danger(disabled)</Button>
+              <Button color="primary" icon={<Search />}>With Icon</Button>
+              <Button color="primary" icon={<Search />} disabled>With Icon(disabled)</Button>
             </div>
           </div>
           <div className="example-code">
             <pre>{`<Button color="primary">Primary</Button>
 <Button color="primary" disabled>Primary(disabled)</Button>
 <Button color="default">Default</Button>
-<Button color="default" disabled>Default(disabled)</Button>`}</pre>
+<Button color="default" disabled>Default(disabled)</Button>
+<Button color="primary" icon={<Search />}>With Icon</Button>
+<Button color="primary" icon={<Search />} disabled>With Icon(disabled)</Button>`}</pre>
           </div>
         </div>
 
@@ -150,6 +243,8 @@ export const ButtonDocs: React.FC = () => {
                 <Button ghost disabled>Ghost(disabled)</Button>
                 <Button ghost color="primary">Primary Ghost</Button>
                 <Button ghost color="danger">Danger Ghost</Button>
+                <Button ghost icon={<Search />}>Ghost with Icon</Button>
+                <Button ghost color="primary" icon={<Plus />}>Primary Ghost</Button>
               </div>
             </div>
           </div>
@@ -157,7 +252,9 @@ export const ButtonDocs: React.FC = () => {
             <pre>{`<Button ghost>Ghost</Button>
 <Button ghost disabled>Ghost(disabled)</Button>
 <Button ghost color="primary">Primary Ghost</Button>
-<Button ghost color="danger">Danger Ghost</Button>`}</pre>
+<Button ghost color="danger">Danger Ghost</Button>
+<Button ghost icon={<Search />}>Ghost with Icon</Button>
+<Button ghost color="primary" icon={<Plus />}>Primary Ghost</Button>`}</pre>
           </div>
         </div>
 
@@ -169,12 +266,14 @@ export const ButtonDocs: React.FC = () => {
               <Button variant="link" href="https://example.com">External Link</Button>
               <Button variant="link" color="primary" href="#section">Internal Link</Button>
               <Button variant="link" color="danger" href="#delete">Delete Link</Button>
+              <Button variant="link" color="primary" icon={<ArrowRight />} iconPosition="end" href="#next">Next Page</Button>
             </div>
           </div>
           <div className="example-code">
             <pre>{`<Button variant="link" href="https://example.com">External Link</Button>
 <Button variant="link" color="primary" href="#section">Internal Link</Button>
-<Button variant="link" color="danger" href="#delete">Delete Link</Button>`}</pre>
+<Button variant="link" color="danger" href="#delete">Delete Link</Button>
+<Button variant="link" color="primary" icon={<ArrowRight />} iconPosition="end" href="#next">Next Page</Button>`}</pre>
           </div>
         </div>
       </div>
@@ -209,8 +308,30 @@ export const ButtonDocs: React.FC = () => {
               <td></td>
             </tr>
             <tr>
+              <td>icon</td>
+              <td>Set the icon component of button</td>
+              <td>ReactNode</td>
+              <td>-</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>iconPosition</td>
+              <td>Set the icon position of button</td>
+              <td>start | end</td>
+              <td>start</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>shape</td>
+              <td>Can be used to set button shape</td>
+              <td>default | circle | round</td>
+              <td>default</td>
+              <td></td>
+            </tr>
+            <tr>
               <td>disabled</td>
               <td>Disabled state of button</td>
+              <td>boolean</td>
               <td>false</td>
               <td></td>
             </tr>
@@ -230,9 +351,8 @@ export const ButtonDocs: React.FC = () => {
             </tr>
             <tr>
               <td>loading</td>
-              <td>Set thetr
-                loading status of button</td>
-              <td>boolean</td>
+              <td>Set the loading status of button</td>
+              <td>boolean | {"{ delay?: number; icon?: ReactNode }"}</td>
               <td>false</td>
               <td></td>
             </tr>

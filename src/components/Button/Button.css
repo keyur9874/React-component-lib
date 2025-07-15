@@ -16,6 +16,7 @@
   outline: none;
   box-sizing: border-box;
   user-select: none;
+  gap: 6px;
 }
 
 .ui-button:focus-visible {
@@ -27,23 +28,103 @@
   outline: none;
 }
 
+/* Shapes */
+.ui-button--default {
+  border-radius: 6px;
+}
+
+.ui-button--round {
+  border-radius: 32px;
+}
+
+.ui-button--circle {
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  min-width: 32px;
+}
+
+.ui-button--circle.ui-button--small {
+  width: 24px;
+  height: 24px;
+  min-width: 24px;
+}
+
+.ui-button--circle.ui-button--large {
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+}
+
 /* Sizes */
 .ui-button--small {
   padding: 4px 15px;
   font-size: 14px;
   height: 24px;
+  gap: 4px;
 }
 
 .ui-button--medium {
   padding: 4px 15px;
   font-size: 14px;
   height: 32px;
+  gap: 6px;
 }
 
 .ui-button--large {
   padding: 6px 15px;
   font-size: 16px;
   height: 40px;
+  gap: 8px;
+}
+
+/* Icon only buttons */
+.ui-button--icon-only {
+  padding: 0;
+  min-width: 32px;
+  width: 32px;
+}
+
+.ui-button--icon-only.ui-button--small {
+  min-width: 24px;
+  width: 24px;
+}
+
+.ui-button--icon-only.ui-button--large {
+  min-width: 40px;
+  width: 40px;
+}
+
+/* Icon styles */
+.ui-button__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+.ui-button__icon svg {
+  width: 1em;
+  height: 1em;
+}
+
+.ui-button__icon--start {
+  order: -1;
+}
+
+.ui-button__icon--end {
+  order: 1;
+}
+
+.ui-button__icon--loading {
+  animation: ui-button-icon-loading 0.3s ease-in-out;
+}
+
+.ui-button__content {
+  display: inline-flex;
+  align-items: center;
+  line-height: 1;
 }
 
 /* ===== DEFAULT COLOR ===== */
