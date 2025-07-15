@@ -211,7 +211,6 @@ export const ButtonDocs: React.FC = () => {
             <tr>
               <td>disabled</td>
               <td>Disabled state of button</td>
-              <td>boolean</td>
               <td>false</td>
               <td></td>
             </tr>
@@ -231,7 +230,8 @@ export const ButtonDocs: React.FC = () => {
             </tr>
             <tr>
               <td>loading</td>
-              <td>Set the loading status of button</td>
+              <td>Set thetr
+                loading status of button</td>
               <td>boolean</td>
               <td>false</td>
               <td></td>
