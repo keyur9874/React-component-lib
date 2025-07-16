@@ -1,3 +1,4 @@
+/* Base Avatar Styles */
 .ui-avatar {
   display: inline-flex;
   align-items: center;
@@ -11,6 +12,8 @@
   flex-shrink: 0;
   box-sizing: border-box;
   transition: all 0.2s ease-in-out;
+  vertical-align: middle;
+  border: 2px solid transparent;
 }
 
 .ui-avatar--clickable {
@@ -20,6 +23,48 @@
 .ui-avatar--clickable:hover {
   transform: scale(1.05);
   box-shadow: var(--shadow-lg);
+  border-color: var(--primary-color);
+}
+
+.ui-avatar--clickable:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+}
+
+.ui-avatar--clickable:active {
+  transform: scale(0.98);
+}
+
+/* Loading State */
+.ui-avatar--loading {
+  background-color: var(--bg-hover);
+}
+
+.ui-avatar__loading {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--bg-hover);
+}
+
+.ui-avatar__spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--border-color);
+  border-top: 2px solid var(--primary-color);
+  border-radius: 50%;
+  animation: ui-avatar-spin 1s linear infinite;
+}
+
+@keyframes ui-avatar-spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
 /* Sizes */
@@ -27,6 +72,12 @@
   width: 32px;
   height: 32px;
   font-size: 12px;
+}
+
+.ui-avatar--small .ui-avatar__spinner {
+  width: 12px;
+  height: 12px;
+  border-width: 1.5px;
 }
 
 .ui-avatar--medium {
@@ -41,10 +92,21 @@
   font-size: 18px;
 }
 
+.ui-avatar--large .ui-avatar__spinner {
+  width: 20px;
+  height: 20px;
+}
+
 .ui-avatar--xlarge {
   width: 80px;
   height: 80px;
   font-size: 24px;
+}
+
+.ui-avatar--xlarge .ui-avatar__spinner {
+  width: 24px;
+  height: 24px;
+  border-width: 3px;
 }
 
 /* Shapes */
@@ -56,47 +118,188 @@
   border-radius: 6px;
 }
 
-/* Content */
+/* Content Types */
 .ui-avatar__image {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
+  transition: opacity 0.2s ease;
 }
 
 .ui-avatar__text {
   user-select: none;
   line-height: 1;
+  transition: transform 0.2s ease;
+  white-space: nowrap;
+  font-weight: 600;
 }
 
-/* Color variations using CSS custom properties */
-.ui-avatar:nth-child(1) {
+.ui-avatar__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+.ui-avatar__icon svg {
+  width: 60%;
+  height: 60%;
+}
+
+.ui-avatar__icon--default {
+  color: var(--text-tertiary);
+}
+
+.ui-avatar__content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+/* Color Variations for Text Avatars */
+.ui-avatar__text--color-0 {
   background-color: var(--avatar-bg-1);
   color: var(--avatar-color-1);
 }
 
-.ui-avatar:nth-child(2) {
+.ui-avatar__text--color-1 {
   background-color: var(--avatar-bg-2);
   color: var(--avatar-color-2);
 }
 
-.ui-avatar:nth-child(3) {
+.ui-avatar__text--color-2 {
   background-color: var(--avatar-bg-3);
   color: var(--avatar-color-3);
 }
 
-.ui-avatar:nth-child(4) {
+.ui-avatar__text--color-3 {
   background-color: var(--avatar-bg-4);
   color: var(--avatar-color-4);
 }
 
-.ui-avatar:nth-child(5) {
+.ui-avatar__text--color-4 {
   background-color: var(--avatar-bg-5);
   color: var(--avatar-color-5);
 }
 
-/* Fallback for avatars beyond 5th child */
-.ui-avatar:nth-child(n+6) {
-  background-color: var(--avatar-default-bg);
-  color: var(--avatar-default-color);
+.ui-avatar__text--color-5 {
+  background-color: var(--avatar-bg-1);
+  color: var(--avatar-color-1);
+}
+
+/* Apply background colors to the avatar itself for text content */
+.ui-avatar:has(.ui-avatar__text--color-0) {
+  background-color: var(--avatar-bg-1);
+}
+
+.ui-avatar:has(.ui-avatar__text--color-1) {
+  background-color: var(--avatar-bg-2);
+}
+
+.ui-avatar:has(.ui-avatar__text--color-2) {
+  background-color: var(--avatar-bg-3);
+}
+
+.ui-avatar:has(.ui-avatar__text--color-3) {
+  background-color: var(--avatar-bg-4);
+}
+
+.ui-avatar:has(.ui-avatar__text--color-4) {
+  background-color: var(--avatar-bg-5);
+}
+
+.ui-avatar:has(.ui-avatar__text--color-5) {
+  background-color: var(--avatar-bg-1);
+}
+
+/* Fallback for browsers that don't support :has() */
+.ui-avatar .ui-avatar__text--color-0 {
+  background-color: transparent;
+}
+
+.ui-avatar .ui-avatar__text--color-1 {
+  background-color: transparent;
+}
+
+.ui-avatar .ui-avatar__text--color-2 {
+  background-color: transparent;
+}
+
+.ui-avatar .ui-avatar__text--color-3 {
+  background-color: transparent;
+}
+
+.ui-avatar .ui-avatar__text--color-4 {
+  background-color: transparent;
+}
+
+.ui-avatar .ui-avatar__text--color-5 {
+  background-color: transparent;
+}
+
+/* Group Styling */
+.ui-avatar-group {
+  display: inline-flex;
+  align-items: center;
+}
+
+.ui-avatar-group .ui-avatar {
+  margin-left: -8px;
+  border: 2px solid var(--bg-color);
+  position: relative;
+  z-index: 1;
+}
+
+.ui-avatar-group .ui-avatar:first-child {
+  margin-left: 0;
+}
+
+.ui-avatar-group .ui-avatar:hover {
+  z-index: 2;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .ui-avatar--xlarge {
+    width: 64px;
+    height: 64px;
+    font-size: 20px;
+  }
+  
+  .ui-avatar--large {
+    width: 48px;
+    height: 48px;
+    font-size: 16px;
+  }
+}
+
+/* High Contrast Mode Support */
+@media (prefers-contrast: high) {
+  .ui-avatar {
+    border-width: 2px;
+    border-color: var(--text-color);
+  }
+  
+  .ui-avatar--clickable:focus {
+    border-width: 3px;
+  }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  .ui-avatar,
+  .ui-avatar__image,
+  .ui-avatar__text {
+    transition: none;
+  }
+  
+  .ui-avatar__spinner {
+    animation: none;
+  }
+  
+  .ui-avatar--clickable:hover {
+    transform: none;
+  }
 }
