@@ -259,27 +259,6 @@
   background-color: transparent;
 }
 
-/* Group Styling */
-.ui-avatar-group {
-  display: inline-flex;
-  align-items: center;
-}
-
-.ui-avatar-group .ui-avatar {
-  margin-left: -8px;
-  border: 2px solid var(--bg-color);
-  position: relative;
-  z-index: 1;
-}
-
-.ui-avatar-group .ui-avatar:first-child {
-  margin-left: 0;
-}
-
-.ui-avatar-group .ui-avatar:hover {
-  z-index: 2;
-}
-
 /* Responsive Design */
 @media (max-width: 768px) {
   .ui-avatar--xlarge {

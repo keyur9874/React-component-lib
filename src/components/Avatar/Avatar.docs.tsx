@@ -1,5 +1,6 @@
 import React from 'react';
 import { Avatar } from './Avatar';
+import { AvatarGroup } from './AvatarGroup';
 import { User, Settings, Heart, Star, Crown } from 'lucide-react';
 
 export const AvatarDocs: React.FC = () => {
@@ -205,28 +206,67 @@ export const AvatarDocs: React.FC = () => {
 
         <div className="example-container">
           <h3>Avatar Group</h3>
-          <p>Multiple avatars can be grouped together with overlapping effect.</p>
+          <p>Multiple avatars can be grouped together with overlapping effect and max count support.</p>
           <div className="example-demo">
-            <div className="ui-avatar-group">
+            <AvatarGroup>
               <Avatar src="https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=2" />
-              <Avatar>JS</Avatar>
+              <Avatar>Jane Smith</Avatar>
               <Avatar src="https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=2" />
-              <Avatar>AB</Avatar>
+              <Avatar>Alice Brown</Avatar>
               <Avatar icon={<User />} />
-            </div>
+            </AvatarGroup>
           </div>
           <div className="example-code">
-            <pre>{`<div className="ui-avatar-group">
+            <pre>{`<AvatarGroup>
   <Avatar src="https://example.com/user1.jpg" />
-  <Avatar>JS</Avatar>
+  <Avatar>Jane Smith</Avatar>
   <Avatar src="https://example.com/user2.jpg" />
-  <Avatar>AB</Avatar>
+  <Avatar>Alice Brown</Avatar>
   <Avatar icon={<User />} />
-</div>`}</pre>
+</AvatarGroup>`}</pre>
+          </div>
+        </div>
           </div>
         </div>
       </div>
 
+        <div className="example-container">
+          <h3>Avatar Group with Max Count</h3>
+          <p>Use max prop to limit the number of avatars shown and display overflow count.</p>
+          <div className="example-demo">
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+              <div>
+                <h4 style={{ marginBottom: '8px', fontSize: '14px', color: 'var(--text-secondary)' }}>Max 3 avatars:</h4>
+                <AvatarGroup max={3}>
+                  <Avatar src="https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=2" />
+                  <Avatar>Jane Smith</Avatar>
+                  <Avatar src="https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=2" />
+                  <Avatar>Alice Brown</Avatar>
+                  <Avatar>Bob Wilson</Avatar>
+                  <Avatar>Charlie Davis</Avatar>
+                </AvatarGroup>
+              </div>
+              <div>
+                <h4 style={{ marginBottom: '8px', fontSize: '14px', color: 'var(--text-secondary)' }}>Max 2 avatars with custom size:</h4>
+                <AvatarGroup max={2} size="large">
+                  <Avatar>John Doe</Avatar>
+                  <Avatar>Jane Smith</Avatar>
+                  <Avatar>Bob Wilson</Avatar>
+                  <Avatar>Alice Brown</Avatar>
+                  <Avatar>Charlie Davis</Avatar>
+                </AvatarGroup>
+              </div>
+            </div>
+          </div>
+          <div className="example-code">
+            <pre>{`<AvatarGroup max={3}>
+  <Avatar src="https://example.com/user1.jpg" />
+  <Avatar>Jane Smith</Avatar>
+  <Avatar src="https://example.com/user2.jpg" />
+  <Avatar>Alice Brown</Avatar>
+  <Avatar>Bob Wilson</Avatar>
+  <Avatar>Charlie Davis</Avatar>
+</AvatarGroup>
       <div className="docs-section">
         <h2>API</h2>
         
@@ -329,6 +369,70 @@ export const AvatarDocs: React.FC = () => {
               <td>onError</td>
               <td>Handler when img load error</td>
               <td>{"(event) => void"}</td>
+              <td>-</td>
+              <td></td>
+            </tr>
+<AvatarGroup max={2} size="large">
+  <Avatar>John Doe</Avatar>
+  <Avatar>Jane Smith</Avatar>
+  <Avatar>Bob Wilson</Avatar>
+  <Avatar>Alice Brown</Avatar>
+  <Avatar>Charlie Davis</Avatar>
+</AvatarGroup>`}</pre>
+          </tbody>
+        </table>
+        
+        <h3>AvatarGroup API</h3>
+        <table className="api-table">
+          <thead>
+            <tr>
+              <th>Property</th>
+              <th>Description</th>
+              <th>Type</th>
+              <th>Default</th>
+              <th>Version</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>max</td>
+              <td>Maximum number of avatars to show</td>
+              <td>number</td>
+              <td>-</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>maxCount</td>
+              <td>Alias for max property</td>
+              <td>number</td>
+              <td>-</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>size</td>
+              <td>Size of all avatars in group</td>
+              <td>small | medium | large | xlarge | number</td>
+              <td>medium</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>shape</td>
+              <td>Shape of all avatars in group</td>
+              <td>circle | square</td>
+              <td>circle</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>maxStyle</td>
+              <td>Style of the overflow avatar</td>
+              <td>CSSProperties</td>
+              <td>-</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>onMaxClick</td>
+              <td>Callback when overflow avatar is clicked</td>
+              <td>{"() => void"}</td>
               <td>-</td>
               <td></td>
             </tr>

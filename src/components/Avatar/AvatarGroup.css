@@ -1,0 +1,119 @@
+/* Avatar Group Styles */
+.ui-avatar-group {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+
+.ui-avatar-group .ui-avatar {
+  margin-left: -8px;
+  border: 2px solid var(--bg-color);
+  position: relative;
+  z-index: 1;
+  transition: all 0.2s ease;
+}
+
+.ui-avatar-group .ui-avatar:first-child {
+  margin-left: 0;
+  z-index: 2;
+}
+
+.ui-avatar-group .ui-avatar:hover {
+  z-index: 10;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.ui-avatar-group .ui-avatar:last-child {
+  z-index: 1;
+}
+
+/* Overflow Avatar Styles */
+.ui-avatar-group__overflow {
+  background-color: var(--bg-secondary) !important;
+  color: var(--text-secondary) !important;
+  border-color: var(--border-color) !important;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.ui-avatar-group__overflow:hover {
+  background-color: var(--bg-hover) !important;
+  color: var(--text-color) !important;
+  border-color: var(--primary-color) !important;
+}
+
+/* Size-specific overlaps */
+.ui-avatar-group--small .ui-avatar {
+  margin-left: -6px;
+}
+
+.ui-avatar-group--large .ui-avatar {
+  margin-left: -10px;
+}
+
+.ui-avatar-group--xlarge .ui-avatar {
+  margin-left: -12px;
+}
+
+/* Compact variant */
+.ui-avatar-group--compact .ui-avatar {
+  margin-left: -12px;
+}
+
+.ui-avatar-group--compact.ui-avatar-group--small .ui-avatar {
+  margin-left: -10px;
+}
+
+.ui-avatar-group--compact.ui-avatar-group--large .ui-avatar {
+  margin-left: -16px;
+}
+
+.ui-avatar-group--compact.ui-avatar-group--xlarge .ui-avatar {
+  margin-left: -20px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .ui-avatar-group .ui-avatar {
+    margin-left: -6px;
+  }
+  
+  .ui-avatar-group--compact .ui-avatar {
+    margin-left: -10px;
+  }
+}
+
+/* Animation for adding/removing avatars */
+.ui-avatar-group .ui-avatar {
+  animation: ui-avatar-group-appear 0.3s ease-out;
+}
+
+@keyframes ui-avatar-group-appear {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Focus styles for accessibility */
+.ui-avatar-group .ui-avatar:focus {
+  z-index: 10;
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  .ui-avatar-group .ui-avatar {
+    border-width: 3px;
+  }
+  
+  .ui-avatar-group__overflow {
+    border-width: 3px !important;
+  }
+}
