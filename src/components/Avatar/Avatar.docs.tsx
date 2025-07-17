@@ -226,9 +226,6 @@ export const AvatarDocs: React.FC = () => {
 </AvatarGroup>`}</pre>
           </div>
         </div>
-          </div>
-        </div>
-      </div>
 
         <div className="example-container">
           <h3>Avatar Group with Max Count</h3>
@@ -267,6 +264,18 @@ export const AvatarDocs: React.FC = () => {
   <Avatar>Bob Wilson</Avatar>
   <Avatar>Charlie Davis</Avatar>
 </AvatarGroup>
+
+<AvatarGroup max={2} size="large">
+  <Avatar>John Doe</Avatar>
+  <Avatar>Jane Smith</Avatar>
+  <Avatar>Bob Wilson</Avatar>
+  <Avatar>Alice Brown</Avatar>
+  <Avatar>Charlie Davis</Avatar>
+</AvatarGroup>`}</pre>
+          </div>
+        </div>
+      </div>
+
       <div className="docs-section">
         <h2>API</h2>
         
@@ -372,13 +381,6 @@ export const AvatarDocs: React.FC = () => {
               <td>-</td>
               <td></td>
             </tr>
-<AvatarGroup max={2} size="large">
-  <Avatar>John Doe</Avatar>
-  <Avatar>Jane Smith</Avatar>
-  <Avatar>Bob Wilson</Avatar>
-  <Avatar>Alice Brown</Avatar>
-  <Avatar>Charlie Davis</Avatar>
-</AvatarGroup>`}</pre>
           </tbody>
         </table>
         
