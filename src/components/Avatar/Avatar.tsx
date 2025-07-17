@@ -59,7 +59,7 @@ export const Avatar: React.FC<AvatarProps> = ({
   const customSizeStyle = typeof size === 'number' ? {
     width: `${size}px`,
     height: `${size}px`,
-    fontSize: `${Math.max(size * 0.35, 12)}px`,
+    fontSize: `${Math.max(size * 0.4, 12)}px`,
   } : {};
 
   const combinedStyle = { ...customSizeStyle, ...style };

@@ -143,14 +143,34 @@
 }
 
 .ui-avatar__icon svg {
-  width: 60%;
-  height: 60%;
+  width: 1em;
+  height: 1em;
 }
 
 .ui-avatar__icon--default {
   color: var(--text-tertiary);
 }
 
+/* Icon sizing based on avatar size */
+.ui-avatar--small .ui-avatar__icon svg {
+  width: 0.75em;
+  height: 0.75em;
+}
+
+.ui-avatar--medium .ui-avatar__icon svg {
+  width: 1em;
+  height: 1em;
+}
+
+.ui-avatar--large .ui-avatar__icon svg {
+  width: 1.2em;
+  height: 1.2em;
+}
+
+.ui-avatar--xlarge .ui-avatar__icon svg {
+  width: 1.5em;
+  height: 1.5em;
+}
 .ui-avatar__content {
   display: flex;
   align-items: center;

@@ -112,22 +112,24 @@ export const AvatarDocs: React.FC = () => {
 
         <div className="example-container">
           <h3>With Icons</h3>
-          <p>Custom icons can be used instead of text or images.</p>
+          <p>Custom icons can be used instead of text or images. Icons automatically scale with avatar size.</p>
           <div className="example-demo">
             <div className="avatar-group">
+              <Avatar icon={<User />} size="small" />
               <Avatar icon={<User />} />
               <Avatar icon={<Settings />} size="large" />
-              <Avatar icon={<Heart />} shape="square" />
-              <Avatar icon={<Star />} size="small" />
-              <Avatar icon={<Crown />} size="xlarge" shape="square" />
+              <Avatar icon={<Heart />} size="xlarge" />
+              <Avatar icon={<Star />} shape="square" />
+              <Avatar icon={<Crown />} size={64} shape="square" />
             </div>
           </div>
           <div className="example-code">
-            <pre>{`<Avatar icon={<User />} />
+            <pre>{`<Avatar icon={<User />} size="small" />
+<Avatar icon={<User />} />
 <Avatar icon={<Settings />} size="large" />
-<Avatar icon={<Heart />} shape="square" />
-<Avatar icon={<Star />} size="small" />
-<Avatar icon={<Crown />} size="xlarge" shape="square" />`}</pre>
+<Avatar icon={<Heart />} size="xlarge" />
+<Avatar icon={<Star />} shape="square" />
+<Avatar icon={<Crown />} size={64} shape="square" />`}</pre>
           </div>
         </div>
 
