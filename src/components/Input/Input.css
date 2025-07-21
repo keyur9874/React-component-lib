@@ -178,6 +178,7 @@
   margin-bottom: 0;
   display: table-cell;
   box-shadow: none;
+  border-radius: 0;
 }
 
 .ui-input-group-addon,
@@ -202,6 +203,9 @@
   border-bottom-left-radius: 0;
 }
 
+.ui-input-group > .ui-input:only-child {
+  border-radius: 0;
+}
 .ui-input-group-addon {
   position: relative;
   padding: 8px 12px;
@@ -221,14 +225,34 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  box-shadow: none;
 }
 
+.ui-input-group-addon:first-child {
+  border-right: 0;
+}
+
+.ui-input-group-addon:last-child {
+  border-left: 0;
+}
 .ui-input-group-addon .ui-input {
   background-color: transparent;
   border: 0;
   box-shadow: none;
 }
 
+/* Size variants for input group */
+.ui-input-group--small .ui-input-group-addon {
+  padding: 6px 8px;
+  font-size: 12px;
+  min-height: 24px;
+}
+
+.ui-input-group--large .ui-input-group-addon {
+  padding: 12px 16px;
+  font-size: 16px;
+  min-height: 40px;
+}
 /* Input with Prefix/Suffix */
 .ui-input-affix-wrapper {
   position: relative;

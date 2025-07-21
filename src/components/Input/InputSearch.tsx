@@ -44,7 +44,9 @@ export const InputSearch = forwardRef<HTMLInputElement, InputSearchProps>(({
 
   if (enterButton) {
     // Render with button addon
-    const buttonContent = enterButton === true ? searchIcon : enterButton;
+    const buttonContent = enterButton === true ? (
+      <Search size={14} />
+    ) : enterButton;
     
     return (
       <Input
@@ -52,7 +54,16 @@ export const InputSearch = forwardRef<HTMLInputElement, InputSearchProps>(({
         ref={ref}
         onPressEnter={handlePressEnter}
         addonAfter={
-          <div onClick={handleSearch} style={{ cursor: 'pointer', display: 'flex', alignItems: 'center' }}>
+          <div 
+            onClick={handleSearch} 
+            style={{ 
+              cursor: 'pointer', 
+              display: 'flex', 
+              alignItems: 'center',
+              color: loading ? 'var(--text-tertiary)' : 'var(--primary-color)',
+              transition: 'color 0.2s ease'
+            }}
+          >
             {buttonContent}
           </div>
         }
