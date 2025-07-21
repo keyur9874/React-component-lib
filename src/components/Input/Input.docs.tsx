@@ -314,7 +314,7 @@ export const InputDocs: React.FC = () => {
               />
               <InputNumber 
                 formatter={(value) => ('$ ' + value).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-                parser={(value) => parseFloat(value?.replace(/\$\s?|(,*)/g, '') || '0')}
+                parser={(value) => parseFloat((value || '').replace(/\$\s?|(,*)/g, '') || '0')}
                 placeholder="Formatted input"
               />
               <InputNumber 
@@ -341,8 +341,8 @@ export const InputDocs: React.FC = () => {
   placeholder="Decimal input"
 />
 <InputNumber 
-  formatter={(value) => \`$ \${value}\`.replace(/\\B(?=(\\d{3})+(?!\\d))/g, ',')}
-  parser={(value) => parseFloat(value?.replace(/\\$\\s?|(,*)/g, '') || '0')}
+  formatter={(value) => ('$ ' + value).replace(/\\B(?=(\\d{3})+(?!\\d))/g, ',')}
+  parser={(value) => parseFloat((value || '').replace(/\\$\\s?|(,*)/g, '') || '0')}
   placeholder="Formatted input"
 />
 <InputNumber 
@@ -611,7 +611,7 @@ export const InputDocs: React.FC = () => {
             <tr>
               <td>iconRender</td>
               <td>Custom toggle button</td>
-              <td>{`(visible) => ReactNode`}</td>
+              <td>{'(visible) => ReactNode'}</td>
               <td>-</td>
             </tr>
             <tr>
@@ -699,7 +699,7 @@ export const InputDocs: React.FC = () => {
             <tr>
               <td>autoSize</td>
               <td>Height autosize feature</td>
-              <td>boolean | {`{ minRows: number, maxRows: number }`}</td>
+              <td>{'boolean | { minRows: number, maxRows: number }'}</td>
               <td>false</td>
             </tr>
             <tr>
@@ -717,7 +717,7 @@ export const InputDocs: React.FC = () => {
             <tr>
               <td>onResize</td>
               <td>The callback function that is triggered when resize</td>
-              <td>function({ width, height })</td>
+              <td>{'function({ width, height })'}</td>
               <td>-</td>
             </tr>
           </tbody>
