@@ -611,7 +611,7 @@ export const InputDocs: React.FC = () => {
             <tr>
               <td>iconRender</td>
               <td>Custom toggle button</td>
-              <td>(visible) => ReactNode</td>
+              <td>{`(visible) => ReactNode`}</td>
               <td>-</td>
             </tr>
             <tr>
