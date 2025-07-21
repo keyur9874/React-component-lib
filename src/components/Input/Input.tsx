@@ -147,12 +147,12 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(({
 
   // Render with addons (InputGroup style)
   if (hasAddons) {
-    const inputClasses = [baseClass, sizeClass, variantClass, statusClass, disabledClass, className]
+    const inputClasses = [baseClass, sizeClass, variantClass, statusClass, disabledClass]
       .filter(Boolean)
       .join(' ');
 
     return (
-      <span className={`ui-input-group ui-input-group--${size}`} style={style}>
+      <span className={`ui-input-group ui-input-group--${size} ${className}`} style={style}>
         {addonBefore && (
           <span className="ui-input-group-addon">{addonBefore}</span>
         )}

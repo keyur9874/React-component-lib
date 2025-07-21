@@ -179,11 +179,13 @@
   display: table-cell;
   box-shadow: none;
   border-radius: 0;
+  vertical-align: middle;
 }
 
 .ui-input-group-addon,
 .ui-input-group > .ui-input {
   display: table-cell;
+  vertical-align: middle;
 }
 
 .ui-input-group-addon:not(:first-child):not(:last-child),
@@ -204,7 +206,7 @@
 }
 
 .ui-input-group > .ui-input:only-child {
-  border-radius: 0;
+  border-radius: 6px;
 }
 .ui-input-group-addon {
   position: relative;
@@ -222,18 +224,20 @@
   display: table-cell;
   width: 1px;
   min-height: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   box-shadow: none;
+  line-height: 1.5715;
 }
 
 .ui-input-group-addon:first-child {
   border-right: 0;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
 }
 
 .ui-input-group-addon:last-child {
   border-left: 0;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
 }
 .ui-input-group-addon .ui-input {
   background-color: transparent;
@@ -361,6 +365,38 @@
 
 .ui-input-affix-wrapper--small .ui-input-suffix {
   margin-left: 6px;
+}
+/* Fix input group input styling */
+.ui-input-group .ui-input {
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.ui-input-group .ui-input:first-child {
+  border-top-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+}
+
+.ui-input-group .ui-input:last-child {
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+}
+
+.ui-input-group .ui-input:only-child {
+  border-radius: 6px;
+}
+
+/* Ensure proper height alignment */
+.ui-input-group--small .ui-input {
+  min-height: 24px;
+}
+
+.ui-input-group--medium .ui-input {
+  min-height: 32px;
+}
+
+.ui-input-group--large .ui-input {
+  min-height: 40px;
 }
 
 .ui-input-affix-wrapper--large {
