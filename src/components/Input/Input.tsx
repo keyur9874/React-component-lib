@@ -124,7 +124,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(({
     if (!showCountDisplay) return null;
     
     return (
-      <span className="ui-input-count" style={{ color: 'var(--text-tertiary)', fontSize: '12px' }}>
+      <span className="ui-input-count">
         {currentLength}/{maxLength}
       </span>
     );

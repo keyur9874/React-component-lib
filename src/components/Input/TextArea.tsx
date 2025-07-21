@@ -159,26 +159,10 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(({
       
       {/* Clear button and count display */}
       {(showClearButton || showCountDisplay) && (
-        <div 
-          style={{
-            position: 'absolute',
-            bottom: '8px',
-            right: '8px',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '8px',
-            pointerEvents: 'none',
-          }}
-        >
+        <div className="ui-textarea-controls">
           {showClearButton && (
             <span 
-              style={{ 
-                cursor: 'pointer', 
-                color: 'var(--text-tertiary)',
-                pointerEvents: 'auto',
-                display: 'flex',
-                alignItems: 'center',
-              }}
+              className="ui-textarea-clear"
               onClick={handleClear}
             >
               <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor">
@@ -189,11 +173,7 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(({
           
           {showCountDisplay && (
             <span 
-              style={{ 
-                color: currentLength > maxLength! ? 'var(--danger-color)' : 'var(--text-tertiary)', 
-                fontSize: '12px',
-                pointerEvents: 'none',
-              }}
+              className={`ui-textarea-count ${currentLength > maxLength! ? 'ui-textarea-count--error' : ''}`}
             >
               {currentLength}/{maxLength}
             </span>

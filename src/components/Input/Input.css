@@ -4,7 +4,7 @@
   align-items: center;
   width: 100%;
   min-height: 32px;
-  padding: 4px 11px;
+  padding: 8px 12px;
   color: var(--text-color);
   font-size: 14px;
   line-height: 1.5715;
@@ -12,41 +12,44 @@
   background-image: none;
   border: 1px solid var(--border-color);
   border-radius: 6px;
-  transition: all 0.2s;
+  transition: all 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
   box-sizing: border-box;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.015);
 }
 
 .ui-input:hover {
   border-color: var(--border-hover);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
 }
 
 .ui-input:focus {
   border-color: var(--primary-color);
   outline: 0;
-  box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+  box-shadow: 0 0 0 3px rgba(24, 144, 255, 0.12), 0 2px 8px rgba(24, 144, 255, 0.15);
 }
 
 .ui-input::placeholder {
   color: var(--text-tertiary);
+  font-weight: 400;
 }
 
 /* Input Sizes */
 .ui-input--small {
   min-height: 24px;
-  padding: 0px 7px;
+  padding: 4px 8px;
   font-size: 12px;
 }
 
 .ui-input--medium {
   min-height: 32px;
-  padding: 4px 11px;
+  padding: 8px 12px;
   font-size: 14px;
 }
 
 .ui-input--large {
   min-height: 40px;
-  padding: 6px 11px;
+  padding: 10px 16px;
   font-size: 16px;
 }
 
@@ -54,22 +57,45 @@
 .ui-input--outlined {
   border: 1px solid var(--border-color);
   background-color: var(--bg-color);
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.015);
 }
 
 .ui-input--filled {
   border: 1px solid transparent;
   background-color: var(--bg-secondary);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.ui-input--filled:hover {
+  background-color: var(--bg-hover);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.ui-input--filled:focus {
+  background-color: var(--bg-color);
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(24, 144, 255, 0.12), inset 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
 .ui-input--borderless {
   border: none;
   background-color: transparent;
   box-shadow: none;
+  border-bottom: 1px solid var(--border-color);
+  border-radius: 0;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.ui-input--borderless:hover {
+  border-bottom-color: var(--border-hover);
+  box-shadow: none;
 }
 
 .ui-input--borderless:focus {
-  box-shadow: none;
-  border-bottom: 1px solid var(--primary-color);
+  border-bottom-color: var(--primary-color);
+  border-bottom-width: 2px;
+  box-shadow: 0 1px 0 var(--primary-color);
 }
 
 /* Input States */
@@ -78,34 +104,58 @@
   background-color: var(--bg-secondary);
   border-color: var(--border-color);
   cursor: not-allowed;
-  opacity: 0.6;
+  opacity: 0.7;
+  box-shadow: none;
+}
+
+.ui-input--disabled:hover {
+  border-color: var(--border-color);
+  box-shadow: none;
 }
 
 .ui-input--error {
   border-color: var(--danger-color);
+  box-shadow: 0 2px 0 rgba(255, 77, 79, 0.06), 0 0 0 1px rgba(255, 77, 79, 0.1);
+}
+
+.ui-input--error:hover {
+  border-color: var(--danger-hover);
+  box-shadow: 0 2px 4px rgba(255, 77, 79, 0.15), 0 0 0 1px rgba(255, 77, 79, 0.15);
 }
 
 .ui-input--error:focus {
   border-color: var(--danger-color);
-  box-shadow: 0 0 0 2px rgba(255, 77, 79, 0.2);
+  box-shadow: 0 0 0 3px rgba(255, 77, 79, 0.15), 0 2px 8px rgba(255, 77, 79, 0.2);
 }
 
 .ui-input--warning {
   border-color: var(--warning-color);
+  box-shadow: 0 2px 0 rgba(250, 173, 20, 0.06), 0 0 0 1px rgba(250, 173, 20, 0.1);
+}
+
+.ui-input--warning:hover {
+  border-color: var(--warning-hover);
+  box-shadow: 0 2px 4px rgba(250, 173, 20, 0.15), 0 0 0 1px rgba(250, 173, 20, 0.15);
 }
 
 .ui-input--warning:focus {
   border-color: var(--warning-color);
-  box-shadow: 0 0 0 2px rgba(250, 173, 20, 0.2);
+  box-shadow: 0 0 0 3px rgba(250, 173, 20, 0.15), 0 2px 8px rgba(250, 173, 20, 0.2);
 }
 
 .ui-input--success {
   border-color: var(--success-color);
+  box-shadow: 0 2px 0 rgba(82, 196, 26, 0.06), 0 0 0 1px rgba(82, 196, 26, 0.1);
+}
+
+.ui-input--success:hover {
+  border-color: var(--success-hover);
+  box-shadow: 0 2px 4px rgba(82, 196, 26, 0.15), 0 0 0 1px rgba(82, 196, 26, 0.15);
 }
 
 .ui-input--success:focus {
   border-color: var(--success-color);
-  box-shadow: 0 0 0 2px rgba(82, 196, 26, 0.2);
+  box-shadow: 0 0 0 3px rgba(82, 196, 26, 0.15), 0 2px 8px rgba(82, 196, 26, 0.2);
 }
 
 /* Input Group Styles */
@@ -115,6 +165,9 @@
   width: 100%;
   border-collapse: separate;
   border-spacing: 0;
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.015);
+  border-radius: 6px;
+  overflow: hidden;
 }
 
 .ui-input-group > .ui-input {
@@ -124,6 +177,7 @@
   width: 100%;
   margin-bottom: 0;
   display: table-cell;
+  box-shadow: none;
 }
 
 .ui-input-group-addon,
@@ -150,7 +204,7 @@
 
 .ui-input-group-addon {
   position: relative;
-  padding: 0 11px;
+  padding: 8px 12px;
   color: var(--text-color);
   font-weight: normal;
   font-size: 14px;
@@ -158,11 +212,15 @@
   background-color: var(--bg-secondary);
   border: 1px solid var(--border-color);
   border-radius: 6px;
-  transition: all 0.3s;
+  transition: all 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
   white-space: nowrap;
   vertical-align: middle;
   display: table-cell;
   width: 1px;
+  min-height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .ui-input-group-addon .ui-input {
@@ -178,7 +236,7 @@
   align-items: center;
   width: 100%;
   min-height: 32px;
-  padding: 4px 11px;
+  padding: 8px 12px;
   color: var(--text-color);
   font-size: 14px;
   line-height: 1.5715;
@@ -186,18 +244,20 @@
   background-image: none;
   border: 1px solid var(--border-color);
   border-radius: 6px;
-  transition: all 0.2s;
+  transition: all 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
   box-sizing: border-box;
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.015);
 }
 
 .ui-input-affix-wrapper:hover {
   border-color: var(--border-hover);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
 }
 
 .ui-input-affix-wrapper:focus-within {
   border-color: var(--primary-color);
   outline: 0;
-  box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+  box-shadow: 0 0 0 3px rgba(24, 144, 255, 0.12), 0 2px 8px rgba(24, 144, 255, 0.15);
 }
 
 .ui-input-affix-wrapper > input {
@@ -210,10 +270,12 @@
   font-size: inherit;
   line-height: inherit;
   padding: 0;
+  font-weight: 400;
 }
 
 .ui-input-affix-wrapper > input::placeholder {
   color: var(--text-tertiary);
+  font-weight: 400;
 }
 
 .ui-input-prefix,
@@ -222,14 +284,15 @@
   align-items: center;
   color: var(--text-tertiary);
   line-height: 0;
+  flex-shrink: 0;
 }
 
 .ui-input-prefix {
-  margin-right: 4px;
+  margin-right: 8px;
 }
 
 .ui-input-suffix {
-  margin-left: 4px;
+  margin-left: 8px;
 }
 
 .ui-input-prefix .ui-input-icon,
@@ -239,6 +302,7 @@
   justify-content: center;
   color: var(--text-tertiary);
   font-size: 14px;
+  transition: color 0.2s ease;
 }
 
 .ui-input-prefix .ui-input-icon svg,
@@ -247,33 +311,46 @@
   height: 1em;
 }
 
+.ui-input-suffix .ui-input-icon:hover {
+  color: var(--primary-color);
+}
+
+/* Count display styling */
+.ui-input-count {
+  font-size: 12px;
+  color: var(--text-tertiary);
+  white-space: nowrap;
+  margin-left: 8px;
+  font-weight: 400;
+}
+
 /* Size variants for affix wrapper */
 .ui-input-affix-wrapper--small {
   min-height: 24px;
-  padding: 0px 7px;
+  padding: 4px 8px;
   font-size: 12px;
 }
 
 .ui-input-affix-wrapper--small .ui-input-prefix {
-  margin-right: 3px;
+  margin-right: 6px;
 }
 
 .ui-input-affix-wrapper--small .ui-input-suffix {
-  margin-left: 3px;
+  margin-left: 6px;
 }
 
 .ui-input-affix-wrapper--large {
   min-height: 40px;
-  padding: 6px 11px;
+  padding: 10px 16px;
   font-size: 16px;
 }
 
 .ui-input-affix-wrapper--large .ui-input-prefix {
-  margin-right: 6px;
+  margin-right: 10px;
 }
 
 .ui-input-affix-wrapper--large .ui-input-suffix {
-  margin-left: 6px;
+  margin-left: 10px;
 }
 
 /* State variants for affix wrapper */
@@ -282,38 +359,62 @@
   background-color: var(--bg-secondary);
   border-color: var(--border-color);
   cursor: not-allowed;
-  opacity: 0.6;
+  opacity: 0.7;
+  box-shadow: none;
 }
 
 .ui-input-affix-wrapper--disabled > input {
   cursor: not-allowed;
 }
 
+.ui-input-affix-wrapper--disabled:hover {
+  border-color: var(--border-color);
+  box-shadow: none;
+}
+
 .ui-input-affix-wrapper--error {
   border-color: var(--danger-color);
+  box-shadow: 0 2px 0 rgba(255, 77, 79, 0.06), 0 0 0 1px rgba(255, 77, 79, 0.1);
+}
+
+.ui-input-affix-wrapper--error:hover {
+  border-color: var(--danger-hover);
+  box-shadow: 0 2px 4px rgba(255, 77, 79, 0.15), 0 0 0 1px rgba(255, 77, 79, 0.15);
 }
 
 .ui-input-affix-wrapper--error:focus-within {
   border-color: var(--danger-color);
-  box-shadow: 0 0 0 2px rgba(255, 77, 79, 0.2);
+  box-shadow: 0 0 0 3px rgba(255, 77, 79, 0.15), 0 2px 8px rgba(255, 77, 79, 0.2);
 }
 
 .ui-input-affix-wrapper--warning {
   border-color: var(--warning-color);
+  box-shadow: 0 2px 0 rgba(250, 173, 20, 0.06), 0 0 0 1px rgba(250, 173, 20, 0.1);
+}
+
+.ui-input-affix-wrapper--warning:hover {
+  border-color: var(--warning-hover);
+  box-shadow: 0 2px 4px rgba(250, 173, 20, 0.15), 0 0 0 1px rgba(250, 173, 20, 0.15);
 }
 
 .ui-input-affix-wrapper--warning:focus-within {
   border-color: var(--warning-color);
-  box-shadow: 0 0 0 2px rgba(250, 173, 20, 0.2);
+  box-shadow: 0 0 0 3px rgba(250, 173, 20, 0.15), 0 2px 8px rgba(250, 173, 20, 0.2);
 }
 
 .ui-input-affix-wrapper--success {
   border-color: var(--success-color);
+  box-shadow: 0 2px 0 rgba(82, 196, 26, 0.06), 0 0 0 1px rgba(82, 196, 26, 0.1);
+}
+
+.ui-input-affix-wrapper--success:hover {
+  border-color: var(--success-hover);
+  box-shadow: 0 2px 4px rgba(82, 196, 26, 0.15), 0 0 0 1px rgba(82, 196, 26, 0.15);
 }
 
 .ui-input-affix-wrapper--success:focus-within {
   border-color: var(--success-color);
-  box-shadow: 0 0 0 2px rgba(82, 196, 26, 0.2);
+  box-shadow: 0 0 0 3px rgba(82, 196, 26, 0.15), 0 2px 8px rgba(82, 196, 26, 0.2);
 }
 
 /* Search Input */
@@ -323,6 +424,14 @@
 
 .ui-input-search .ui-input-suffix {
   cursor: pointer;
+  transition: all 0.2s ease;
+  border-radius: 4px;
+  padding: 4px;
+  margin: -4px;
+}
+
+.ui-input-search .ui-input-suffix:hover {
+  background-color: var(--bg-hover);
 }
 
 .ui-input-search .ui-input-suffix:hover .ui-input-icon {
@@ -332,6 +441,14 @@
 /* Password Input */
 .ui-input-password .ui-input-suffix {
   cursor: pointer;
+  transition: all 0.2s ease;
+  border-radius: 4px;
+  padding: 4px;
+  margin: -4px;
+}
+
+.ui-input-password .ui-input-suffix:hover {
+  background-color: var(--bg-hover);
 }
 
 .ui-input-password .ui-input-suffix:hover .ui-input-icon {
@@ -345,13 +462,70 @@
   min-height: 32px;
   line-height: 1.5715;
   vertical-align: bottom;
-  transition: all 0.3s, height 0s;
+  transition: all 0.2s cubic-bezier(0.645, 0.045, 0.355, 1), height 0s;
   resize: vertical;
-  padding: 4px 11px;
+  padding: 8px 12px;
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.015);
+}
+
+.ui-textarea:hover {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+}
+
+.ui-textarea:focus {
+  box-shadow: 0 0 0 3px rgba(24, 144, 255, 0.12), 0 2px 8px rgba(24, 144, 255, 0.15);
 }
 
 .ui-textarea--auto-size {
   resize: none;
+}
+
+/* TextArea wrapper for clear button and count */
+.ui-textarea-wrapper {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+.ui-textarea-controls {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  pointer-events: none;
+  background: var(--bg-color);
+  padding: 2px 4px;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.ui-textarea-clear {
+  cursor: pointer;
+  color: var(--text-tertiary);
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  padding: 2px;
+  border-radius: 2px;
+  transition: all 0.2s ease;
+}
+
+.ui-textarea-clear:hover {
+  color: var(--danger-color);
+  background-color: var(--bg-hover);
+}
+
+.ui-textarea-count {
+  color: var(--text-tertiary);
+  font-size: 12px;
+  pointer-events: none;
+  font-weight: 400;
+}
+
+.ui-textarea-count--error {
+  color: var(--danger-color);
 }
 
 /* Input Number */
@@ -371,7 +545,8 @@
   border-left: 1px solid var(--border-color);
   border-radius: 0 6px 6px 0;
   opacity: 0;
-  transition: opacity 0.24s linear 0.1s;
+  transition: opacity 0.2s ease;
+  box-shadow: -1px 0 0 rgba(0, 0, 0, 0.06);
 }
 
 .ui-input-number:hover .ui-input-number-handler-wrap {
@@ -385,8 +560,9 @@
   width: 100%;
   height: 50%;
   cursor: pointer;
-  transition: all 0.1s linear;
+  transition: all 0.2s ease;
   color: var(--text-tertiary);
+  user-select: none;
 }
 
 .ui-input-number-handler:hover {
@@ -396,6 +572,7 @@
 
 .ui-input-number-handler:active {
   background: var(--bg-active);
+  transform: scale(0.95);
 }
 
 .ui-input-number-handler-up {
@@ -405,6 +582,11 @@
 
 .ui-input-number-handler-down {
   border-radius: 0 0 6px 0;
+}
+
+.ui-input-number-handler svg {
+  width: 10px;
+  height: 10px;
 }
 
 /* Form Item */
@@ -423,7 +605,7 @@
   font-size: 14px;
   line-height: 1.5715;
   margin-bottom: 8px;
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .ui-form-item-label-required::before {
@@ -446,32 +628,44 @@
   font-size: 12px;
   line-height: 1.5;
   margin-top: 4px;
+  font-weight: 400;
 }
 
 .ui-form-item-explain-error {
   color: var(--danger-color);
+  font-weight: 500;
 }
 
 .ui-form-item-explain-warning {
   color: var(--warning-color);
+  font-weight: 500;
 }
 
 .ui-form-item-explain-success {
   color: var(--success-color);
+  font-weight: 500;
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
   .ui-input-group-addon {
-    padding: 0 8px;
+    padding: 6px 8px;
   }
   
   .ui-input-affix-wrapper {
-    padding: 4px 8px;
+    padding: 6px 8px;
   }
   
   .ui-input {
-    padding: 4px 8px;
+    padding: 6px 8px;
+  }
+  
+  .ui-input-prefix {
+    margin-right: 6px;
+  }
+  
+  .ui-input-suffix {
+    margin-left: 6px;
   }
 }
 
@@ -485,6 +679,16 @@
   .ui-input:focus,
   .ui-input-affix-wrapper:focus-within {
     border-width: 3px;
+    box-shadow: none;
+  }
+  
+  .ui-input--error,
+  .ui-input--warning,
+  .ui-input--success,
+  .ui-input-affix-wrapper--error,
+  .ui-input-affix-wrapper--warning,
+  .ui-input-affix-wrapper--success {
+    box-shadow: none;
   }
 }
 
@@ -492,7 +696,15 @@
 @media (prefers-reduced-motion: reduce) {
   .ui-input,
   .ui-input-affix-wrapper,
-  .ui-input-group-addon {
+  .ui-input-group-addon,
+  .ui-textarea,
+  .ui-input-number-handler,
+  .ui-input-prefix .ui-input-icon,
+  .ui-input-suffix .ui-input-icon {
     transition: none;
+  }
+  
+  .ui-input-number-handler:active {
+    transform: none;
   }
 }
