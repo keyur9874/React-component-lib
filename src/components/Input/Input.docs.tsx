@@ -313,7 +313,7 @@ export const InputDocs: React.FC = () => {
                 placeholder="Decimal input"
               />
               <InputNumber 
-                formatter={(value) => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                formatter={(value) => ('$ ' + value).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                 parser={(value) => parseFloat(value?.replace(/\$\s?|(,*)/g, '') || '0')}
                 placeholder="Formatted input"
               />
