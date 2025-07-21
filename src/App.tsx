@@ -4,8 +4,9 @@ import { ThemeToggle } from './components/ThemeToggle/ThemeToggle';
 import { ButtonDocs } from './components/Button/Button.docs';
 import { AvatarDocs } from './components/Avatar/Avatar.docs';
 import { BadgeDocs } from './components/Badge/Badge.docs';
+import { InputDocs } from './components/Input/Input.docs';
 
-type ActiveComponent = 'button' | 'avatar' | 'badge';
+type ActiveComponent = 'button' | 'avatar' | 'badge' | 'input';
 
 function App() {
   const [activeComponent, setActiveComponent] = useState<ActiveComponent>('button');
@@ -14,6 +15,7 @@ function App() {
     { id: 'button' as const, label: 'Button', component: ButtonDocs },
     { id: 'avatar' as const, label: 'Avatar', component: AvatarDocs },
     { id: 'badge' as const, label: 'Badge', component: BadgeDocs },
+    { id: 'input' as const, label: 'Input', component: InputDocs },
   ];
 
   const ActiveComponentDoc = components.find(comp => comp.id === activeComponent)?.component || ButtonDocs;
