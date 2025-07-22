@@ -167,7 +167,11 @@ export const InputNumber = forwardRef<HTMLInputElement, InputNumberProps>(({
   const statusClass = status ? `ui-input--${status}` : '';
   const disabledClass = disabled ? 'ui-input--disabled' : '';
 
-  const classes = [baseClass, className].filter(Boolean).join(' ');
+  const numberSizeClass = `ui-input-number--${size}`;
+  const numberStatusClass = status ? `ui-input-number--${status}` : '';
+  const numberDisabledClass = disabled ? 'ui-input-number--disabled' : '';
+
+  const classes = [baseClass, numberSizeClass, numberStatusClass, numberDisabledClass, className].filter(Boolean).join(' ');
   const inputClasses = [inputClass, sizeClass, variantClass, statusClass, disabledClass]
     .filter(Boolean)
     .join(' ');
@@ -194,12 +198,32 @@ export const InputNumber = forwardRef<HTMLInputElement, InputNumberProps>(({
           <span
             className="ui-input-number-handler ui-input-number-handler-up"
             onClick={() => handleStep('up')}
+            onMouseDown={(e) => e.preventDefault()}
+            tabIndex={0}
+            role="button"
+            aria-label="Increase value"
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                handleStep('up');
+              }
+            }}
           >
             <ChevronUp size={12} />
           </span>
           <span
             className="ui-input-number-handler ui-input-number-handler-down"
             onClick={() => handleStep('down')}
+            onMouseDown={(e) => e.preventDefault()}
+            tabIndex={0}
+            role="button"
+            aria-label="Decrease value"
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                handleStep('down');
+              }
+            }}
           >
             <ChevronDown size={12} />
           </span>

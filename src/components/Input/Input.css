@@ -606,7 +606,8 @@
   border-radius: 0 6px 6px 0;
   opacity: 0;
   transition: opacity 0.2s ease;
-  box-shadow: -1px 0 0 rgba(0, 0, 0, 0.06);
+  box-shadow: -1px 0 2px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
 }
 
 .ui-input-number:hover .ui-input-number-handler-wrap {
@@ -620,24 +621,43 @@
   width: 100%;
   height: 50%;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
   color: var(--text-tertiary);
   user-select: none;
+  position: relative;
+  background: var(--bg-color);
+  border: none;
+  outline: none;
 }
 
 .ui-input-number-handler:hover {
-  color: var(--primary-color);
-  background: var(--bg-hover);
+  color: var(--primary-hover);
+  background: linear-gradient(135deg, var(--bg-hover) 0%, var(--bg-active) 100%);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+  transform: scale(1.05);
 }
 
 .ui-input-number-handler:active {
-  background: var(--bg-active);
-  transform: scale(0.95);
+  background: linear-gradient(135deg, var(--bg-active) 0%, var(--bg-hover) 100%);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15);
+  transform: scale(0.98);
+  color: var(--primary-active);
+}
+
+.ui-input-number-handler:focus-visible {
+  outline: 2px solid var(--primary-color);
+  outline-offset: -2px;
+  z-index: 1;
 }
 
 .ui-input-number-handler-up {
   border-bottom: 1px solid var(--border-color);
   border-radius: 0 6px 0 0;
+  border-bottom-color: var(--border-light);
+}
+
+.ui-input-number-handler-up:hover {
+  border-bottom-color: var(--primary-color);
 }
 
 .ui-input-number-handler-down {
@@ -645,8 +665,72 @@
 }
 
 .ui-input-number-handler svg {
+  width: 12px;
+  height: 12px;
+  transition: transform 0.15s ease;
+}
+
+.ui-input-number-handler:hover svg {
+  transform: scale(1.1);
+}
+
+.ui-input-number-handler:active svg {
+  transform: scale(0.9);
+}
+
+/* Enhanced handler wrap for different sizes */
+.ui-input-number--small .ui-input-number-handler-wrap {
+  width: 20px;
+}
+
+.ui-input-number--small .ui-input-number-handler svg {
   width: 10px;
   height: 10px;
+}
+
+.ui-input-number--large .ui-input-number-handler-wrap {
+  width: 26px;
+}
+
+.ui-input-number--large .ui-input-number-handler svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* Disabled state for handlers */
+.ui-input-number--disabled .ui-input-number-handler-wrap {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.ui-input-number--disabled .ui-input-number-handler {
+  cursor: not-allowed;
+  color: var(--text-disabled);
+}
+
+/* Status variants for number input */
+.ui-input-number--error .ui-input-number-handler-wrap {
+  border-left-color: var(--danger-color);
+}
+
+.ui-input-number--error .ui-input-number-handler:hover {
+  color: var(--danger-hover);
+}
+
+.ui-input-number--warning .ui-input-number-handler-wrap {
+  border-left-color: var(--warning-color);
+}
+
+.ui-input-number--warning .ui-input-number-handler:hover {
+  color: var(--warning-hover);
+}
+
+.ui-input-number--success .ui-input-number-handler-wrap {
+  border-left-color: var(--success-color);
+}
+
+.ui-input-number--success .ui-input-number-handler:hover {
+  color: var(--success-hover);
 }
 
 /* Form Item */
