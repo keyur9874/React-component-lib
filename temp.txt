@@ -1,0 +1,184 @@
+const inputPropsDocumentation = {
+  Input: [
+    {
+      property: "addonAfter",
+      description: "The label text displayed after (on the right side of) the input field",
+      type: "ReactNode",
+      default: "-"
+    },
+    {
+      property: "addonBefore",
+      description: "The label text displayed before (on the left side of) the input field",
+      type: "ReactNode",
+      default: "-"
+    },
+    {
+      property: "allowClear",
+      description: "If allow to remove input content with clear icon",
+      type: "boolean",
+      default: "false"
+    },
+    {
+      property: "maxLength",
+      description: "The max length",
+      type: "number",
+      default: "-"
+    },
+    {
+      property: "prefix",
+      description: "The prefix icon for the Input",
+      type: "ReactNode",
+      default: "-"
+    },
+    {
+      property: "showCount",
+      description: "Whether show text count",
+      type: "boolean",
+      default: "false"
+    },
+    {
+      property: "size",
+      description: "The size of the input box",
+      type: "small | medium | large",
+      default: "medium"
+    },
+    {
+      property: "status",
+      description: "Set validation status",
+      type: "error | warning | success",
+      default: "-"
+    },
+    {
+      property: "suffix",
+      description: "The suffix icon for the Input",
+      type: "ReactNode",
+      default: "-"
+    },
+    {
+      property: "variant",
+      description: "Variants of input",
+      type: "outlined | filled | borderless",
+      default: "outlined"
+    },
+    {
+      property: "onPressEnter",
+      description: "The callback function that is triggered when Enter key is pressed",
+      type: "function(e)",
+      default: "-"
+    }
+  ],
+
+  "Input.Search": [
+    {
+      property: "enterButton",
+      description: "Whether to show an enter button after input",
+      type: "boolean | ReactNode",
+      default: "false"
+    },
+    {
+      property: "loading",
+      description: "Search box with loading",
+      type: "boolean",
+      default: "false"
+    },
+    {
+      property: "onSearch",
+      description: "The callback function triggered when you click on the search-icon, the enter button or press the Enter key",
+      type: "function(value, event)",
+      default: "-"
+    }
+  ],
+
+  "Input.Password": [
+    {
+      property: "iconRender",
+      description: "Custom toggle button",
+      type: "(visible) => ReactNode",
+      default: "-"
+    },
+    {
+      property: "visibilityToggle",
+      description: "Whether show toggle button",
+      type: "boolean",
+      default: "true"
+    }
+  ],
+
+  "Input.Number": [
+    {
+      property: "controls",
+      description: "Whether to show +/- controls",
+      type: "boolean",
+      default: "true"
+    },
+    {
+      property: "formatter",
+      description: "Specifies the format of the value presented",
+      type: "function(value: number | string): string",
+      default: "-"
+    },
+    {
+      property: "keyboard",
+      description: "If enable keyboard behavior",
+      type: "boolean",
+      default: "true"
+    },
+    {
+      property: "max",
+      description: "The max value",
+      type: "number",
+      default: "Infinity"
+    },
+    {
+      property: "min",
+      description: "The min value",
+      type: "number",
+      default: "-Infinity"
+    },
+    {
+      property: "parser",
+      description: "Specifies the value extracted from formatter",
+      type: "function(string): number",
+      default: "-"
+    },
+    {
+      property: "precision",
+      description: "The precision of input value",
+      type: "number",
+      default: "-"
+    },
+    {
+      property: "step",
+      description: "The number to which the current value is increased or decreased",
+      type: "number | string",
+      default: "1"
+    }
+  ],
+
+  TextArea: [
+    {
+      property: "autoSize",
+      description: "Height autosize feature",
+      type: "boolean | { minRows: number, maxRows: number }",
+      default: "false"
+    },
+    {
+      property: "showCount",
+      description: "Whether show text count",
+      type: "boolean",
+      default: "false"
+    },
+    {
+      property: "allowClear",
+      description: "If allow to remove input content with clear icon",
+      type: "boolean",
+      default: "false"
+    },
+    {
+      property: "onResize",
+      description: "The callback function that is triggered when resize",
+      type: "function({ width, height })",
+      default: "-"
+    }
+  ]
+};
