@@ -7,6 +7,7 @@ export interface InputNumberProps extends Omit<React.InputHTMLAttributes<HTMLInp
   size?: 'small' | 'medium' | 'large';
   variant?: 'outlined' | 'filled' | 'borderless';
   status?: 'error' | 'warning' | 'success';
+  suffix?: React.ReactNode;
   value?: number;
   defaultValue?: number;
   min?: number;
@@ -27,6 +28,7 @@ export const InputNumber = forwardRef<HTMLInputElement, InputNumberProps>(({
   size = 'medium',
   variant = 'outlined',
   status,
+  suffix,
   value,
   defaultValue,
   min = -Infinity,
