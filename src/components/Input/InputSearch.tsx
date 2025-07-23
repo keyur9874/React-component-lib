@@ -2,7 +2,7 @@ import React, { forwardRef } from 'react';
 import { Search } from 'lucide-react';
 import { Input, InputProps } from './Input';
 
-export interface InputSearchProps extends Omit<InputProps, 'suffix'> {
+export interface InputSearchProps extends InputProps {
   onSearch?: (value: string, event?: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLInputElement>) => void;
   enterButton?: boolean | React.ReactNode;
   loading?: boolean;
@@ -42,6 +42,14 @@ export const InputSearch = forwardRef<HTMLInputElement, InputSearchProps>(({
     </div>
   );
 
+  // Combine custom suffix with search icon
+  const combinedSuffix = suffix ? (
+    <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+      {suffix}
+      {searchIcon}
+    </div>
+  ) : searchIcon;
+
   if (enterButton) {
     // Render with button addon
     const buttonContent = enterButton === true ? (
@@ -53,6 +61,7 @@ export const InputSearch = forwardRef<HTMLInputElement, InputSearchProps>(({
         {...props}
         ref={ref}
         onPressEnter={handlePressEnter}
+        suffix={suffix}
         addonAfter={
           <div 
             onClick={handleSearch} 
@@ -77,7 +86,7 @@ export const InputSearch = forwardRef<HTMLInputElement, InputSearchProps>(({
       {...props}
       ref={ref}
       className={`ui-input-search ${props.className || ''}`}
-      suffix={searchIcon}
+      suffix={combinedSuffix}
       onPressEnter={handlePressEnter}
     />
   );

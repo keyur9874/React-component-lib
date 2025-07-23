@@ -2,7 +2,7 @@ import React, { forwardRef, useState, useRef, useImperativeHandle } from 'react'
 import { ChevronUp, ChevronDown } from 'lucide-react';
 import './Input.css';
 
-export interface InputNumberProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size' | 'onChange' | 'value' | 'defaultValue'> {
+export interface InputNumberProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size' | 'onChange' | 'value' | 'defaultValue' | 'type'> {
   size?: 'small' | 'medium' | 'large';
   variant?: 'outlined' | 'filled' | 'borderless';
   status?: 'error' | 'warning' | 'success';
@@ -17,6 +17,8 @@ export interface InputNumberProps extends Omit<React.InputHTMLAttributes<HTMLInp
   controls?: boolean;
   keyboard?: boolean;
   stringMode?: boolean;
+  prefix?: React.ReactNode;
+  suffix?: React.ReactNode;
   onChange?: (value: number | null) => void;
   onStep?: (value: number, info: { offset: number; type: 'up' | 'down' }) => void;
   onPressEnter?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
@@ -38,6 +40,8 @@ export const InputNumber = forwardRef<HTMLInputElement, InputNumberProps>(({
   keyboard = true,
   stringMode = false,
   disabled = false,
+  prefix,
+  suffix,
   className = '',
   style,
   onChange,
@@ -161,74 +165,88 @@ export const InputNumber = forwardRef<HTMLInputElement, InputNumberProps>(({
 
   // Build class names
   const baseClass = 'ui-input-number';
-  const inputClass = 'ui-input';
-  const sizeClass = `ui-input--${size}`;
-  const variantClass = `ui-input--${variant}`;
-  const statusClass = status ? `ui-input--${status}` : '';
-  const disabledClass = disabled ? 'ui-input--disabled' : '';
-
   const numberSizeClass = `ui-input-number--${size}`;
   const numberStatusClass = status ? `ui-input-number--${status}` : '';
   const numberDisabledClass = disabled ? 'ui-input-number--disabled' : '';
 
   const classes = [baseClass, numberSizeClass, numberStatusClass, numberDisabledClass, className].filter(Boolean).join(' ');
-  const inputClasses = [inputClass, sizeClass, variantClass, statusClass, disabledClass]
-    .filter(Boolean)
-    .join(' ');
 
   // Get current display value
   const currentDisplayValue = focused ? displayValue : formatValue(currentValue);
 
+  // Combine suffix with controls or use just suffix if controls are disabled
+  const renderSuffix = () => {
+    if (!controls && !suffix) return undefined;
+    
+    if (!controls) return suffix;
+    
+    const controlsElement = (
+      <div className="ui-input-number-handler-wrap">
+        <span
+          className="ui-input-number-handler ui-input-number-handler-up"
+          onClick={() => handleStep('up')}
+          onMouseDown={(e) => e.preventDefault()}
+          tabIndex={0}
+          role="button"
+          aria-label="Increase value"
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              handleStep('up');
+            }
+          }}
+        >
+          <ChevronUp size={12} />
+        </span>
+        <span
+          className="ui-input-number-handler ui-input-number-handler-down"
+          onClick={() => handleStep('down')}
+          onMouseDown={(e) => e.preventDefault()}
+          tabIndex={0}
+          role="button"
+          aria-label="Decrease value"
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              handleStep('down');
+            }
+          }}
+        >
+          <ChevronDown size={12} />
+        </span>
+      </div>
+    );
+
+    if (suffix) {
+      return (
+        <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+          {suffix}
+          {controlsElement}
+        </div>
+      );
+    }
+
+    return controlsElement;
+  };
+
   return (
     <div className={classes} style={style}>
-      <input
+      <Input
         {...props}
         ref={inputRef}
-        className={inputClasses}
+        size={size}
+        variant={variant}
+        status={status}
+        disabled={disabled}
+        prefix={prefix}
+        suffix={renderSuffix()}
         type="text"
         value={currentDisplayValue}
-        disabled={disabled}
         onChange={handleChange}
         onBlur={handleBlur}
         onFocus={handleFocus}
         onKeyDown={handleKeyDown}
       />
-      {controls && (
-        <div className="ui-input-number-handler-wrap">
-          <span
-            className="ui-input-number-handler ui-input-number-handler-up"
-            onClick={() => handleStep('up')}
-            onMouseDown={(e) => e.preventDefault()}
-            tabIndex={0}
-            role="button"
-            aria-label="Increase value"
-            onKeyDown={(e) => {
-              if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                handleStep('up');
-              }
-            }}
-          >
-            <ChevronUp size={12} />
-          </span>
-          <span
-            className="ui-input-number-handler ui-input-number-handler-down"
-            onClick={() => handleStep('down')}
-            onMouseDown={(e) => e.preventDefault()}
-            tabIndex={0}
-            role="button"
-            aria-label="Decrease value"
-            onKeyDown={(e) => {
-              if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                handleStep('down');
-              }
-            }}
-          >
-            <ChevronDown size={12} />
-          </span>
-        </div>
-      )}
     </div>
   );
 });
