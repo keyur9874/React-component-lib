@@ -18,8 +18,6 @@ export interface InputNumberProps extends Omit<React.InputHTMLAttributes<HTMLInp
   controls?: boolean;
   keyboard?: boolean;
   stringMode?: boolean;
-  prefix?: React.ReactNode;
-  suffix?: React.ReactNode;
   onChange?: (value: number | null) => void;
   onStep?: (value: number, info: { offset: number; type: 'up' | 'down' }) => void;
   onPressEnter?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
@@ -41,8 +39,6 @@ export const InputNumber = forwardRef<HTMLInputElement, InputNumberProps>(({
   keyboard = true,
   stringMode = false,
   disabled = false,
-  prefix,
-  suffix,
   className = '',
   style,
   onChange,
@@ -239,7 +235,6 @@ export const InputNumber = forwardRef<HTMLInputElement, InputNumberProps>(({
         variant={variant}
         status={status}
         disabled={disabled}
-        prefix={prefix}
         suffix={renderSuffix()}
         type="text"
         value={currentDisplayValue}
