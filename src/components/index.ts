@@ -13,13 +13,16 @@ export { Badge } from './Badge/Badge';
 export type { BadgeProps } from './Badge/Badge';
 
 // Input
-export { Input, InputGroup, InputSearch, InputPassword, InputNumber, TextArea, FormItem } from './Input';
+export { Input, InputGroup, InputSearch, InputPassword, InputNumber, TextArea } from './Input';
 export type { 
   InputProps, 
   InputGroupProps, 
   InputSearchProps, 
   InputPasswordProps, 
   InputNumberProps, 
-  TextAreaProps, 
-  FormItemProps 
+  TextAreaProps
 } from './Input';
+
+// Form
+export { FormItem } from './Form';
+export type { FormItemProps } from './Form';

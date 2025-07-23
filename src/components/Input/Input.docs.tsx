@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Input, InputGroup, InputSearch, InputPassword, InputNumber, TextArea, FormItem } from './index';
+import { Input, InputGroup, InputSearch, InputPassword, InputNumber, TextArea } from './index';
+import { FormItem } from '../Form';
 import { Button } from '../Button/Button';
 import { User, Lock, Mail, Phone, Search, Settings, Globe, CreditCard } from 'lucide-react';
 

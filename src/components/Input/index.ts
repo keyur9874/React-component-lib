@@ -15,6 +15,3 @@ export type { InputNumberProps } from './InputNumber';
 
 export { TextArea } from './TextArea';
 export type { TextAreaProps } from './TextArea';
-
-export { FormItem } from './FormItem';
-export type { FormItemProps } from './FormItem';
