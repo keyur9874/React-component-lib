@@ -1,5 +1,6 @@
 import React, { forwardRef, useState, useRef, useImperativeHandle } from 'react';
 import { ChevronUp, ChevronDown } from 'lucide-react';
+import { Input, InputProps } from './Input';
 import './Input.css';
 
 export interface InputNumberProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size' | 'onChange' | 'value' | 'defaultValue' | 'type'> {
