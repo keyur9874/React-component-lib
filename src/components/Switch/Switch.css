@@ -1,0 +1,311 @@
+/* Switch Component Styles */
+.ui-switch {
+  position: relative;
+  display: inline-block;
+  box-sizing: border-box;
+  min-width: 44px;
+  height: 22px;
+  line-height: 20px;
+  vertical-align: middle;
+  background-color: rgba(0, 0, 0, 0.25);
+  border: 1px solid transparent;
+  border-radius: 100px;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+  user-select: none;
+  outline: none;
+}
+
+.ui-switch:focus-visible {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
+/* Switch Handle */
+.ui-switch-handle {
+  position: absolute;
+  top: 1px;
+  left: 1px;
+  width: 18px;
+  height: 18px;
+  background-color: var(--bg-color);
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: all 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ui-switch-handle::before {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: var(--bg-color);
+  border-radius: 50%;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+  transition: all 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+  content: '';
+}
+
+/* Switch Inner Content */
+.ui-switch-inner {
+  display: block;
+  margin: 0 7px 0 25px;
+  color: var(--text-inverse);
+  font-size: 12px;
+  transition: margin 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+  pointer-events: none;
+  line-height: 20px;
+  font-weight: 500;
+}
+
+/* Checked State */
+.ui-switch--checked {
+  background-color: var(--primary-color);
+}
+
+.ui-switch--checked .ui-switch-handle {
+  left: calc(100% - 19px);
+}
+
+.ui-switch--checked .ui-switch-inner {
+  margin: 0 25px 0 7px;
+}
+
+/* Loading State */
+.ui-switch--loading {
+  cursor: default;
+  opacity: 0.65;
+}
+
+.ui-switch--loading .ui-switch-handle::after {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 18px;
+  height: 18px;
+  border: 2px solid transparent;
+  border-top: 2px solid var(--primary-color);
+  border-radius: 50%;
+  animation: ui-switch-loading-spin 1s linear infinite;
+  content: '';
+}
+
+@keyframes ui-switch-loading-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Disabled State */
+.ui-switch--disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.ui-switch--disabled .ui-switch-handle {
+  cursor: not-allowed;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.ui-switch--disabled .ui-switch-handle::before {
+  background-color: var(--bg-secondary);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Sizes */
+.ui-switch--small {
+  min-width: 28px;
+  height: 16px;
+  line-height: 14px;
+}
+
+.ui-switch--small .ui-switch-handle {
+  width: 12px;
+  height: 12px;
+  top: 1px;
+}
+
+.ui-switch--small .ui-switch-handle::after {
+  width: 12px;
+  height: 12px;
+}
+
+.ui-switch--small.ui-switch--checked .ui-switch-handle {
+  left: calc(100% - 13px);
+}
+
+.ui-switch--small .ui-switch-inner {
+  margin: 0 5px 0 17px;
+  font-size: 10px;
+  line-height: 14px;
+}
+
+.ui-switch--small.ui-switch--checked .ui-switch-inner {
+  margin: 0 17px 0 5px;
+}
+
+.ui-switch--large {
+  min-width: 56px;
+  height: 28px;
+  line-height: 26px;
+}
+
+.ui-switch--large .ui-switch-handle {
+  width: 24px;
+  height: 24px;
+  top: 1px;
+}
+
+.ui-switch--large .ui-switch-handle::after {
+  width: 24px;
+  height: 24px;
+}
+
+.ui-switch--large.ui-switch--checked .ui-switch-handle {
+  left: calc(100% - 25px);
+}
+
+.ui-switch--large .ui-switch-inner {
+  margin: 0 9px 0 31px;
+  font-size: 14px;
+  line-height: 26px;
+}
+
+.ui-switch--large.ui-switch--checked .ui-switch-inner {
+  margin: 0 31px 0 9px;
+}
+
+/* Color Variants */
+.ui-switch--success {
+  background-color: rgba(82, 196, 26, 0.25);
+}
+
+.ui-switch--success.ui-switch--checked {
+  background-color: var(--success-color);
+}
+
+.ui-switch--warning {
+  background-color: rgba(250, 173, 20, 0.25);
+}
+
+.ui-switch--warning.ui-switch--checked {
+  background-color: var(--warning-color);
+}
+
+.ui-switch--danger {
+  background-color: rgba(255, 77, 79, 0.25);
+}
+
+.ui-switch--danger.ui-switch--checked {
+  background-color: var(--danger-color);
+}
+
+.ui-switch--info {
+  background-color: rgba(24, 144, 255, 0.25);
+}
+
+.ui-switch--info.ui-switch--checked {
+  background-color: var(--info-color);
+}
+
+/* Hidden Input */
+.ui-switch-input {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+  cursor: pointer;
+  opacity: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.ui-switch-input:disabled {
+  cursor: not-allowed;
+}
+
+/* Dark Theme Adjustments */
+[data-theme="dark"] .ui-switch {
+  background-color: rgba(255, 255, 255, 0.25);
+}
+
+[data-theme="dark"] .ui-switch--disabled {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="dark"] .ui-switch--disabled .ui-switch-handle::before {
+  background-color: var(--bg-hover);
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+  .ui-switch {
+    border: 2px solid var(--border-color);
+  }
+  
+  .ui-switch--checked {
+    border-color: var(--primary-color);
+  }
+  
+  .ui-switch-handle::before {
+    border: 1px solid var(--border-color);
+  }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .ui-switch,
+  .ui-switch-handle,
+  .ui-switch-handle::before,
+  .ui-switch-inner {
+    transition: none;
+  }
+  
+  .ui-switch-handle::after {
+    animation: none;
+  }
+}
+
+/* Hover Effects */
+.ui-switch:hover:not(.ui-switch--disabled):not(.ui-switch--loading) {
+  box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.1);
+}
+
+.ui-switch:hover:not(.ui-switch--disabled):not(.ui-switch--loading) .ui-switch-handle::before {
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+/* Active State */
+.ui-switch:active:not(.ui-switch--disabled):not(.ui-switch--loading) .ui-switch-handle {
+  width: 22px;
+}
+
+.ui-switch--small:active:not(.ui-switch--disabled):not(.ui-switch--loading) .ui-switch-handle {
+  width: 16px;
+}
+
+.ui-switch--large:active:not(.ui-switch--disabled):not(.ui-switch--loading) .ui-switch-handle {
+  width: 28px;
+}
+
+.ui-switch--checked:active:not(.ui-switch--disabled):not(.ui-switch--loading) .ui-switch-handle {
+  left: calc(100% - 23px);
+}
+
+.ui-switch--small.ui-switch--checked:active:not(.ui-switch--disabled):not(.ui-switch--loading) .ui-switch-handle {
+  left: calc(100% - 17px);
+}
+
+.ui-switch--large.ui-switch--checked:active:not(.ui-switch--disabled):not(.ui-switch--loading) .ui-switch-handle {
+  left: calc(100% - 29px);
+}

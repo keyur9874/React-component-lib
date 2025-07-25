@@ -5,8 +5,9 @@ import { ButtonDocs } from './components/Button/Button.docs';
 import { AvatarDocs } from './components/Avatar/Avatar.docs';
 import { BadgeDocs } from './components/Badge/Badge.docs';
 import { InputDocs } from './components/Input/Input.docs';
+import { SwitchDocs } from './components/Switch/Switch.docs';
 
-type ActiveComponent = 'button' | 'avatar' | 'badge' | 'input';
+type ActiveComponent = 'button' | 'avatar' | 'badge' | 'input' | 'switch';
 
 function App() {
   const [activeComponent, setActiveComponent] = useState<ActiveComponent>('button');
@@ -16,6 +17,7 @@ function App() {
     { id: 'avatar' as const, label: 'Avatar', component: AvatarDocs },
     { id: 'badge' as const, label: 'Badge', component: BadgeDocs },
     { id: 'input' as const, label: 'Input', component: InputDocs },
+    { id: 'switch' as const, label: 'Switch', component: SwitchDocs },
   ];
 
   const ActiveComponentDoc = components.find(comp => comp.id === activeComponent)?.component || ButtonDocs;
