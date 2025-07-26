@@ -100,10 +100,6 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>(({
     .filter(Boolean)
     .join(' ');
 
-  // Determine inner content
-  const checkedContent = checkedChildren;
-  const uncheckedContent = unCheckedChildren;
-
   return (
     <button
       type="button"
@@ -132,29 +128,27 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>(({
         tabIndex={-1}
         aria-hidden="true"
       />
+      
+      {/* Switch Handle */}
       <span className="ui-switch-handle" />
-      {(checkedContent || uncheckedContent) && (
-        <span className="ui-switch-inner">
-          <span 
-            style={{ 
-              opacity: currentChecked ? 1 : 0,
-              transform: currentChecked ? 'translateX(0)' : 'translateX(-10px)',
-              transition: 'all 0.2s ease'
-            }}
-          >
-            {checkedContent}
-          </span>
-          <span 
-            style={{ 
-              opacity: !currentChecked ? 1 : 0,
-              transform: !currentChecked ? 'translateX(0)' : 'translateX(10px)',
-              transition: 'all 0.2s ease',
-              position: 'absolute'
-            }}
-          >
-            {uncheckedContent}
-          </span>
-        </span>
+      
+      {/* Switch Inner Content */}
+      {(checkedChildren || unCheckedChildren) && (
+        <div className="ui-switch-inner">
+          {/* Checked Content */}
+          {checkedChildren && (
+            <div className="ui-switch-checked-content">
+              {checkedChildren}
+            </div>
+          )}
+          
+          {/* Unchecked Content */}
+          {unCheckedChildren && (
+            <div className="ui-switch-unchecked-content">
+              {unCheckedChildren}
+            </div>
+          )}
+        </div>
       )}
     </button>
   );
