@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { ThemeProvider } from "./theme/ThemeProvider";
 import { ThemeToggle } from "./components/ThemeToggle/ThemeToggle";
-import { BadgeDocs } from "./components/Badge/Badge.docs";
 import { SwitchDocs } from "./components/Switch/Switch.docs";
 
 type ActiveComponent = "button" | "avatar" | "badge" | "input" | "switch";
@@ -11,7 +10,6 @@ function App() {
     useState<ActiveComponent>("switch");
 
   const components = [
-    { id: "badge" as const, label: "Badge", component: BadgeDocs },
     { id: "switch" as const, label: "Switch", component: SwitchDocs },
   ];
 
