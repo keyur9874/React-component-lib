@@ -53,13 +53,24 @@
 /* Switch Inner Content */
 .ui-switch-inner {
   display: block;
-  margin: 0 7px 0 25px;
+  margin: 0 6px 0 24px;
   color: var(--text-inverse);
   font-size: 12px;
-  transition: margin 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+  transition: all 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
   pointer-events: none;
   line-height: 20px;
   font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 /* Checked State */
@@ -72,7 +83,7 @@
 }
 
 .ui-switch--checked .ui-switch-inner {
-  margin: 0 25px 0 7px;
+  margin: 0 24px 0 6px;
 }
 
 /* Loading State */
@@ -143,13 +154,13 @@
 }
 
 .ui-switch--small .ui-switch-inner {
-  margin: 0 5px 0 17px;
+  margin: 0 4px 0 16px;
   font-size: 10px;
   line-height: 14px;
 }
 
 .ui-switch--small.ui-switch--checked .ui-switch-inner {
-  margin: 0 17px 0 5px;
+  margin: 0 16px 0 4px;
 }
 
 .ui-switch--large {
@@ -174,13 +185,13 @@
 }
 
 .ui-switch--large .ui-switch-inner {
-  margin: 0 9px 0 31px;
+  margin: 0 8px 0 30px;
   font-size: 14px;
   line-height: 26px;
 }
 
 .ui-switch--large.ui-switch--checked .ui-switch-inner {
-  margin: 0 31px 0 9px;
+  margin: 0 30px 0 8px;
 }
 
 /* Color Variants */
@@ -278,16 +289,18 @@
 
 /* Hover Effects */
 .ui-switch:hover:not(.ui-switch--disabled):not(.ui-switch--loading) {
-  box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.1);
+  box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.15);
+  transform: scale(1.02);
 }
 
 .ui-switch:hover:not(.ui-switch--disabled):not(.ui-switch--loading) .ui-switch-handle::before {
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
 /* Active State */
 .ui-switch:active:not(.ui-switch--disabled):not(.ui-switch--loading) .ui-switch-handle {
   width: 22px;
+  transition: width 0.1s ease;
 }
 
 .ui-switch--small:active:not(.ui-switch--disabled):not(.ui-switch--loading) .ui-switch-handle {
@@ -308,4 +321,49 @@
 
 .ui-switch--large.ui-switch--checked:active:not(.ui-switch--disabled):not(.ui-switch--loading) .ui-switch-handle {
   left: calc(100% - 29px);
+}
+/* Improved visual feedback */
+.ui-switch {
+  position: relative;
+  overflow: hidden;
+}
+
+.ui-switch::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.ui-switch:hover::before {
+  opacity: 1;
+}
+
+/* Better handle styling */
+.ui-switch-handle {
+  background: linear-gradient(135deg, var(--bg-color) 0%, #f8f9fa 100%);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.ui-switch-handle::before {
+  background: linear-gradient(135deg, var(--bg-color) 0%, #f8f9fa 100%);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+/* Dark theme handle adjustments */
+[data-theme="dark"] .ui-switch-handle {
+  background: linear-gradient(135deg, var(--bg-color) 0%, #2a2a2a 100%);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="dark"] .ui-switch-handle::before {
+  background: linear-gradient(135deg, var(--bg-color) 0%, #2a2a2a 100%);
+  border-color: rgba(255, 255, 255, 0.05);
 }
