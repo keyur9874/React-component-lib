@@ -1,26 +1,23 @@
-import React, { useState } from 'react';
-import { ThemeProvider } from './theme/ThemeProvider';
-import { ThemeToggle } from './components/ThemeToggle/ThemeToggle';
-import { ButtonDocs } from './components/Button/Button.docs';
-import { AvatarDocs } from './components/Avatar/Avatar.docs';
-import { BadgeDocs } from './components/Badge/Badge.docs';
-import { InputDocs } from './components/Input/Input.docs';
-import { SwitchDocs } from './components/Switch/Switch.docs';
+import React, { useState } from "react";
+import { ThemeProvider } from "./theme/ThemeProvider";
+import { ThemeToggle } from "./components/ThemeToggle/ThemeToggle";
+import { BadgeDocs } from "./components/Badge/Badge.docs";
+import { SwitchDocs } from "./components/Switch/Switch.docs";
 
-type ActiveComponent = 'button' | 'avatar' | 'badge' | 'input' | 'switch';
+type ActiveComponent = "button" | "avatar" | "badge" | "input" | "switch";
 
 function App() {
-  const [activeComponent, setActiveComponent] = useState<ActiveComponent>('button');
+  const [activeComponent, setActiveComponent] =
+    useState<ActiveComponent>("switch");
 
   const components = [
-    { id: 'button' as const, label: 'Button', component: ButtonDocs },
-    { id: 'avatar' as const, label: 'Avatar', component: AvatarDocs },
-    { id: 'badge' as const, label: 'Badge', component: BadgeDocs },
-    { id: 'input' as const, label: 'Input', component: InputDocs },
-    { id: 'switch' as const, label: 'Switch', component: SwitchDocs },
+    { id: "badge" as const, label: "Badge", component: BadgeDocs },
+    { id: "switch" as const, label: "Switch", component: SwitchDocs },
   ];
 
-  const ActiveComponentDoc = components.find(comp => comp.id === activeComponent)?.component || ButtonDocs;
+  const ActiveComponentDoc =
+    components.find((comp) => comp.id === activeComponent)?.component ||
+    SwitchDocs;
 
   return (
     <ThemeProvider>
@@ -34,15 +31,17 @@ function App() {
             </div>
             <ThemeToggle />
           </div>
-          
+
           <nav className="sidebar-nav">
             <div className="nav-section">
               <div className="nav-section-title">General</div>
-              {components.map(component => (
+              {components.map((component) => (
                 <a
                   key={component.id}
                   href="#"
-                  className={`nav-item ${activeComponent === component.id ? 'active' : ''}`}
+                  className={`nav-item ${
+                    activeComponent === component.id ? "active" : ""
+                  }`}
                   onClick={(e) => {
                     e.preventDefault();
                     setActiveComponent(component.id);
