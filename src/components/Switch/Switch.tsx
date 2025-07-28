@@ -11,7 +11,7 @@ export interface SwitchProps extends Omit<React.InputHTMLAttributes<HTMLInputEle
   checkedChildren?: React.ReactNode;
   unCheckedChildren?: React.ReactNode;
   onChange?: (checked: boolean, event: React.ChangeEvent<HTMLInputElement>) => void;
-  onClick?: (checked: boolean, event: React.MouseEvent<HTMLButtonElement>) => void;
+  onClick?: (checked: boolean, event: React.MouseEvent<HTMLElement>) => void;
   className?: string;
   style?: React.CSSProperties;
   autoFocus?: boolean;
@@ -61,7 +61,7 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>(({
     onChange?.(newChecked, event);
   };
 
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     if (disabled || loading) {
       event.preventDefault();
       return;
@@ -73,17 +73,19 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>(({
     onClick?.(currentChecked, event);
   };
 
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLButtonElement>) => {
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLElement>) => {
     if (event.key === ' ' || event.key === 'Enter') {
       event.preventDefault();
       if (!disabled && !loading) {
-        // Trigger the input change
-        const inputEvent = {
+        // Simulate input change
+        const syntheticEvent = {
           target: { checked: !currentChecked },
           currentTarget: { checked: !currentChecked },
+          preventDefault: () => {},
+          stopPropagation: () => {},
         } as React.ChangeEvent<HTMLInputElement>;
         
-        handleChange(inputEvent);
+        handleChange(syntheticEvent);
       }
     }
   };
@@ -99,6 +101,9 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>(({
   const classes = [baseClass, sizeClass, variantClass, checkedClass, disabledClass, loadingClass, className]
     .filter(Boolean)
     .join(' ');
+
+  // Determine which content to show
+  const displayContent = currentChecked ? checkedChildren : unCheckedChildren;
 
   return (
     <button
@@ -129,26 +134,11 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>(({
         aria-hidden="true"
       />
       
-      {/* Switch Handle */}
-      <span className="ui-switch-handle" />
-      
       {/* Switch Inner Content */}
       {(checkedChildren || unCheckedChildren) && (
-        <div className="ui-switch-inner">
-          {/* Checked Content */}
-          {checkedChildren && (
-            <div className="ui-switch-checked-content">
-              {checkedChildren}
-            </div>
-          )}
-          
-          {/* Unchecked Content */}
-          {unCheckedChildren && (
-            <div className="ui-switch-unchecked-content">
-              {unCheckedChildren}
-            </div>
-          )}
-        </div>
+        <span className="ui-switch-inner">
+          {displayContent}
+        </span>
       )}
     </button>
   );
