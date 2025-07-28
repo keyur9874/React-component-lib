@@ -192,20 +192,59 @@
 
 /* Dark Theme Adjustments */
 [data-theme="dark"] .ui-switch {
-  background-color: rgba(255, 255, 255, 0.15);
+  background-color: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
 }
 
 [data-theme="dark"] .ui-switch::after {
-  background-color: #141414;
-  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.4);
+  background-color: #f0f0f0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25), 0 1px 3px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 [data-theme="dark"] .ui-switch--disabled {
-  background-color: rgba(255, 255, 255, 0.05);
+  background-color: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.06);
 }
 
 [data-theme="dark"] .ui-switch--disabled::after {
-  background-color: #333;
+  background-color: #666;
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme="dark"] .ui-switch-inner {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* Dark theme checked states with better contrast */
+[data-theme="dark"] .ui-switch--checked {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.1);
+}
+
+[data-theme="dark"] .ui-switch--success.ui-switch--checked {
+  background-color: var(--success-color);
+  border-color: var(--success-color);
+  box-shadow: 0 0 0 2px rgba(82, 196, 26, 0.1);
+}
+
+[data-theme="dark"] .ui-switch--warning.ui-switch--checked {
+  background-color: var(--warning-color);
+  border-color: var(--warning-color);
+  box-shadow: 0 0 0 2px rgba(250, 173, 20, 0.1);
+}
+
+[data-theme="dark"] .ui-switch--danger.ui-switch--checked {
+  background-color: var(--danger-color);
+  border-color: var(--danger-color);
+  box-shadow: 0 0 0 2px rgba(255, 77, 79, 0.1);
+}
+
+[data-theme="dark"] .ui-switch--info.ui-switch--checked {
+  background-color: var(--info-color);
+  border-color: var(--info-color);
+  box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.1);
 }
 
 /* Hover Effects */
@@ -213,24 +252,65 @@
   background-color: rgba(0, 0, 0, 0.35);
 }
 
+[data-theme="dark"] .ui-switch:hover:not(.ui-switch--disabled):not(.ui-switch--loading) {
+  background-color: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.18);
+}
+
 .ui-switch--checked:hover:not(.ui-switch--disabled):not(.ui-switch--loading) {
   background-color: var(--primary-hover);
+}
+
+[data-theme="dark"] .ui-switch--checked:hover:not(.ui-switch--disabled):not(.ui-switch--loading) {
+  background-color: var(--primary-hover);
+  box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.15);
 }
 
 .ui-switch--success.ui-switch--checked:hover:not(.ui-switch--disabled):not(.ui-switch--loading) {
   background-color: var(--success-hover);
 }
 
+[data-theme="dark"] .ui-switch--success.ui-switch--checked:hover:not(.ui-switch--disabled):not(.ui-switch--loading) {
+  background-color: var(--success-hover);
+  box-shadow: 0 0 0 2px rgba(82, 196, 26, 0.15);
+}
+
 .ui-switch--warning.ui-switch--checked:hover:not(.ui-switch--disabled):not(.ui-switch--loading) {
   background-color: var(--warning-hover);
+}
+
+[data-theme="dark"] .ui-switch--warning.ui-switch--checked:hover:not(.ui-switch--disabled):not(.ui-switch--loading) {
+  background-color: var(--warning-hover);
+  box-shadow: 0 0 0 2px rgba(250, 173, 20, 0.15);
 }
 
 .ui-switch--danger.ui-switch--checked:hover:not(.ui-switch--disabled):not(.ui-switch--loading) {
   background-color: var(--danger-hover);
 }
 
+[data-theme="dark"] .ui-switch--danger.ui-switch--checked:hover:not(.ui-switch--disabled):not(.ui-switch--loading) {
+  background-color: var(--danger-hover);
+  box-shadow: 0 0 0 2px rgba(255, 77, 79, 0.15);
+}
+
 .ui-switch--info.ui-switch--checked:hover:not(.ui-switch--disabled):not(.ui-switch--loading) {
   background-color: var(--info-hover);
+}
+
+[data-theme="dark"] .ui-switch--info.ui-switch--checked:hover:not(.ui-switch--disabled):not(.ui-switch--loading) {
+  background-color: var(--info-hover);
+  box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.15);
+}
+
+/* Focus states for dark theme */
+[data-theme="dark"] .ui-switch:focus-visible {
+  outline: 4px solid rgba(24, 144, 255, 0.15);
+  outline-offset: 1px;
+}
+
+/* Loading state improvements for dark theme */
+[data-theme="dark"] .ui-switch--loading::after {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none'%3e%3cpath d='M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83' stroke='%23999' stroke-width='2' stroke-linecap='round'/%3e%3c/svg%3e");
 }
 
 /* Active State */
