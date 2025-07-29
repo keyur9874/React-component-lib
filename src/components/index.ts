@@ -30,3 +30,6 @@ export type { FormItemProps } from './Form';
 // Switch
 export { Switch } from './Switch';
 export type { SwitchProps } from './Switch';
+// Dropdown
+export { Dropdown } from './Dropdown';
+export type { DropdownProps, DropdownOption, DropdownRef } from './Dropdown';
