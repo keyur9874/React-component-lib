@@ -461,6 +461,9 @@ export const Dropdown = forwardRef<DropdownRef, DropdownProps>(({
           iconPosition="start"
           onClick={() => handleSelect(option)}
           onMouseEnter={() => setFocusedIndex(currentIndex)}
+          role="option"
+          aria-selected={isSelected}
+          tabIndex={-1}
           style={{ 
             width: '100%', 
             justifyContent: 'flex-start',
@@ -520,6 +523,9 @@ export const Dropdown = forwardRef<DropdownRef, DropdownProps>(({
             iconPosition="start"
             onClick={() => handleSelect(option)}
             onMouseEnter={() => setFocusedIndex(currentIndex)}
+            role="option"
+            aria-selected={isSelected}
+            tabIndex={-1}
             style={{ 
               width: '100%', 
               justifyContent: 'flex-start',
@@ -582,6 +588,11 @@ export const Dropdown = forwardRef<DropdownRef, DropdownProps>(({
         iconPosition="end"
         onClick={trigger === 'click' ? handleToggle : triggerButtonProps.onClick}
         onKeyDown={handleKeyDown}
+        aria-haspopup="listbox"
+        aria-expanded={isOpen}
+        aria-label={ariaLabel}
+        aria-labelledby={ariaLabelledBy}
+        aria-describedby={ariaDescribedBy}
         style={{
           width: '100%',
           justifyContent: 'space-between',
