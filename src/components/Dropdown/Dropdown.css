@@ -295,7 +295,7 @@
   height: 14px;
   border: 1px solid var(--border-color);
   border-radius: 2px;
-  background: var(--bg-color);
+  background: transparent;
   transition: all 0.2s ease;
 }
 
@@ -311,7 +311,7 @@
   top: 1px;
   width: 4px;
   height: 8px;
-  border: solid white;
+  border: solid var(--text-inverse);
   border-width: 0 2px 2px 0;
   transform: rotate(45deg);
 }
@@ -328,13 +328,18 @@
   display: inline-flex;
   align-items: center;
   padding: 2px 6px;
-  background: var(--bg-secondary);
-  border: 1px solid var(--border-light);
+  background: transparent;
+  border: 1px solid var(--border-color);
   border-radius: 4px;
   font-size: 12px;
   color: var(--text-color);
   gap: 4px;
   max-width: 120px;
+  transition: all 0.2s ease;
+}
+
+.ui-dropdown__tag:hover {
+  border-color: var(--border-hover);
 }
 
 .ui-dropdown__tag-text {
@@ -353,7 +358,7 @@
 }
 
 .ui-dropdown__tag-close:hover {
-  color: var(--text-color);
+  color: var(--danger-color);
 }
 
 /* Dark Theme Adjustments */

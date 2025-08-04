@@ -435,7 +435,7 @@ export const Dropdown = forwardRef<DropdownRef, DropdownProps>(({
       const itemClasses = [
         'ui-dropdown__item',
         multiple && 'ui-dropdown__item--multi',
-        isSelected && 'ui-dropdown__item--selected',
+        isSelected && !multiple && 'ui-dropdown__item--selected',
         option.disabled && 'ui-dropdown__item--disabled',
         option.danger && 'ui-dropdown__item--danger'
       ].filter(Boolean).join(' ');
@@ -484,7 +484,7 @@ export const Dropdown = forwardRef<DropdownRef, DropdownProps>(({
         const itemClasses = [
           'ui-dropdown__item',
           multiple && 'ui-dropdown__item--multi',
-          isSelected && 'ui-dropdown__item--selected',
+          isSelected && !multiple && 'ui-dropdown__item--selected',
           option.disabled && 'ui-dropdown__item--disabled',
           option.danger && 'ui-dropdown__item--danger'
         ].filter(Boolean).join(' ');
