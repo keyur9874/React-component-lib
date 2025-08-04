@@ -188,7 +188,7 @@ export const Dropdown = forwardRef<DropdownRef, DropdownProps>(({
 
     const selectedOption = options.find(opt => opt.value === currentValue);
     return selectedOption ? selectedOption.label : placeholder;
-  }, [currentValue, options, placeholder, loading, multiple, maxTagCount, maxTagTextLength]);
+  }, [currentValue, options, placeholder, loading, multiple, maxTagCount, maxTagTextLength, handleRemoveValue]);
 
   // Handle value selection
   const handleSelect = useCallback((option: DropdownOption) => {
@@ -255,7 +255,8 @@ export const Dropdown = forwardRef<DropdownRef, DropdownProps>(({
       setInternalValue(newValue);
     }
 
-    onChange?.(newValue, multiple ? [] : undefined);
+    const selectedOptions = multiple ? [] : undefined;
+    onChange?.(newValue, selectedOptions);
     onClear?.();
   }, [multiple, isControlled, onChange, onClear]);
 
@@ -423,6 +424,7 @@ export const Dropdown = forwardRef<DropdownRef, DropdownProps>(({
   const renderOptions = () => {
     const { groups, ungrouped } = groupedOptions;
     const items: React.ReactNode[] = [];
+    let currentIndex = 0;
 
     // Render ungrouped options first
     ungrouped.forEach((option, index) => {
@@ -430,7 +432,7 @@ export const Dropdown = forwardRef<DropdownRef, DropdownProps>(({
         ? Array.isArray(currentValue) && currentValue.includes(option.value)
         : currentValue === option.value;
       
-      const isFocused = index === focusedIndex;
+      const isFocused = currentIndex === focusedIndex;
 
       const itemClasses = [
         'ui-dropdown__item',
@@ -443,11 +445,11 @@ export const Dropdown = forwardRef<DropdownRef, DropdownProps>(({
       items.push(
         <button
           key={option.key}
-          ref={el => itemRefs.current[index] = el}
+          ref={el => itemRefs.current[currentIndex] = el}
           className={itemClasses}
           disabled={option.disabled}
           onClick={() => handleSelect(option)}
-          onMouseEnter={() => setFocusedIndex(index)}
+          onMouseEnter={() => setFocusedIndex(currentIndex)}
           role="option"
           aria-selected={isSelected}
           tabIndex={-1}
@@ -459,6 +461,7 @@ export const Dropdown = forwardRef<DropdownRef, DropdownProps>(({
           <span className="ui-dropdown__item-label">{option.label}</span>
         </button>
       );
+      currentIndex++;
     });
 
     // Render grouped options
@@ -474,12 +477,11 @@ export const Dropdown = forwardRef<DropdownRef, DropdownProps>(({
       );
 
       groupOptions.forEach((option, groupIndex) => {
-        const globalIndex = ungrouped.length + groupIndex + Object.keys(groups).indexOf(groupName) * 100;
         const isSelected = multiple 
           ? Array.isArray(currentValue) && currentValue.includes(option.value)
           : currentValue === option.value;
         
-        const isFocused = globalIndex === focusedIndex;
+        const isFocused = currentIndex === focusedIndex;
 
         const itemClasses = [
           'ui-dropdown__item',
@@ -492,11 +494,11 @@ export const Dropdown = forwardRef<DropdownRef, DropdownProps>(({
         items.push(
           <button
             key={option.key}
-            ref={el => itemRefs.current[globalIndex] = el}
+            ref={el => itemRefs.current[currentIndex] = el}
             className={itemClasses}
             disabled={option.disabled}
             onClick={() => handleSelect(option)}
-            onMouseEnter={() => setFocusedIndex(globalIndex)}
+            onMouseEnter={() => setFocusedIndex(currentIndex)}
             role="option"
             aria-selected={isSelected}
             tabIndex={-1}
@@ -508,6 +510,7 @@ export const Dropdown = forwardRef<DropdownRef, DropdownProps>(({
             <span className="ui-dropdown__item-label">{option.label}</span>
           </button>
         );
+        currentIndex++;
       });
     });
 
