@@ -8,6 +8,7 @@ import React, {
   useMemo
 } from 'react';
 import { ChevronDown, Search, X } from 'lucide-react';
+import { Button, ButtonProps } from './Button'; // Import your Button component
 import './Dropdown.css';
 
 export interface DropdownOption {
@@ -51,6 +52,8 @@ export interface DropdownProps {
   'aria-label'?: string;
   'aria-labelledby'?: string;
   'aria-describedby'?: string;
+  // Button-specific props for the trigger
+  triggerButtonProps?: Partial<ButtonProps>;
 }
 
 export interface DropdownRef {
@@ -91,11 +94,12 @@ export const Dropdown = forwardRef<DropdownRef, DropdownProps>(({
   'aria-label': ariaLabel,
   'aria-labelledby': ariaLabelledBy,
   'aria-describedby': ariaDescribedBy,
+  triggerButtonProps = {},
 }, ref) => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchValue, setSearchValue] = useState('');
   const [focusedIndex, setFocusedIndex] = useState(-1);
-  const [internalValue, setInternalValue] = useState(multiple ? [] : defaultValue);
+  const [internalValue, setInternalValue] = useState<any>(multiple ? [] : defaultValue);
 
   const triggerRef = useRef<HTMLButtonElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
@@ -138,6 +142,28 @@ export const Dropdown = forwardRef<DropdownRef, DropdownProps>(({
     return { groups, ungrouped };
   }, [filteredOptions]);
 
+  // Handle remove value (for multiple) - moved before getDisplayValue
+  const handleRemoveValue = useCallback((valueToRemove: any) => {
+    if (!multiple) return;
+
+    const values = Array.isArray(currentValue) ? [...currentValue] : [];
+    const index = values.indexOf(valueToRemove);
+    
+    if (index > -1) {
+      values.splice(index, 1);
+      
+      if (!isControlled) {
+        setInternalValue(values);
+      }
+
+      const selectedOptions = values.map(val => 
+        options.find(opt => opt.value === val)
+      ).filter((opt): opt is DropdownOption => opt !== undefined);
+
+      onChange?.(values, selectedOptions);
+    }
+  }, [currentValue, multiple, isControlled, onChange, options]);
+
   // Get display value
   const getDisplayValue = useCallback(() => {
     if (loading) {
@@ -155,7 +181,7 @@ export const Dropdown = forwardRef<DropdownRef, DropdownProps>(({
 
       const selectedOptions = values.map(val => 
         options.find(opt => opt.value === val)
-      ).filter(Boolean) as DropdownOption[];
+      ).filter((opt): opt is DropdownOption => opt !== undefined);
 
       if (selectedOptions.length <= maxTagCount) {
         return (
@@ -210,7 +236,7 @@ export const Dropdown = forwardRef<DropdownRef, DropdownProps>(({
 
       const selectedOptions = values.map(val => 
         options.find(opt => opt.value === val)
-      ).filter(Boolean) as DropdownOption[];
+      ).filter((opt): opt is DropdownOption => opt !== undefined);
 
       onChange?.(values, selectedOptions);
       onSelect?.(option.value, option);
@@ -225,29 +251,7 @@ export const Dropdown = forwardRef<DropdownRef, DropdownProps>(({
     }
   }, [currentValue, multiple, isControlled, onChange, onSelect, options]);
 
-  // Handle remove value (for multiple)
-  const handleRemoveValue = useCallback((valueToRemove: any) => {
-    if (!multiple) return;
-
-    const values = Array.isArray(currentValue) ? [...currentValue] : [];
-    const index = values.indexOf(valueToRemove);
-    
-    if (index > -1) {
-      values.splice(index, 1);
-      
-      if (!isControlled) {
-        setInternalValue(values);
-      }
-
-      const selectedOptions = values.map(val => 
-        options.find(opt => opt.value === val)
-      ).filter(Boolean) as DropdownOption[];
-
-      onChange?.(values, selectedOptions);
-    }
-  }, [currentValue, multiple, isControlled, onChange, options]);
-
-  // Handle clear
+  // Handle clear - Fixed the type error
   const handleClear = useCallback(() => {
     const newValue = multiple ? [] : undefined;
     
@@ -255,10 +259,18 @@ export const Dropdown = forwardRef<DropdownRef, DropdownProps>(({
       setInternalValue(newValue);
     }
 
-    const selectedOptions = multiple ? [] : undefined;
-    onChange?.(newValue, selectedOptions);
+    // Fix: Properly type the selectedOptions for the onChange callback
+    if (multiple) {
+      const selectedOptions: DropdownOption[] = [];
+      onChange?.(newValue, selectedOptions);
+    } else {
+      // For single select, find the option that matches undefined (which should be none)
+      const selectedOption = options.find(opt => opt.value === undefined);
+      onChange?.(newValue, selectedOption || options[0]); // Fallback to first option if needed
+    }
+    
     onClear?.();
-  }, [multiple, isControlled, onChange, onClear]);
+  }, [multiple, isControlled, onChange, onClear, options]);
 
   // Handle dropdown toggle
   const handleToggle = useCallback(() => {
@@ -405,13 +417,6 @@ export const Dropdown = forwardRef<DropdownRef, DropdownProps>(({
   const sizeClass = `ui-dropdown--${size}`;
   const classes = [baseClass, sizeClass, className].filter(Boolean).join(' ');
 
-  const triggerClasses = [
-    'ui-dropdown__trigger',
-    disabled && 'ui-dropdown__trigger--disabled',
-    loading && 'ui-dropdown__trigger--loading',
-    isOpen && 'ui-dropdown__trigger--open'
-  ].filter(Boolean).join(' ');
-
   const contentClasses = [
     'ui-dropdown__content',
     isOpen && 'ui-dropdown__content--open',
@@ -427,7 +432,7 @@ export const Dropdown = forwardRef<DropdownRef, DropdownProps>(({
     let currentIndex = 0;
 
     // Render ungrouped options first
-    ungrouped.forEach((option, index) => {
+    ungrouped.forEach((option) => {
       const isSelected = multiple 
         ? Array.isArray(currentValue) && currentValue.includes(option.value)
         : currentValue === option.value;
@@ -439,27 +444,37 @@ export const Dropdown = forwardRef<DropdownRef, DropdownProps>(({
         multiple && 'ui-dropdown__item--multi',
         isSelected && !multiple && 'ui-dropdown__item--selected',
         option.disabled && 'ui-dropdown__item--disabled',
-        option.danger && 'ui-dropdown__item--danger'
+        option.danger && 'ui-dropdown__item--danger',
+        isFocused && 'ui-dropdown__item--focused'
       ].filter(Boolean).join(' ');
 
       items.push(
-        <button
+        <Button
           key={option.key}
           ref={el => itemRefs.current[currentIndex] = el}
           className={itemClasses}
           disabled={option.disabled}
+          variant="text"
+          size={size}
+          color={option.danger ? 'danger' : 'default'}
+          icon={option.icon}
+          iconPosition="start"
           onClick={() => handleSelect(option)}
           onMouseEnter={() => setFocusedIndex(currentIndex)}
-          role="option"
-          aria-selected={isSelected}
-          tabIndex={-1}
+          style={{ 
+            width: '100%', 
+            justifyContent: 'flex-start',
+            border: 'none',
+            borderRadius: 0
+          }}
         >
-          {multiple && (
-            <div className={`ui-dropdown__checkbox ${isSelected ? 'ui-dropdown__checkbox--checked' : ''}`} />
-          )}
-          {option.icon && <span className="ui-dropdown__item-icon">{option.icon}</span>}
-          <span className="ui-dropdown__item-label">{option.label}</span>
-        </button>
+          <div style={{ display: 'flex', alignItems: 'center', width: '100%' }}>
+            {multiple && (
+              <div className={`ui-dropdown__checkbox ${isSelected ? 'ui-dropdown__checkbox--checked' : ''}`} />
+            )}
+            <span className="ui-dropdown__item-label">{option.label}</span>
+          </div>
+        </Button>
       );
       currentIndex++;
     });
@@ -476,7 +491,7 @@ export const Dropdown = forwardRef<DropdownRef, DropdownProps>(({
         </div>
       );
 
-      groupOptions.forEach((option, groupIndex) => {
+      groupOptions.forEach((option) => {
         const isSelected = multiple 
           ? Array.isArray(currentValue) && currentValue.includes(option.value)
           : currentValue === option.value;
@@ -488,33 +503,63 @@ export const Dropdown = forwardRef<DropdownRef, DropdownProps>(({
           multiple && 'ui-dropdown__item--multi',
           isSelected && !multiple && 'ui-dropdown__item--selected',
           option.disabled && 'ui-dropdown__item--disabled',
-          option.danger && 'ui-dropdown__item--danger'
+          option.danger && 'ui-dropdown__item--danger',
+          isFocused && 'ui-dropdown__item--focused'
         ].filter(Boolean).join(' ');
 
         items.push(
-          <button
+          <Button
             key={option.key}
             ref={el => itemRefs.current[currentIndex] = el}
             className={itemClasses}
             disabled={option.disabled}
+            variant="text"
+            size={size}
+            color={option.danger ? 'danger' : 'default'}
+            icon={option.icon}
+            iconPosition="start"
             onClick={() => handleSelect(option)}
             onMouseEnter={() => setFocusedIndex(currentIndex)}
-            role="option"
-            aria-selected={isSelected}
-            tabIndex={-1}
+            style={{ 
+              width: '100%', 
+              justifyContent: 'flex-start',
+              border: 'none',
+              borderRadius: 0
+            }}
           >
-            {multiple && (
-              <div className={`ui-dropdown__checkbox ${isSelected ? 'ui-dropdown__checkbox--checked' : ''}`} />
-            )}
-            {option.icon && <span className="ui-dropdown__item-icon">{option.icon}</span>}
-            <span className="ui-dropdown__item-label">{option.label}</span>
-          </button>
+            <div style={{ display: 'flex', alignItems: 'center', width: '100%' }}>
+              {multiple && (
+                <div className={`ui-dropdown__checkbox ${isSelected ? 'ui-dropdown__checkbox--checked' : ''}`} />
+              )}
+              <span className="ui-dropdown__item-label">{option.label}</span>
+            </div>
+          </Button>
         );
         currentIndex++;
       });
     });
 
     return items;
+  };
+
+  // Determine trigger button icon
+  const getTriggerIcon = () => {
+    if (allowClear && currentValue && (multiple ? Array.isArray(currentValue) && currentValue.length > 0 : true)) {
+      return (
+        <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+          <X 
+            className="ui-dropdown__clear" 
+            onClick={(e) => {
+              e.stopPropagation();
+              handleClear();
+            }}
+            style={{ cursor: 'pointer' }}
+          />
+          <ChevronDown className="ui-dropdown__arrow" />
+        </div>
+      );
+    }
+    return <ChevronDown className="ui-dropdown__arrow" />;
   };
 
   return (
@@ -524,24 +569,30 @@ export const Dropdown = forwardRef<DropdownRef, DropdownProps>(({
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      <button
+      <Button
+        {...triggerButtonProps}
         ref={triggerRef}
-        className={triggerClasses}
+        className={`ui-dropdown__trigger ${triggerButtonProps.className || ''}`}
         disabled={disabled}
-        onClick={trigger === 'click' ? handleToggle : undefined}
+        loading={loading}
+        size={size}
+        variant={triggerButtonProps.variant || 'outlined'}
+        color={triggerButtonProps.color || 'default'}
+        icon={getTriggerIcon()}
+        iconPosition="end"
+        onClick={trigger === 'click' ? handleToggle : triggerButtonProps.onClick}
         onKeyDown={handleKeyDown}
-        aria-haspopup="listbox"
-        aria-expanded={isOpen}
-        aria-label={ariaLabel}
-        aria-labelledby={ariaLabelledBy}
-        aria-describedby={ariaDescribedBy}
+        style={{
+          width: '100%',
+          justifyContent: 'space-between',
+          ...triggerButtonProps.style
+        }}
         type="button"
       >
         <span className="ui-dropdown__trigger-content">
           {children || getDisplayValue()}
         </span>
-        <ChevronDown className="ui-dropdown__arrow" />
-      </button>
+      </Button>
 
       <div
         ref={contentRef}
