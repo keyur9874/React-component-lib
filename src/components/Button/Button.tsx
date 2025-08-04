@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import './Button.css';
 
 export interface ButtonProps {
@@ -13,13 +13,27 @@ export interface ButtonProps {
   icon?: React.ReactNode;
   iconPosition?: 'start' | 'end';
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  onKeyDown?: (event: React.KeyboardEvent<HTMLButtonElement>) => void;
+  onMouseEnter?: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  onMouseLeave?: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  onFocus?: (event: React.FocusEvent<HTMLButtonElement>) => void;
+  onBlur?: (event: React.FocusEvent<HTMLButtonElement>) => void;
   type?: 'button' | 'submit' | 'reset';
   className?: string;
   style?: React.CSSProperties;
   href?: string;
+  role?: string;
+  'aria-label'?: string;
+  'aria-labelledby'?: string;
+  'aria-describedby'?: string;
+  'aria-expanded'?: boolean;
+  'aria-haspopup'?: boolean | 'false' | 'true' | 'menu' | 'listbox' | 'tree' | 'grid' | 'dialog';
+  'aria-selected'?: boolean;
+  'aria-disabled'?: boolean;
+  tabIndex?: number;
 }
 
-export const Button: React.FC<ButtonProps> = ({
+export const Button = forwardRef<HTMLButtonElement, ButtonProps>(({
   children,
   color = 'default',
   variant = 'solid',
@@ -31,11 +45,25 @@ export const Button: React.FC<ButtonProps> = ({
   icon,
   iconPosition = 'start',
   onClick,
+  onKeyDown,
+  onMouseEnter,
+  onMouseLeave,
+  onFocus,
+  onBlur,
   type = 'button',
   className = '',
   style,
   href,
-}) => {
+  role,
+  'aria-label': ariaLabel,
+  'aria-labelledby': ariaLabelledBy,
+  'aria-describedby': ariaDescribedBy,
+  'aria-expanded': ariaExpanded,
+  'aria-haspopup': ariaHasPopup,
+  'aria-selected': ariaSelected,
+  'aria-disabled': ariaDisabled,
+  tabIndex,
+}, ref) => {
   const baseClass = 'ui-button';
   const colorClass = `ui-button--${color}`;
   const variantClass = `ui-button--${variant}`;
@@ -45,7 +73,7 @@ export const Button: React.FC<ButtonProps> = ({
   const loadingClass = loading ? 'ui-button--loading' : '';
   const ghostClass = ghost ? 'ui-button--ghost' : '';
   const iconOnlyClass = icon && !children ? 'ui-button--icon-only' : '';
-
+  
   const classes = [
     baseClass,
     colorClass,
@@ -99,14 +127,33 @@ export const Button: React.FC<ButtonProps> = ({
     </>
   );
 
+  // Common props for both button and anchor elements
+  const commonProps = {
+    className: classes,
+    style,
+    onClick,
+    onKeyDown,
+    onMouseEnter,
+    onMouseLeave,
+    onFocus,
+    onBlur,
+    role,
+    'aria-label': ariaLabel,
+    'aria-labelledby': ariaLabelledBy,
+    'aria-describedby': ariaDescribedBy,
+    'aria-expanded': ariaExpanded,
+    'aria-haspopup': ariaHasPopup,
+    'aria-selected': ariaSelected,
+    'aria-disabled': ariaDisabled || disabled || isLoading,
+    tabIndex,
+  };
+
   if (variant === 'link' && href) {
     return (
       <a
+        {...commonProps}
         href={href}
-        className={classes}
         onClick={onClick as any}
-        aria-disabled={disabled || isLoading}
-        style={style}
       >
         {buttonContent}
       </a>
@@ -115,13 +162,14 @@ export const Button: React.FC<ButtonProps> = ({
 
   return (
     <button
+      {...commonProps}
+      ref={ref}
       type={type}
-      className={classes}
       disabled={disabled || isLoading}
-      onClick={onClick}
-      style={style}
     >
       {buttonContent}
     </button>
   );
-};
+});
+
+Button.displayName = 'Button';
