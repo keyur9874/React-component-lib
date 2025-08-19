@@ -8,7 +8,7 @@ import React, {
   useMemo
 } from 'react';
 import { ChevronDown, Search, X } from 'lucide-react';
-import { Button, ButtonProps } from './Button'; // Import your Button component
+import { Button, ButtonProps } from '../Button/Button'; // Import your Button component
 import './Dropdown.css';
 
 export interface DropdownOption {
