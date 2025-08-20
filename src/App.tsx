@@ -2,9 +2,15 @@ import React, { useState } from "react";
 import { ThemeProvider } from "./theme/ThemeProvider";
 import { ThemeToggle } from "./components/ThemeToggle/ThemeToggle";
 import { SwitchDocs } from "./components/Switch/Switch.docs";
-import { DropdownDocs } from "./components/Dropdown/Dropdown.docs";
+import { Switch } from "./components";
 
-type ActiveComponent = "button" | "avatar" | "badge" | "input" | "switch" | "dropdown";
+type ActiveComponent =
+  | "button"
+  | "avatar"
+  | "badge"
+  | "input"
+  | "switch"
+  | "dropdown";
 
 function App() {
   const [activeComponent, setActiveComponent] =
@@ -12,12 +18,10 @@ function App() {
 
   const components = [
     { id: "switch" as const, label: "Switch", component: SwitchDocs },
-    { id: "dropdown" as const, label: "Dropdown", component: DropdownDocs },
   ];
 
   const ActiveComponentDoc =
-    components.find((comp) => comp.id === activeComponent)?.component ||
-    DropdownDocs;
+    components.find((comp) => comp.id === activeComponent)?.component || Switch;
 
   return (
     <ThemeProvider>
