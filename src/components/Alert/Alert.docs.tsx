@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Alert } from './Alert';
-import { Button } from '../Button/Button';
 import { 
   Heart, 
   Download, 
@@ -284,9 +283,9 @@ export const AlertDocs: React.FC = () => {
                 type="success"
                 showIcon
                 action={
-                  <Button size="small" variant="ghost">
+                  <button className="ui-alert-action">
                     UNDO
-                  </Button>
+                  </button>
                 }
                 closable
               />
@@ -297,12 +296,12 @@ export const AlertDocs: React.FC = () => {
                 showIcon
                 action={
                   <div style={{ display: 'flex', gap: '8px' }}>
-                    <Button size="small" variant="primary">
+                    <button className="ui-alert-action" style={{ backgroundColor: 'var(--primary-color)', color: 'white', borderColor: 'var(--primary-color)' }}>
                       Accept
-                    </Button>
-                    <Button size="small" variant="ghost">
+                    </button>
+                    <button className="ui-alert-action">
                       Decline
-                    </Button>
+                    </button>
                   </div>
                 }
               />
@@ -341,8 +340,8 @@ export const AlertDocs: React.FC = () => {
   showIcon
   action={
     <div style={{ display: 'flex', gap: '8px' }}>
-      <Button size="small" variant="primary">Accept</Button>
-      <Button size="small" variant="ghost">Decline</Button>
+      <button className="ui-alert-action" style={{ backgroundColor: 'var(--primary-color)', color: 'white' }}>Accept</button>
+      <button className="ui-alert-action">Decline</button>
     </div>
   }
 />`}</pre>
@@ -355,20 +354,20 @@ export const AlertDocs: React.FC = () => {
           <div className="example-demo">
             <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
               <div style={{ display: 'flex', gap: '8px', marginBottom: '16px' }}>
-                <Button 
-                  size="small" 
+                <button 
+                  className="ui-alert-action"
                   onClick={() => setShowAlert(true)}
                   disabled={showAlert}
                 >
                   Show Alert
-                </Button>
-                <Button 
-                  size="small" 
+                </button>
+                <button 
+                  className="ui-alert-action"
                   onClick={() => setShowCustomAlert(true)}
                   disabled={showCustomAlert}
                 >
                   Show Custom Alert
-                </Button>
+                </button>
               </div>
               
               {showAlert && (
@@ -419,9 +418,9 @@ export const AlertDocs: React.FC = () => {
                 showIcon
                 icon={<Bell size={24} />}
                 action={
-                  <Button size="small" variant="primary">
+                  <button className="ui-alert-action" style={{ backgroundColor: 'var(--primary-color)', color: 'white', borderColor: 'var(--primary-color)' }}>
                     Resend Email
-                  </Button>
+                  </button>
                 }
                 closable
               />
@@ -434,12 +433,12 @@ export const AlertDocs: React.FC = () => {
                 icon={<Shield size={24} />}
                 action={
                   <div style={{ display: 'flex', gap: '8px' }}>
-                    <Button size="small" variant="danger">
+                    <button className="ui-alert-action" style={{ backgroundColor: 'var(--danger-color)', color: 'white', borderColor: 'var(--danger-color)' }}>
                       Secure Account
-                    </Button>
-                    <Button size="small" variant="ghost">
+                    </button>
+                    <button className="ui-alert-action">
                       This was me
-                    </Button>
+                    </button>
                   </div>
                 }
               />
@@ -451,9 +450,9 @@ export const AlertDocs: React.FC = () => {
                 showIcon
                 icon={<Zap size={24} />}
                 action={
-                  <Button size="small" variant="primary">
+                  <button className="ui-alert-action" style={{ backgroundColor: 'var(--primary-color)', color: 'white', borderColor: 'var(--primary-color)' }}>
                     Enable
-                  </Button>
+                  </button>
                 }
                 closable
               />
@@ -476,9 +475,9 @@ export const AlertDocs: React.FC = () => {
   showIcon
   icon={<Bell size={24} />}
   action={
-    <Button size="small" variant="primary">
+    <button className="ui-alert-action" style={{ backgroundColor: 'var(--primary-color)', color: 'white' }}>
       Resend Email
-    </Button>
+    </button>
   }
   closable
 />`}</pre>
