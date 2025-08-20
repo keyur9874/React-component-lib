@@ -62,6 +62,8 @@ export const Alert = forwardRef<HTMLDivElement, AlertProps>(({
   style,
   role = 'alert',
   outlined = false,
+  compact = false,
+  withStatus = false,
   ...props
 }, ref) => {
   const [visible, setVisible] = useState(true);
