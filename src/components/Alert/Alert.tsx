@@ -1,12 +1,5 @@
 import React, { forwardRef, useState, useEffect } from 'react';
-import { 
-  Info, 
-  CheckCircle, 
-  AlertTriangle, 
-  XCircle, 
-  X,
-  LucideIcon
-} from 'lucide-react';
+import { Info, CheckCircle, AlertTriangle, XCircle, X, DivideIcon as LucideIcon } from 'lucide-react';
 import './Alert.css';
 
 export interface AlertProps {
