@@ -33,6 +33,10 @@ export interface AlertProps {
   role?: string;
   /** Whether to use outlined style */
   outlined?: boolean;
+  /** Whether to use compact style */
+  compact?: boolean;
+  /** Whether to show status indicator bar */
+  withStatus?: boolean;
 }
 
 const defaultIcons: Record<string, LucideIcon> = {
@@ -88,6 +92,9 @@ export const Alert = forwardRef<HTMLDivElement, AlertProps>(({
   const withDescriptionClass = description ? 'ui-alert--with-description' : '';
   const noIconClass = !showIcon ? 'ui-alert--no-icon' : '';
   const closingClass = closing ? 'ui-alert-exit-active' : '';
+  const closableClass = closable ? 'ui-alert--closable' : '';
+  const compactClass = compact ? 'ui-alert--compact' : '';
+  const withStatusClass = withStatus ? 'ui-alert--with-status' : '';
 
   const classes = [
     baseClass,
@@ -97,6 +104,9 @@ export const Alert = forwardRef<HTMLDivElement, AlertProps>(({
     withDescriptionClass,
     noIconClass,
     closingClass,
+    closableClass,
+    compactClass,
+    withStatusClass,
     className
   ].filter(Boolean).join(' ');
 
