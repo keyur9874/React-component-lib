@@ -2,26 +2,24 @@ import React, { useState } from "react";
 import { ThemeProvider } from "./theme/ThemeProvider";
 import { ThemeToggle } from "./components/ThemeToggle/ThemeToggle";
 import { SwitchDocs } from "./components/Switch/Switch.docs";
+import { AlertDocs } from "./components/Alert/Alert.docs";
 import { Switch } from "./components";
 
 type ActiveComponent =
-  | "button"
-  | "avatar"
-  | "badge"
-  | "input"
   | "switch"
-  | "dropdown";
+  | "alert";
 
 function App() {
   const [activeComponent, setActiveComponent] =
-    useState<ActiveComponent>("dropdown");
+    useState<ActiveComponent>("alert");
 
   const components = [
     { id: "switch" as const, label: "Switch", component: SwitchDocs },
+    { id: "alert" as const, label: "Alert", component: AlertDocs },
   ];
 
   const ActiveComponentDoc =
-    components.find((comp) => comp.id === activeComponent)?.component || Switch;
+    components.find((comp) => comp.id === activeComponent)?.component || AlertDocs;
 
   return (
     <ThemeProvider>
