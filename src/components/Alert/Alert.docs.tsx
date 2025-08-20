@@ -510,7 +510,7 @@ export const AlertDocs: React.FC = () => {
             <tr>
               <td>afterClose</td>
               <td>Called when close animation is finished</td>
-              <td>() => void</td>
+              <td><code>() =&gt; void</code></td>
               <td>-</td>
               <td></td>
             </tr>
@@ -580,7 +580,7 @@ export const AlertDocs: React.FC = () => {
             <tr>
               <td>onClose</td>
               <td>Callback when Alert is closed</td>
-              <td>(e: MouseEvent) => void</td>
+              <td><code>(e: MouseEvent) =&gt; void</code></td>
               <td>-</td>
               <td></td>
             </tr>
