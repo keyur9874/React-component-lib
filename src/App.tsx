@@ -3,11 +3,13 @@ import { ThemeProvider } from "./theme/ThemeProvider";
 import { ThemeToggle } from "./components/ThemeToggle/ThemeToggle";
 import { SwitchDocs } from "./components/Switch/Switch.docs";
 import { AlertDocs } from "./components/Alert/Alert.docs";
+import { UploadDocs } from "./components/Upload/Upload.docs";
 import { Switch } from "./components";
 
 type ActiveComponent =
   | "switch"
-  | "alert";
+  | "alert"
+  | "upload";
 
 function App() {
   const [activeComponent, setActiveComponent] =
@@ -16,6 +18,7 @@ function App() {
   const components = [
     { id: "switch" as const, label: "Switch", component: SwitchDocs },
     { id: "alert" as const, label: "Alert", component: AlertDocs },
+    { id: "upload" as const, label: "Upload", component: UploadDocs },
   ];
 
   const ActiveComponentDoc =
