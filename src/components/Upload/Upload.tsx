@@ -186,7 +186,9 @@ export const Upload = forwardRef<UploadRef, UploadProps>(({
     if (!isControlled) {
       setInternalFileList(newFileList);
     }
-    onChange?.({ file: newFileList[newFileList.length - 1], fileList: newFileList });
+    if (newFileList.length > 0) {
+      onChange?.({ file: newFileList[newFileList.length - 1], fileList: newFileList });
+    }
   }, [isControlled, onChange]);
 
   const uploadFile = useCallback((file: UploadFile) => {
@@ -330,16 +332,19 @@ export const Upload = forwardRef<UploadRef, UploadProps>(({
       };
 
       // Generate thumbnail for images
-      if (file.type.startsWith('image/') && listType !== 'text') {
+      if (file.type.startsWith('image/')) {
         const reader = new FileReader();
         reader.onload = (e) => {
           uploadFile.thumbUrl = e.target?.result as string;
-          updateFileList([...currentFileList, ...newFiles, uploadFile]);
+          // Update the file in the existing list
+          const updatedFileList = [...currentFileList, ...newFiles.filter(f => f.uid !== uploadFile.uid), uploadFile];
+          updateFileList(updatedFileList);
         };
         reader.readAsDataURL(file);
+      } else {
+        // For non-image files, add immediately
+        newFiles.push(uploadFile);
       }
-
-      newFiles.push(uploadFile);
     }
 
     if (newFiles.length > 0) {
@@ -347,8 +352,8 @@ export const Upload = forwardRef<UploadRef, UploadProps>(({
       updateFileList(updatedFileList);
 
       // Start uploading
-      newFiles.forEach(file => {
-        uploadFile(file);
+      newFiles.forEach(fileToUpload => {
+        uploadFile(fileToUpload);
       });
     }
   }, [disabled, maxCount, maxSize, beforeUpload, currentFileList, updateFileList, uploadFile, listType]);
@@ -500,7 +505,11 @@ export const Upload = forwardRef<UploadRef, UploadProps>(({
   };
 
   const renderFileList = () => {
-    if (!showUploadList || currentFileList.length === 0) {
+    if (!showUploadList) {
+      return null;
+    }
+
+    if (currentFileList.length === 0) {
       return null;
     }
 
