@@ -362,6 +362,13 @@ export const Upload = forwardRef<UploadRef, UploadProps>(({
     e.target.value = '';
   };
 
+  const handleAreaClick = (e: React.MouseEvent) => {
+    // Prevent double triggering when clicking on the upload area
+    if (e.target === e.currentTarget || (e.target as HTMLElement).closest('.ui-upload-area') === e.currentTarget) {
+      handleClick();
+    }
+  };
+
   const handleRemove = async (file: UploadFile) => {
     if (onRemove) {
       try {
@@ -417,7 +424,9 @@ export const Upload = forwardRef<UploadRef, UploadProps>(({
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
-      handleClick();
+      if (!disabled) {
+        inputRef.current?.click();
+      }
     }
   };
 
@@ -443,7 +452,7 @@ export const Upload = forwardRef<UploadRef, UploadProps>(({
       <div
         {...uploadAreaProps}
         className={areaClasses}
-        onClick={handleClick}
+        onClick={handleAreaClick}
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
@@ -462,6 +471,7 @@ export const Upload = forwardRef<UploadRef, UploadProps>(({
           disabled={disabled}
           onChange={handleInputChange}
           aria-hidden="true"
+          onClick={(e) => e.stopPropagation()}
         />
 
         {children || (
