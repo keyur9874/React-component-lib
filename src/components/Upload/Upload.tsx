@@ -322,7 +322,7 @@ export const Upload = forwardRef<UploadRef, UploadProps>(({
         }
       }
 
-      const uploadFile: UploadFile = {
+      const newUploadFile: UploadFile = {
         uid: generateUID(),
         name: file.name,
         size: file.size,
@@ -335,16 +335,18 @@ export const Upload = forwardRef<UploadRef, UploadProps>(({
       if (file.type.startsWith('image/')) {
         const reader = new FileReader();
         reader.onload = (e) => {
-          uploadFile.thumbUrl = e.target?.result as string;
-          // Update the file in the existing list
-          const updatedFileList = [...currentFileList, ...newFiles.filter(f => f.uid !== uploadFile.uid), uploadFile];
-          updateFileList(updatedFileList);
+          newUploadFile.thumbUrl = e.target?.result as string;
+          // Force re-render by updating the file list
+          const updatedList = currentFileList.map(f => 
+            f.uid === newUploadFile.uid ? { ...f, thumbUrl: newUploadFile.thumbUrl } : f
+          );
+          updateFileList(updatedList);
         };
         reader.readAsDataURL(file);
-      } else {
-        // For non-image files, add immediately
-        newFiles.push(uploadFile);
       }
+      
+      // Add all files to the list immediately
+      newFiles.push(newUploadFile);
     }
 
     if (newFiles.length > 0) {
@@ -352,11 +354,11 @@ export const Upload = forwardRef<UploadRef, UploadProps>(({
       updateFileList(updatedFileList);
 
       // Start uploading
-      newFiles.forEach(fileToUpload => {
-        uploadFile(fileToUpload);
+      newFiles.forEach(file => {
+        uploadFile(file);
       });
     }
-  }, [disabled, maxCount, maxSize, beforeUpload, currentFileList, updateFileList, uploadFile, listType]);
+  }, [disabled, maxCount, maxSize, beforeUpload, currentFileList, updateFileList, uploadFile]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
@@ -367,10 +369,9 @@ export const Upload = forwardRef<UploadRef, UploadProps>(({
     e.target.value = '';
   };
 
-  const handleAreaClick = (e: React.MouseEvent) => {
-    // Prevent double triggering when clicking on the upload area
-    if (e.target === e.currentTarget || (e.target as HTMLElement).closest('.ui-upload-area') === e.currentTarget) {
-      handleClick();
+  const handleAreaClick = () => {
+    if (!disabled) {
+      inputRef.current?.click();
     }
   };
 
@@ -429,9 +430,7 @@ export const Upload = forwardRef<UploadRef, UploadProps>(({
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
-      if (!disabled) {
-        inputRef.current?.click();
-      }
+      handleClick();
     }
   };
 
@@ -476,7 +475,6 @@ export const Upload = forwardRef<UploadRef, UploadProps>(({
           disabled={disabled}
           onChange={handleInputChange}
           aria-hidden="true"
-          onClick={(e) => e.stopPropagation()}
         />
 
         {children || (
