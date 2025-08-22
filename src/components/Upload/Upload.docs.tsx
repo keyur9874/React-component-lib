@@ -363,7 +363,7 @@ export const UploadDocs: React.FC = () => {
             <Upload
               action="https://httpbin.org/post"
               customRequest={customRequest}
-              showUploadList={{ showProgress: true }}
+              showUploadList={true}
             >
               <button className="ui-alert-action" style={{ backgroundColor: 'var(--success-color)', color: 'white', borderColor: 'var(--success-color)' }}>
                 <UploadIcon size={16} style={{ marginRight: '8px' }} />
@@ -394,6 +394,7 @@ export const UploadDocs: React.FC = () => {
 <Upload
   action="https://httpbin.org/post"
   customRequest={customRequest}
+  showUploadList={true}
 >
   <Button>Custom Upload</Button>
 </Upload>`}</pre>
@@ -644,7 +645,7 @@ export const UploadDocs: React.FC = () => {
             <tr>
               <td>showUploadList</td>
               <td>Whether to show default upload list</td>
-              <td>boolean</td>
+              <td>boolean | object</td>
               <td>true</td>
               <td></td>
             </tr>
