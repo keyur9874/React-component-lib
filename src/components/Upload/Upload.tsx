@@ -370,9 +370,13 @@ export const Upload = forwardRef<UploadRef, UploadProps>(({
   };
 
   const handleAreaClick = () => {
-    if (!disabled) {
+    if (!disabled && inputRef.current) {
       inputRef.current?.click();
     }
+  };
+
+  const handleClick = () => {
+    // This function is intentionally empty to prevent default behavior
   };
 
   const handleRemove = async (file: UploadFile) => {
@@ -430,7 +434,9 @@ export const Upload = forwardRef<UploadRef, UploadProps>(({
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
-      handleClick();
+      if (!disabled && inputRef.current) {
+        inputRef.current.click();
+      }
     }
   };
 
@@ -474,6 +480,7 @@ export const Upload = forwardRef<UploadRef, UploadProps>(({
           accept={accept}
           disabled={disabled}
           onChange={handleInputChange}
+          onClick={(e) => e.stopPropagation()}
           aria-hidden="true"
         />
 
