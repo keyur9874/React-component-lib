@@ -196,6 +196,21 @@
   --avatar-default-color: #d1d5db;
 }
 
+/* Skeleton Colors */
+:root {
+  --skeleton-bg: #f2f2f2;
+  --skeleton-highlight: #e6e6e6;
+  --skeleton-icon-color: #bfbfbf;
+  --skeleton-bg-high-contrast: #d9d9d9;
+}
+
+[data-theme="dark"] {
+  --skeleton-bg: #303030;
+  --skeleton-highlight: #3a3a3a;
+  --skeleton-icon-color: #595959;
+  --skeleton-bg-high-contrast: #434343;
+}
+
 /* Global styles for the component library showcase */
 * {
   margin: 0;

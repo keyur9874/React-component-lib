@@ -13,3 +13,21 @@ export type { AlertProps } from "./Alert";
 // Upload
 export { Upload } from "./Upload";
 export type { UploadProps, UploadFile, UploadRef } from "./Upload";
+
+// Skeleton
+export { 
+  Skeleton, 
+  SkeletonAvatar, 
+  SkeletonButton, 
+  SkeletonInput, 
+  SkeletonImage, 
+  SkeletonNode 
+} from "./Skeleton";
+export type { 
+  SkeletonProps, 
+  SkeletonAvatarProps, 
+  SkeletonButtonProps, 
+  SkeletonInputProps, 
+  SkeletonImageProps, 
+  SkeletonNodeProps 
+} from "./Skeleton";
