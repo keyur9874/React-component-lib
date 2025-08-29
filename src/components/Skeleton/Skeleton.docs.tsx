@@ -7,32 +7,12 @@ import {
   SkeletonImage, 
   SkeletonNode 
 } from './Skeleton';
-import { Switch } from '../Switch';
+import { Switch } from '../Switch/Switch';
 import { FormItem } from '../Form';
-import { 
-  User, 
-  Star, 
-  Heart, 
-  MessageCircle, 
-  Share2,
-  MoreHorizontal,
-  Calendar,
-  MapPin,
-  Clock
-} from 'lucide-react';
 
 export const SkeletonDocs: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [active, setActive] = useState(true);
-  const [avatarLoading, setAvatarLoading] = useState(true);
-  const [cardLoading, setCardLoading] = useState(true);
-  const [listLoading, setListLoading] = useState(true);
-
-  // Simulate loading delay
-  const simulateLoading = (setter: (value: boolean) => void) => {
-    setter(true);
-    setTimeout(() => setter(false), 2000);
-  };
 
   return (
     <div className="component-docs">
@@ -44,10 +24,9 @@ export const SkeletonDocs: React.FC = () => {
       <div className="docs-section">
         <h2>When To Use</h2>
         <ul>
-          <li>When a resource needs long time to load, like components with heavy dependencies.</li>
+          <li>When a resource needs long time to load.</li>
           <li>When the component contains lots of information, such as List or Card.</li>
-          <li>Only works when loading is slow or in poor network conditions.</li>
-          <li>To improve perceived performance and user experience.</li>
+          <li>Only works when loading is true or when used to occupy space.</li>
         </ul>
       </div>
 
@@ -56,1277 +35,235 @@ export const SkeletonDocs: React.FC = () => {
         
         <div className="example-container">
           <h3>Basic</h3>
-          <p>The simplest usage.</p>
+          <p>Simplest Skeleton usage.</p>
+          <div className="example-demo">
+            <Skeleton />
+          </div>
+          <div className="example-code">
+            <pre>{`<Skeleton />`}</pre>
+          </div>
+        </div>
+
+        <div className="example-container">
+          <h3>Complex combination</h3>
+          <p>Complex combination with avatar and multiple paragraphs.</p>
           <div className="example-demo">
             <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+              <Skeleton avatar paragraph={{ rows: 4 }} />
+              <Skeleton avatar={{ size: 'large', shape: 'square' }} paragraph={{ rows: 2 }} />
+              <Skeleton avatar={{ size: 'small' }} title={false} paragraph={{ rows: 3 }} />
+            </div>
+          </div>
+          <div className="example-code">
+            <pre>{`<Skeleton avatar paragraph={{ rows: 4 }} />
+<Skeleton avatar={{ size: 'large', shape: 'square' }} paragraph={{ rows: 2 }} />
+<Skeleton avatar={{ size: 'small' }} title={false} paragraph={{ rows: 3 }} />`}</pre>
+          </div>
+        </div>
+
+        <div className="example-container">
+          <h3>Active Animation</h3>
+          <p>Display active animation.</p>
+          <div className="example-demo">
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
               <div style={{ display: 'flex', gap: '16px', alignItems: 'center', marginBottom: '16px' }}>
-                <FormItem label="Loading">
-                  <Switch checked={loading} onChange={setLoading} />
-                </FormItem>
                 <FormItem label="Active Animation">
                   <Switch checked={active} onChange={setActive} />
                 </FormItem>
               </div>
-              
-              <Skeleton loading={loading} active={active}>
-                <div style={{ padding: '16px', border: '1px solid var(--border-light)', borderRadius: '8px' }}>
-                  <h3 style={{ margin: '0 0 8px 0', color: 'var(--text-color)' }}>Article Title</h3>
-                  <p style={{ margin: '0', color: 'var(--text-secondary)', lineHeight: '1.6' }}>
-                    This is the actual content that appears when loading is complete. 
-                    The skeleton provides a placeholder that matches the structure of this content, 
-                    giving users a preview of what's coming and improving perceived performance.
-                  </p>
-                </div>
-              </Skeleton>
+              <Skeleton avatar active={active} paragraph={{ rows: 2 }} />
+              <Skeleton avatar={{ size: 'large' }} active={active} paragraph={{ rows: 3 }} />
             </div>
           </div>
           <div className="example-code">
-            <pre>{`<Skeleton loading={loading} active={active}>
-  <div>
-    <h3>Article Title</h3>
-    <p>This is the actual content that appears when loading is complete.</p>
-  </div>
-</Skeleton>`}</pre>
+            <pre>{`<Skeleton avatar active={active} paragraph={{ rows: 2 }} />
+<Skeleton avatar={{ size: 'large' }} active={active} paragraph={{ rows: 3 }} />`}</pre>
           </div>
         </div>
 
         <div className="example-container">
-          <h3>Complex</h3>
-          <p>Complex combination with avatar and multiple paragraphs.</p>
+          <h3>Contains sub component</h3>
+          <p>Skeleton contains sub components.</p>
           <div className="example-demo">
             <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
               <div style={{ display: 'flex', gap: '16px', alignItems: 'center', marginBottom: '16px' }}>
-                <FormItem label="Loading">
-                  <Switch checked={avatarLoading} onChange={setAvatarLoading} />
+                <FormItem label="Show Loading">
+                  <Switch checked={loading} onChange={setLoading} />
                 </FormItem>
-                <button 
-                  onClick={() => simulateLoading(setAvatarLoading)}
-                  style={{ 
-                    padding: '6px 12px', 
-                    border: '1px solid var(--primary-color)', 
-                    borderRadius: '4px',
-                    background: 'var(--primary-color)',
-                    color: 'white',
-                    cursor: 'pointer',
-                    fontSize: '12px'
-                  }}
-                >
-                  Simulate Loading
-                </button>
               </div>
               
-              <Skeleton 
-                loading={avatarLoading} 
-                avatar={{ size: 'large', shape: 'circle' }}
-                paragraph={{ rows: 4, width: ['100%', '100%', '80%', '60%'] }}
-                active={active}
-              >
-                <div style={{ display: 'flex', gap: '16px', padding: '16px', border: '1px solid var(--border-light)', borderRadius: '8px' }}>
-                  <img 
-                    src="https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=80&h=80&dpr=2"
-                    alt="User"
-                    style={{ width: '64px', height: '64px', borderRadius: '50%', objectFit: 'cover' }}
-                  />
-                  <div style={{ flex: 1 }}>
-                    <h3 style={{ margin: '0 0 8px 0', color: 'var(--text-color)' }}>John Doe</h3>
-                    <p style={{ margin: '0 0 8px 0', color: 'var(--text-secondary)', lineHeight: '1.6' }}>
-                      Senior Frontend Developer at TechCorp. Passionate about creating beautiful user interfaces 
-                      and exceptional user experiences. 
-                    </p>
-                    <p style={{ margin: '0', color: 'var(--text-tertiary)', fontSize: '14px' }}>
-                      Joined 2 years ago • 1.2k followers
-                    </p>
+              <Skeleton loading={loading}>
+                <div style={{ 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  gap: '16px',
+                  padding: '16px',
+                  border: '1px solid var(--border-light)',
+                  borderRadius: '8px',
+                  backgroundColor: 'var(--bg-color)'
+                }}>
+                  <div style={{
+                    width: '48px',
+                    height: '48px',
+                    borderRadius: '50%',
+                    backgroundColor: 'var(--primary-color)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    color: 'white',
+                    fontWeight: 'bold'
+                  }}>
+                    JD
+                  </div>
+                  <div>
+                    <h3 style={{ margin: '0 0 4px 0', color: 'var(--text-color)' }}>John Doe</h3>
+                    <p style={{ margin: '0', color: 'var(--text-secondary)' }}>Software Engineer at Tech Corp</p>
                   </div>
                 </div>
               </Skeleton>
             </div>
           </div>
           <div className="example-code">
-            <pre>{`<Skeleton 
-  loading={loading} 
-  avatar={{ size: 'large', shape: 'circle' }}
-  paragraph={{ rows: 4, width: ['100%', '100%', '80%', '60%'] }}
-  active={true}
->
-  <UserProfile />
+            <pre>{`<Skeleton loading={loading}>
+  <div className="user-card">
+    <Avatar src="/user.jpg" size="large" />
+    <div>
+      <h3>John Doe</h3>
+      <p>Software Engineer at Tech Corp</p>
+    </div>
+  </div>
 </Skeleton>`}</pre>
           </div>
         </div>
 
         <div className="example-container">
-          <h3>Sub-components</h3>
-          <p>Use sub-components for more control over the skeleton layout.</p>
+          <h3>Avatar Variants</h3>
+          <p>Different avatar configurations.</p>
           <div className="example-demo">
             <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-              <div>
-                <h4 style={{ marginBottom: '12px', color: 'var(--text-color)' }}>Avatar</h4>
-                <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
-                  <SkeletonAvatar size="small" active={active} />
-                  <SkeletonAvatar size="medium" active={active} />
-                  <SkeletonAvatar size="large" active={active} />
-                  <SkeletonAvatar size="xlarge" active={active} />
-                  <SkeletonAvatar size="medium" shape="square" active={active} />
-                </div>
+              <div style={{ display: 'flex', gap: '24px', alignItems: 'center' }}>
+                <SkeletonAvatar size="small" />
+                <SkeletonAvatar size="medium" />
+                <SkeletonAvatar size="large" />
+                <SkeletonAvatar size="xlarge" />
               </div>
-
-              <div>
-                <h4 style={{ marginBottom: '12px', color: 'var(--text-color)' }}>Button</h4>
-                <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
-                  <SkeletonButton size="small" active={active} />
-                  <SkeletonButton size="medium" active={active} />
-                  <SkeletonButton size="large" active={active} />
-                  <SkeletonButton shape="round" active={active} />
-                  <SkeletonButton shape="circle" active={active} />
-                </div>
-              </div>
-
-              <div>
-                <h4 style={{ marginBottom: '12px', color: 'var(--text-color)' }}>Input</h4>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', maxWidth: '300px' }}>
-                  <SkeletonInput size="small" active={active} />
-                  <SkeletonInput size="medium" active={active} />
-                  <SkeletonInput size="large" active={active} />
-                </div>
-              </div>
-
-              <div>
-                <h4 style={{ marginBottom: '12px', color: 'var(--text-color)' }}>Image</h4>
-                <div style={{ display: 'flex', gap: '16px', alignItems: 'flex-start' }}>
-                  <SkeletonImage size="small" active={active} style={{ width: '120px' }} />
-                  <SkeletonImage size="medium" active={active} style={{ width: '200px' }} />
-                  <SkeletonImage size="large" active={active} style={{ width: '300px' }} />
-                </div>
+              <div style={{ display: 'flex', gap: '24px', alignItems: 'center' }}>
+                <SkeletonAvatar shape="circle" />
+                <SkeletonAvatar shape="square" />
               </div>
             </div>
           </div>
           <div className="example-code">
-            <pre>{`<Skeleton.Avatar size="large" />
-<Skeleton.Button shape="round" />
-<Skeleton.Input size="large" />
-<Skeleton.Image size="medium" />
-<Skeleton.Node />`}</pre>
+            <pre>{`<SkeletonAvatar size="small" />
+<SkeletonAvatar size="medium" />
+<SkeletonAvatar size="large" />
+<SkeletonAvatar size="xlarge" />
+
+<SkeletonAvatar shape="circle" />
+<SkeletonAvatar shape="square" />`}</pre>
           </div>
         </div>
 
         <div className="example-container">
-          <h3>Card Loading</h3>
-          <p>Skeleton for card-like content with image, avatar, and text.</p>
+          <h3>Button and Input</h3>
+          <p>Button and Input skeleton.</p>
+          <div className="example-demo">
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+              <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+                <SkeletonButton size="small" />
+                <SkeletonButton size="medium" />
+                <SkeletonButton size="large" />
+              </div>
+              <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+                <SkeletonButton shape="circle" />
+                <SkeletonButton shape="round" />
+                <SkeletonButton shape="default" />
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                <SkeletonInput size="small" />
+                <SkeletonInput size="medium" />
+                <SkeletonInput size="large" />
+              </div>
+            </div>
+          </div>
+          <div className="example-code">
+            <pre>{`<SkeletonButton size="small" />
+<SkeletonButton size="medium" />
+<SkeletonButton size="large" />
+
+<SkeletonButton shape="circle" />
+<SkeletonButton shape="round" />
+
+<SkeletonInput size="small" />
+<SkeletonInput size="medium" />
+<SkeletonInput size="large" />`}</pre>
+          </div>
+        </div>
+
+        <div className="example-container">
+          <h3>Image Skeleton</h3>
+          <p>Image placeholder with different sizes.</p>
+          <div className="example-demo">
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '16px' }}>
+                <SkeletonImage size="small" />
+                <SkeletonImage size="medium" />
+                <SkeletonImage size="large" />
+              </div>
+            </div>
+          </div>
+          <div className="example-code">
+            <pre>{`<SkeletonImage size="small" />
+<SkeletonImage size="medium" />
+<SkeletonImage size="large" />`}</pre>
+          </div>
+        </div>
+
+        <div className="example-container">
+          <h3>List Skeleton</h3>
+          <p>Use SkeletonNode for list items.</p>
           <div className="example-demo">
             <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-              <div style={{ display: 'flex', gap: '16px', alignItems: 'center', marginBottom: '16px' }}>
-                <FormItem label="Card Loading">
-                  <Switch checked={cardLoading} onChange={setCardLoading} />
-                </FormItem>
-                <button 
-                  onClick={() => simulateLoading(setCardLoading)}
-                  style={{ 
-                    padding: '6px 12px', 
-                    border: '1px solid var(--primary-color)', 
-                    borderRadius: '4px',
-                    background: 'var(--primary-color)',
-                    color: 'white',
-                    cursor: 'pointer',
-                    fontSize: '12px'
-                  }}
-                >
-                  Reload Card
-                </button>
-              </div>
+              <SkeletonNode />
+              <SkeletonNode />
+              <SkeletonNode />
+            </div>
+          </div>
+          <div className="example-code">
+            <pre>{`<SkeletonNode />
+<SkeletonNode />
+<SkeletonNode />`}</pre>
+          </div>
+        </div>
 
-              <div style={{ maxWidth: '400px' }}>
-                {cardLoading ? (
-                  <div className="ui-skeleton-card">
-                    <div className="ui-skeleton-card-header">
-                      <SkeletonAvatar size="medium" active={active} />
-                      <div className={`ui-skeleton-element ui-skeleton-card-title ${active ? 'ui-skeleton-element--active' : ''}`} />
-                    </div>
-                    <SkeletonImage active={active} style={{ width: '100%', height: '200px', marginBottom: '16px' }} />
-                    <div className="ui-skeleton-card-content">
-                      <div className={`ui-skeleton-element ui-skeleton-card-line ${active ? 'ui-skeleton-element--active' : ''}`} />
-                      <div className={`ui-skeleton-element ui-skeleton-card-line ${active ? 'ui-skeleton-element--active' : ''}`} />
-                      <div className={`ui-skeleton-element ui-skeleton-card-line ${active ? 'ui-skeleton-element--active' : ''}`} />
-                    </div>
-                  </div>
-                ) : (
-                  <div style={{ border: '1px solid var(--border-light)', borderRadius: '8px', padding: '16px', background: 'var(--bg-color)' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
-                      <img 
-                        src="https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=64&h=64&dpr=2"
-                        alt="User"
-                        style={{ width: '32px', height: '32px', borderRadius: '50%', objectFit: 'cover' }}
-                      />
-                      <div>
-                        <h4 style={{ margin: '0', color: 'var(--text-color)', fontSize: '14px' }}>Sarah Wilson</h4>
-                        <p style={{ margin: '0', color: 'var(--text-tertiary)', fontSize: '12px' }}>2 hours ago</p>
-                      </div>
-                    </div>
-                    <img 
-                      src="https://images.pexels.com/photos/36764/marguerite-daisy-beautiful-beauty.jpg?auto=compress&cs=tinysrgb&w=400&h=200&dpr=2"
-                      alt="Nature"
-                      style={{ width: '100%', height: '200px', objectFit: 'cover', borderRadius: '6px', marginBottom: '16px' }}
-                    />
-                    <div>
-                      <p style={{ margin: '0 0 8px 0', color: 'var(--text-color)', lineHeight: '1.6' }}>
-                        Beautiful morning in the garden! The flowers are blooming and the weather is perfect.
-                      </p>
-                      <p style={{ margin: '0', color: 'var(--text-secondary)', lineHeight: '1.6' }}>
-                        Nature has a way of bringing peace to our busy lives. Taking time to appreciate these small moments.
-                      </p>
-                    </div>
-                  </div>
-                )}
+        <div className="example-container">
+          <h3>Card Skeleton</h3>
+          <p>Complete card layout with image, avatar, and content.</p>
+          <div className="example-demo">
+            <div className="ui-skeleton-card">
+              <div className="ui-skeleton-card-header">
+                <SkeletonAvatar size="medium" className="ui-skeleton-card-avatar" />
+                <div className="ui-skeleton-element ui-skeleton-card-title ui-skeleton-element--active" />
+              </div>
+              <SkeletonImage className="ui-skeleton-card-image" />
+              <div className="ui-skeleton-card-content">
+                <div className="ui-skeleton-element ui-skeleton-card-line ui-skeleton-element--active" />
+                <div className="ui-skeleton-element ui-skeleton-card-line ui-skeleton-element--active" />
+                <div className="ui-skeleton-element ui-skeleton-card-line ui-skeleton-element--active" />
               </div>
             </div>
           </div>
           <div className="example-code">
-            <pre>{`// Custom card skeleton
-<div className="ui-skeleton-card">
+            <pre>{`<div className="ui-skeleton-card">
   <div className="ui-skeleton-card-header">
-    <Skeleton.Avatar size="medium" />
+    <SkeletonAvatar size="medium" />
     <div className="ui-skeleton-card-title" />
   </div>
-  <Skeleton.Image style={{ width: '100%', height: '200px' }} />
+  <SkeletonImage className="ui-skeleton-card-image" />
   <div className="ui-skeleton-card-content">
     <div className="ui-skeleton-card-line" />
     <div className="ui-skeleton-card-line" />
     <div className="ui-skeleton-card-line" />
-  </div>
-</div>`}</pre>
-          </div>
-        </div>
-
-        <div className="example-container">
-          <h3>List Loading</h3>
-          <p>Skeleton for list items with consistent structure.</p>
-          <div className="example-demo">
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-              <div style={{ display: 'flex', gap: '16px', alignItems: 'center', marginBottom: '16px' }}>
-                <FormItem label="List Loading">
-                  <Switch checked={listLoading} onChange={setListLoading} />
-                </FormItem>
-                <button 
-                  onClick={() => simulateLoading(setListLoading)}
-                  style={{ 
-                    padding: '6px 12px', 
-                    border: '1px solid var(--success-color)', 
-                    borderRadius: '4px',
-                    background: 'var(--success-color)',
-                    color: 'white',
-                    cursor: 'pointer',
-                    fontSize: '12px'
-                  }}
-                >
-                  Reload List
-                </button>
-              </div>
-
-              <div style={{ maxWidth: '500px' }}>
-                {listLoading ? (
-                  <div className="ui-skeleton-list">
-                    {[1, 2, 3].map((item) => (
-                      <SkeletonNode key={item} active={active} />
-                    ))}
-                  </div>
-                ) : (
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-                    {[
-                      { name: 'Alice Johnson', role: 'Product Designer', time: '5 min ago', avatar: 'https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=64&h=64&dpr=2' },
-                      { name: 'Bob Smith', role: 'Frontend Developer', time: '12 min ago', avatar: 'https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=64&h=64&dpr=2' },
-                      { name: 'Carol Davis', role: 'UX Researcher', time: '1 hour ago', avatar: 'https://images.pexels.com/photos/1680172/pexels-photo-1680172.jpeg?auto=compress&cs=tinysrgb&w=64&h=64&dpr=2' }
-                    ].map((user, index) => (
-                      <div key={index} style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: '12px 0' }}>
-                        <img 
-                          src={user.avatar}
-                          alt={user.name}
-                          style={{ width: '32px', height: '32px', borderRadius: '50%', objectFit: 'cover' }}
-                        />
-                        <div style={{ flex: 1 }}>
-                          <h4 style={{ margin: '0 0 4px 0', color: 'var(--text-color)', fontSize: '14px' }}>{user.name}</h4>
-                          <p style={{ margin: '0', color: 'var(--text-secondary)', fontSize: '12px' }}>{user.role} • {user.time}</p>
-                        </div>
-                        <button style={{ background: 'none', border: 'none', color: 'var(--text-tertiary)', cursor: 'pointer' }}>
-                          <MoreHorizontal size={16} />
-                        </button>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
-          <div className="example-code">
-            <pre>{`// List skeleton
-<div className="ui-skeleton-list">
-  {[1, 2, 3].map((item) => (
-    <Skeleton.Node key={item} active={true} />
-  ))}
-</div>
-
-// Or use main component
-<Skeleton 
-  loading={loading}
-  avatar={{ size: 'medium' }}
-  paragraph={{ rows: 2 }}
->
-  <UserListItem />
-</Skeleton>`}</pre>
-          </div>
-        </div>
-
-        <div className="example-container">
-          <h3>Social Media Post</h3>
-          <p>Real-world example of a social media post skeleton.</p>
-          <div className="example-demo">
-            <div style={{ maxWidth: '500px' }}>
-              <Skeleton loading={true} active={active}>
-                <div>Social media post content</div>
-              </Skeleton>
-              
-              <div style={{ marginTop: '24px', padding: '16px', border: '1px solid var(--border-light)', borderRadius: '8px', background: 'var(--bg-color)' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
-                  <SkeletonAvatar size="medium" active={active} />
-                  <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                    <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ height: '14px', width: '30%' }} />
-                    <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ height: '12px', width: '50%' }} />
-                  </div>
-                  <SkeletonButton shape="circle" size="small" active={active} />
-                </div>
-                
-                <div style={{ marginBottom: '16px' }}>
-                  <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ height: '14px', width: '100%', marginBottom: '8px' }} />
-                  <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ height: '14px', width: '85%', marginBottom: '8px' }} />
-                  <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ height: '14px', width: '60%' }} />
-                </div>
-                
-                <SkeletonImage active={active} style={{ width: '100%', height: '250px', marginBottom: '16px' }} />
-                
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <div style={{ display: 'flex', gap: '24px' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                      <SkeletonButton shape="circle" size="small" active={active} />
-                      <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ height: '12px', width: '30px' }} />
-                    </div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                      <SkeletonButton shape="circle" size="small" active={active} />
-                      <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ height: '12px', width: '25px' }} />
-                    </div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                      <SkeletonButton shape="circle" size="small" active={active} />
-                      <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ height: '12px', width: '35px' }} />
-                    </div>
-                  </div>
-                  <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ height: '12px', width: '60px' }} />
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="example-code">
-            <pre>{`// Social media post skeleton
-<div className="post-skeleton">
-  <div className="post-header">
-    <Skeleton.Avatar size="medium" />
-    <div className="user-info">
-      <div className="skeleton-line" style={{ width: '30%' }} />
-      <div className="skeleton-line" style={{ width: '50%' }} />
-    </div>
-    <Skeleton.Button shape="circle" size="small" />
-  </div>
-  
-  <div className="post-content">
-    <div className="skeleton-line" style={{ width: '100%' }} />
-    <div className="skeleton-line" style={{ width: '85%' }} />
-    <div className="skeleton-line" style={{ width: '60%' }} />
-  </div>
-  
-  <Skeleton.Image style={{ width: '100%', height: '250px' }} />
-  
-  <div className="post-actions">
-    <Skeleton.Button shape="circle" size="small" />
-    <Skeleton.Button shape="circle" size="small" />
-    <Skeleton.Button shape="circle" size="small" />
-  </div>
-</div>`}</pre>
-          </div>
-        </div>
-
-        <div className="example-container">
-          <h3>Dashboard Loading</h3>
-          <p>Complex dashboard layout with multiple skeleton components.</p>
-          <div className="example-demo">
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-              <div style={{ display: 'flex', gap: '16px', alignItems: 'center', marginBottom: '16px' }}>
-                <FormItem label="Dashboard Loading">
-                  <Switch checked={listLoading} onChange={setListLoading} />
-                </FormItem>
-                <button 
-                  onClick={() => simulateLoading(setListLoading)}
-                  style={{ 
-                    padding: '8px 16px', 
-                    border: '1px solid var(--primary-color)', 
-                    borderRadius: '6px',
-                    background: 'var(--primary-color)',
-                    color: 'white',
-                    cursor: 'pointer',
-                    fontSize: '14px',
-                    fontWeight: '500'
-                  }}
-                >
-                  Reload Dashboard
-                </button>
-              </div>
-
-              {listLoading ? (
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-                  {/* Header */}
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0 4px' }}>
-                    <div>
-                      <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ height: '28px', width: '200px', marginBottom: '8px' }} />
-                      <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ height: '16px', width: '300px' }} />
-                    </div>
-                    <div style={{ display: 'flex', gap: '8px' }}>
-                      <SkeletonButton size="medium" active={active} />
-                      <SkeletonAvatar size="medium" active={active} />
-                    </div>
-                  </div>
-
-                  {/* Stats Cards */}
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px' }}>
-                    {[
-                      { title: 'Total Revenue', icon: '💰', trend: '↗️' },
-                      { title: 'Active Users', icon: '👥', trend: '↗️' },
-                      { title: 'Orders', icon: '📦', trend: '↘️' },
-                      { title: 'Conversion Rate', icon: '📊', trend: '↗️' }
-                    ].map((stat, index) => (
-                      <div key={index} style={{ 
-                        padding: '24px', 
-                        border: '1px solid var(--border-light)', 
-                        borderRadius: '12px', 
-                        background: 'var(--bg-color)',
-                        boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)'
-                      }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '16px' }}>
-                          <div style={{ flex: 1 }}>
-                            <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ height: '14px', width: '70%', marginBottom: '12px' }} />
-                            <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ height: '32px', width: '50%', marginBottom: '8px' }} />
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                              <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ height: '12px', width: '20px' }} />
-                              <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ height: '12px', width: '60px' }} />
-                            </div>
-                          </div>
-                          <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ width: '48px', height: '48px', borderRadius: '12px' }} />
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                  
-                  {/* Main Content Grid */}
-                  <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '24px' }}>
-                    {/* Chart Area */}
-                    <div style={{ 
-                      padding: '24px', 
-                      border: '1px solid var(--border-light)', 
-                      borderRadius: '12px', 
-                      background: 'var(--bg-color)',
-                      boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)'
-                    }}>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
-                        <div>
-                          <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ height: '20px', width: '160px', marginBottom: '8px' }} />
-                          <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ height: '14px', width: '240px' }} />
-                        </div>
-                        <div style={{ display: 'flex', gap: '8px' }}>
-                          <SkeletonButton size="small" active={active} />
-                          <SkeletonButton size="small" active={active} />
-                          <SkeletonButton size="small" shape="circle" active={active} />
-                        </div>
-                      </div>
-                      
-                      {/* Chart Legend */}
-                      <div style={{ display: 'flex', gap: '24px', marginBottom: '20px' }}>
-                        {[1, 2, 3].map((item) => (
-                          <div key={item} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                            <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ width: '12px', height: '12px', borderRadius: '50%' }} />
-                            <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ height: '12px', width: '60px' }} />
-                          </div>
-                        ))}
-                      </div>
-                      
-                      <SkeletonImage active={active} style={{ width: '100%', height: '280px', borderRadius: '8px' }} />
-                    </div>
-                    
-                    {/* Right Sidebar */}
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-                      {/* Recent Activity */}
-                      <div style={{ 
-                        padding: '20px', 
-                        border: '1px solid var(--border-light)', 
-                        borderRadius: '12px', 
-                        background: 'var(--bg-color)',
-                        boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)'
-                      }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-                          <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ height: '18px', width: '120px' }} />
-                          <SkeletonButton size="small" shape="circle" active={active} />
-                        </div>
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-                          {[1, 2, 3, 4].map((item) => (
-                            <div key={item} style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                              <SkeletonAvatar size="small" active={active} />
-                              <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                                <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ height: '14px', width: `${Math.random() * 40 + 60}%` }} />
-                                <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ height: '12px', width: `${Math.random() * 30 + 40}%` }} />
-                              </div>
-                              <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ height: '10px', width: '40px' }} />
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-
-                      {/* Quick Actions */}
-                      <div style={{ 
-                        padding: '20px', 
-                        border: '1px solid var(--border-light)', 
-                        borderRadius: '12px', 
-                        background: 'var(--bg-color)',
-                        boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)'
-                      }}>
-                        <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ height: '18px', width: '100px', marginBottom: '16px' }} />
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                          {[1, 2, 3].map((item) => (
-                            <div key={item} style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: '8px', borderRadius: '6px', background: 'var(--bg-secondary)' }}>
-                              <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ width: '32px', height: '32px', borderRadius: '8px' }} />
-                              <div style={{ flex: 1 }}>
-                                <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ height: '14px', width: '80%', marginBottom: '4px' }} />
-                                <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ height: '12px', width: '60%' }} />
-                              </div>
-                              <SkeletonButton size="small" shape="circle" active={active} />
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Bottom Section */}
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px', marginTop: '24px' }}>
-                    {/* Recent Orders Table */}
-                    <div style={{ 
-                      padding: '20px', 
-                      border: '1px solid var(--border-light)', 
-                      borderRadius: '12px', 
-                      background: 'var(--bg-color)',
-                      boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)'
-                    }}>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
-                        <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ height: '18px', width: '140px' }} />
-                        <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ height: '14px', width: '80px' }} />
-                      </div>
-                      
-                      {/* Table Header */}
-                      <div style={{ 
-                        display: 'grid', 
-                        gridTemplateColumns: '2fr 1fr 1fr 80px', 
-                        gap: '16px', 
-                        padding: '12px 0', 
-                        borderBottom: '1px solid var(--border-light)',
-                        marginBottom: '12px'
-                      }}>
-                        <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ height: '12px', width: '60%' }} />
-                        <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ height: '12px', width: '50%' }} />
-                        <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ height: '12px', width: '40%' }} />
-                        <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ height: '12px', width: '100%' }} />
-                      </div>
-                      
-                      {/* Table Rows */}
-                      {[1, 2, 3, 4, 5].map((row) => (
-                        <div key={row} style={{ 
-                          display: 'grid', 
-                          gridTemplateColumns: '2fr 1fr 1fr 80px', 
-                          gap: '16px', 
-                          padding: '12px 0',
-                          borderBottom: row < 5 ? '1px solid var(--border-light)' : 'none'
-                        }}>
-                          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                            <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ width: '24px', height: '24px', borderRadius: '4px' }} />
-                            <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ height: '14px', width: '120px' }} />
-                          </div>
-                          <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ height: '14px', width: '70%' }} />
-                          <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                            <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ width: '8px', height: '8px', borderRadius: '50%' }} />
-                            <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ height: '12px', width: '50px' }} />
-                          </div>
-                          <SkeletonButton size="small" shape="round" active={active} />
-                        </div>
-                      ))}
-                    </div>
-
-                    {/* Performance Metrics */}
-                    <div style={{ 
-                      padding: '20px', 
-                      border: '1px solid var(--border-light)', 
-                      borderRadius: '12px', 
-                      background: 'var(--bg-color)',
-                      boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)'
-                    }}>
-                      <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ height: '18px', width: '160px', marginBottom: '20px' }} />
-                      
-                      {/* Metric Items */}
-                      {[1, 2, 3, 4].map((item) => (
-                        <div key={item} style={{ 
-                          display: 'flex', 
-                          justifyContent: 'space-between', 
-                          alignItems: 'center',
-                          padding: '16px 0',
-                          borderBottom: item < 4 ? '1px solid var(--border-light)' : 'none'
-                        }}>
-                          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                            <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ width: '36px', height: '36px', borderRadius: '8px' }} />
-                            <div>
-                              <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ height: '14px', width: '100px', marginBottom: '6px' }} />
-                              <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ height: '12px', width: '60px' }} />
-                            </div>
-                          </div>
-                          <div style={{ textAlign: 'right' }}>
-                            <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ height: '16px', width: '40px', marginBottom: '4px' }} />
-                            <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ height: '12px', width: '30px' }} />
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              ) : (
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-                  {/* Real Dashboard Header */}
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0 4px' }}>
-                    <div>
-                      <h1 style={{ margin: '0 0 8px 0', color: 'var(--text-color)', fontSize: '28px', fontWeight: '600' }}>Dashboard</h1>
-                      <p style={{ margin: '0', color: 'var(--text-secondary)', fontSize: '16px' }}>Welcome back! Here's what's happening with your business today.</p>
-                    </div>
-                    <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-                      <button style={{ 
-                        padding: '8px 16px', 
-                        border: '1px solid var(--border-color)', 
-                        borderRadius: '6px',
-                        background: 'var(--bg-color)',
-                        color: 'var(--text-color)',
-                        cursor: 'pointer',
-                        fontSize: '14px'
-                      }}>
-                        Export
-                      </button>
-                      <img 
-                        src="https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=64&h=64&dpr=2"
-                        alt="User"
-                        style={{ width: '32px', height: '32px', borderRadius: '50%', objectFit: 'cover' }}
-                      />
-                    </div>
-                  </div>
-
-                  {/* Real Stats Cards */}
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px' }}>
-                    {[
-                      { title: 'Total Revenue', value: '$45,231.89', change: '+20.1%', icon: '💰', positive: true },
-                      { title: 'Active Users', value: '2,350', change: '+180.1%', icon: '👥', positive: true },
-                      { title: 'Orders', value: '12,234', change: '-19%', icon: '📦', positive: false },
-                      { title: 'Conversion Rate', value: '3.2%', change: '+12%', icon: '📊', positive: true }
-                    ].map((stat, index) => (
-                      <div key={index} style={{ 
-                        padding: '24px', 
-                        border: '1px solid var(--border-light)', 
-                        borderRadius: '12px', 
-                        background: 'var(--bg-color)',
-                        boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)'
-                      }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '16px' }}>
-                          <div style={{ flex: 1 }}>
-                            <p style={{ margin: '0 0 12px 0', color: 'var(--text-secondary)', fontSize: '14px' }}>{stat.title}</p>
-                            <p style={{ margin: '0 0 8px 0', color: 'var(--text-color)', fontSize: '32px', fontWeight: '600' }}>{stat.value}</p>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                              <span style={{ color: stat.positive ? 'var(--success-color)' : 'var(--danger-color)', fontSize: '12px' }}>
-                                {stat.positive ? '↗️' : '↘️'}
-                              </span>
-                              <span style={{ color: stat.positive ? 'var(--success-color)' : 'var(--danger-color)', fontSize: '12px', fontWeight: '500' }}>
-                                {stat.change}
-                              </span>
-                            </div>
-                          </div>
-                          <div style={{ 
-                            width: '48px', 
-                            height: '48px', 
-                            borderRadius: '12px', 
-                            background: 'var(--bg-secondary)',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            fontSize: '20px'
-                          }}>
-                            {stat.icon}
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-
-                  {/* Real Content Grid */}
-                  <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '24px' }}>
-                    {/* Chart Area */}
-                    <div style={{ 
-                      padding: '24px', 
-                      border: '1px solid var(--border-light)', 
-                      borderRadius: '12px', 
-                      background: 'var(--bg-color)',
-                      boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)'
-                    }}>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
-                        <div>
-                          <h3 style={{ margin: '0 0 8px 0', color: 'var(--text-color)', fontSize: '20px', fontWeight: '600' }}>Revenue Analytics</h3>
-                          <p style={{ margin: '0', color: 'var(--text-secondary)', fontSize: '14px' }}>Track your revenue performance over time</p>
-                        </div>
-                        <div style={{ display: 'flex', gap: '8px' }}>
-                          <button style={{ 
-                            padding: '6px 12px', 
-                            border: '1px solid var(--primary-color)', 
-                            borderRadius: '4px',
-                            background: 'var(--primary-color)',
-                            color: 'white',
-                            cursor: 'pointer',
-                            fontSize: '12px'
-                          }}>7D</button>
-                          <button style={{ 
-                            padding: '6px 12px', 
-                            border: '1px solid var(--border-color)', 
-                            borderRadius: '4px',
-                            background: 'var(--bg-color)',
-                            color: 'var(--text-color)',
-                            cursor: 'pointer',
-                            fontSize: '12px'
-                          }}>30D</button>
-                          <button style={{ 
-                            padding: '6px 8px', 
-                            border: '1px solid var(--border-color)', 
-                            borderRadius: '4px',
-                            background: 'var(--bg-color)',
-                            color: 'var(--text-color)',
-                            cursor: 'pointer'
-                          }}>⚙️</button>
-                        </div>
-                      </div>
-                      
-                      {/* Chart Legend */}
-                      <div style={{ display: 'flex', gap: '24px', marginBottom: '20px' }}>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                          <div style={{ width: '12px', height: '12px', borderRadius: '50%', background: 'var(--primary-color)' }} />
-                          <span style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>Revenue</span>
-                        </div>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                          <div style={{ width: '12px', height: '12px', borderRadius: '50%', background: 'var(--success-color)' }} />
-                          <span style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>Profit</span>
-                        </div>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                          <div style={{ width: '12px', height: '12px', borderRadius: '50%', background: 'var(--warning-color)' }} />
-                          <span style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>Expenses</span>
-                        </div>
-                      </div>
-                      
-                      <div style={{ 
-                        width: '100%', 
-                        height: '280px', 
-                        borderRadius: '8px',
-                        background: 'linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-hover) 100%)',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        color: 'var(--text-tertiary)',
-                        fontSize: '14px'
-                      }}>
-                        📈 Interactive Chart Area
-                      </div>
-                    </div>
-                    
-                    {/* Right Sidebar */}
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-                      {/* Recent Activity */}
-                      <div style={{ 
-                        padding: '20px', 
-                        border: '1px solid var(--border-light)', 
-                        borderRadius: '12px', 
-                        background: 'var(--bg-color)',
-                        boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)'
-                      }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-                          <h3 style={{ margin: '0', color: 'var(--text-color)', fontSize: '18px', fontWeight: '600' }}>Recent Activity</h3>
-                          <button style={{ 
-                            width: '24px', 
-                            height: '24px', 
-                            border: 'none', 
-                            borderRadius: '4px',
-                            background: 'var(--bg-hover)',
-                            color: 'var(--text-tertiary)',
-                            cursor: 'pointer'
-                          }}>⋯</button>
-                        </div>
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-                          {[
-                            { user: 'Alice Johnson', action: 'completed order #1234', time: '2 min ago', avatar: 'https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=48&h=48&dpr=2' },
-                            { user: 'Bob Smith', action: 'left a review', time: '5 min ago', avatar: 'https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=48&h=48&dpr=2' },
-                            { user: 'Carol Davis', action: 'updated profile', time: '12 min ago', avatar: 'https://images.pexels.com/photos/1680172/pexels-photo-1680172.jpeg?auto=compress&cs=tinysrgb&w=48&h=48&dpr=2' },
-                            { user: 'David Wilson', action: 'made a purchase', time: '1 hour ago', avatar: 'https://images.pexels.com/photos/1043471/pexels-photo-1043471.jpeg?auto=compress&cs=tinysrgb&w=48&h=48&dpr=2' }
-                          ].map((activity, index) => (
-                            <div key={index} style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                              <img 
-                                src={activity.avatar}
-                                alt={activity.user}
-                                style={{ width: '24px', height: '24px', borderRadius: '50%', objectFit: 'cover' }}
-                              />
-                              <div style={{ flex: 1, minWidth: 0 }}>
-                                <p style={{ margin: '0 0 2px 0', color: 'var(--text-color)', fontSize: '14px', fontWeight: '500' }}>
-                                  {activity.user}
-                                </p>
-                                <p style={{ margin: '0', color: 'var(--text-secondary)', fontSize: '12px' }}>
-                                  {activity.action}
-                                </p>
-                              </div>
-                              <span style={{ color: 'var(--text-tertiary)', fontSize: '10px', whiteSpace: 'nowrap' }}>
-                                {activity.time}
-                              </span>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-
-                      {/* Quick Actions */}
-                      <div style={{ 
-                        padding: '20px', 
-                        border: '1px solid var(--border-light)', 
-                        borderRadius: '12px', 
-                        background: 'var(--bg-color)',
-                        boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)'
-                      }}>
-                        <h3 style={{ margin: '0 0 16px 0', color: 'var(--text-color)', fontSize: '18px', fontWeight: '600' }}>Quick Actions</h3>
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                          {[
-                            { title: 'Create Product', desc: 'Add new product to catalog', icon: '📦', color: 'var(--primary-color)' },
-                            { title: 'Send Invoice', desc: 'Generate and send invoice', icon: '📄', color: 'var(--success-color)' },
-                            { title: 'View Reports', desc: 'Access detailed analytics', icon: '📊', color: 'var(--info-color)' }
-                          ].map((action, index) => (
-                            <div key={index} style={{ 
-                              display: 'flex', 
-                              alignItems: 'center', 
-                              gap: '12px', 
-                              padding: '12px', 
-                              borderRadius: '8px', 
-                              background: 'var(--bg-secondary)',
-                              cursor: 'pointer',
-                              transition: 'background-color 0.2s ease'
-                            }}>
-                              <div style={{ 
-                                width: '32px', 
-                                height: '32px', 
-                                borderRadius: '8px', 
-                                background: action.color,
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                fontSize: '16px'
-                              }}>
-                                {action.icon}
-                              </div>
-                              <div style={{ flex: 1 }}>
-                                <p style={{ margin: '0 0 4px 0', color: 'var(--text-color)', fontSize: '14px', fontWeight: '500' }}>{action.title}</p>
-                                <p style={{ margin: '0', color: 'var(--text-secondary)', fontSize: '12px' }}>{action.desc}</p>
-                              </div>
-                              <button style={{ 
-                                width: '24px', 
-                                height: '24px', 
-                                border: 'none', 
-                                borderRadius: '50%',
-                                background: 'var(--bg-hover)',
-                                color: 'var(--text-tertiary)',
-                                cursor: 'pointer'
-                              }}>→</button>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Bottom Section */}
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px' }}>
-                    {/* Recent Orders Table */}
-                    <div style={{ 
-                      padding: '20px', 
-                      border: '1px solid var(--border-light)', 
-                      borderRadius: '12px', 
-                      background: 'var(--bg-color)',
-                      boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)'
-                    }}>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
-                        <h3 style={{ margin: '0', color: 'var(--text-color)', fontSize: '18px', fontWeight: '600' }}>Recent Orders</h3>
-                        <a href="#" style={{ color: 'var(--primary-color)', fontSize: '14px', textDecoration: 'none' }}>View all</a>
-                      </div>
-                      
-                      {/* Table Header */}
-                      <div style={{ 
-                        display: 'grid', 
-                        gridTemplateColumns: '2fr 1fr 1fr 80px', 
-                        gap: '16px', 
-                        padding: '12px 0', 
-                        borderBottom: '1px solid var(--border-light)',
-                        marginBottom: '12px'
-                      }}>
-                        <span style={{ fontSize: '12px', color: 'var(--text-tertiary)', fontWeight: '600', textTransform: 'uppercase' }}>Product</span>
-                        <span style={{ fontSize: '12px', color: 'var(--text-tertiary)', fontWeight: '600', textTransform: 'uppercase' }}>Customer</span>
-                        <span style={{ fontSize: '12px', color: 'var(--text-tertiary)', fontWeight: '600', textTransform: 'uppercase' }}>Status</span>
-                        <span style={{ fontSize: '12px', color: 'var(--text-tertiary)', fontWeight: '600', textTransform: 'uppercase' }}>Action</span>
-                      </div>
-                      
-                      {/* Table Rows */}
-                      {[
-                        { product: 'MacBook Pro', customer: 'John Doe', status: 'Completed', statusColor: 'var(--success-color)' },
-                        { product: 'iPhone 15', customer: 'Jane Smith', status: 'Processing', statusColor: 'var(--warning-color)' },
-                        { product: 'AirPods Pro', customer: 'Bob Johnson', status: 'Shipped', statusColor: 'var(--info-color)' },
-                        { product: 'iPad Air', customer: 'Alice Brown', status: 'Pending', statusColor: 'var(--secondary-color)' },
-                        { product: 'Apple Watch', customer: 'Mike Wilson', status: 'Cancelled', statusColor: 'var(--danger-color)' }
-                      ].map((order, index) => (
-                        <div key={index} style={{ 
-                          display: 'grid', 
-                          gridTemplateColumns: '2fr 1fr 1fr 80px', 
-                          gap: '16px', 
-                          padding: '12px 0',
-                          borderBottom: index < 4 ? '1px solid var(--border-light)' : 'none'
-                        }}>
-                          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                            <div style={{ width: '24px', height: '24px', borderRadius: '4px', background: 'var(--bg-secondary)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '12px' }}>
-                              📱
-                            </div>
-                            <span style={{ fontSize: '14px', color: 'var(--text-color)', fontWeight: '500' }}>{order.product}</span>
-                          </div>
-                          <span style={{ fontSize: '14px', color: 'var(--text-secondary)' }}>{order.customer}</span>
-                          <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                            <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: order.statusColor }} />
-                            <span style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>{order.status}</span>
-                          </div>
-                          <button style={{ 
-                            padding: '4px 8px', 
-                            border: '1px solid var(--border-color)', 
-                            borderRadius: '4px',
-                            background: 'var(--bg-color)',
-                            color: 'var(--text-color)',
-                            cursor: 'pointer',
-                            fontSize: '12px'
-                          }}>View</button>
-                        </div>
-                      ))}
-                    </div>
-
-                    {/* Performance Metrics */}
-                    <div style={{ 
-                      padding: '20px', 
-                      border: '1px solid var(--border-light)', 
-                      borderRadius: '12px', 
-                      background: 'var(--bg-color)',
-                      boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)'
-                    }}>
-                      <h3 style={{ margin: '0 0 20px 0', color: 'var(--text-color)', fontSize: '18px', fontWeight: '600' }}>Performance</h3>
-                      
-                      {[
-                        { title: 'Page Views', value: '24.5k', change: '+12%', icon: '👁️', positive: true },
-                        { title: 'Bounce Rate', value: '2.4%', change: '-8%', icon: '⚡', positive: true },
-                        { title: 'Session Duration', value: '4m 32s', change: '+15%', icon: '⏱️', positive: true },
-                        { title: 'Load Time', value: '1.2s', change: '-5%', icon: '🚀', positive: true }
-                      ].map((metric, index) => (
-                        <div key={index} style={{ 
-                          display: 'flex', 
-                          justifyContent: 'space-between', 
-                          alignItems: 'center',
-                          padding: '16px 0',
-                          borderBottom: index < 3 ? '1px solid var(--border-light)' : 'none'
-                        }}>
-                          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                            <div style={{ 
-                              width: '36px', 
-                              height: '36px', 
-                              borderRadius: '8px',
-                              background: 'var(--bg-secondary)',
-                              display: 'flex',
-                              alignItems: 'center',
-                              justifyContent: 'center',
-                              fontSize: '16px'
-                            }}>
-                              {metric.icon}
-                            </div>
-                            <div>
-                              <p style={{ margin: '0 0 4px 0', color: 'var(--text-color)', fontSize: '14px', fontWeight: '500' }}>{metric.title}</p>
-                              <p style={{ margin: '0', color: 'var(--text-secondary)', fontSize: '12px' }}>Last 30 days</p>
-                            </div>
-                          </div>
-                          <div style={{ textAlign: 'right' }}>
-                            <p style={{ margin: '0 0 4px 0', color: 'var(--text-color)', fontSize: '16px', fontWeight: '600' }}>{metric.value}</p>
-                            <p style={{ margin: '0', color: metric.positive ? 'var(--success-color)' : 'var(--danger-color)', fontSize: '12px', fontWeight: '500' }}>
-                              {metric.change}
-                            </p>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
-          <div className="example-code">
-            <pre>{`// Interactive Dashboard Loading
-const [dashboardLoading, setDashboardLoading] = useState(true);
-
-{dashboardLoading ? (
-  <div className="dashboard-skeleton">
-    {/* Header */}
-    <div className="dashboard-header">
-      <div className="skeleton-line" style={{ height: '28px', width: '200px' }} />
-      <div className="skeleton-line" style={{ height: '16px', width: '300px' }} />
-    </div>
-
-    {/* Stats Grid */}
-    <div className="stats-grid">
-      {[1, 2, 3, 4].map((item) => (
-        <div key={item} className="stat-card-skeleton">
-          <div className="stat-content">
-            <div className="skeleton-line" style={{ width: '70%' }} />
-            <div className="skeleton-line" style={{ height: '32px', width: '50%' }} />
-            <div className="skeleton-trend">
-              <div className="skeleton-line" style={{ width: '20px' }} />
-              <div className="skeleton-line" style={{ width: '60px' }} />
-            </div>
-          </div>
-          <div className="skeleton-icon" />
-        </div>
-      ))}
-    </div>
-
-    {/* Main Content */}
-    <div className="dashboard-main">
-      <div className="chart-section">
-        <div className="chart-header">
-          <div className="skeleton-line" style={{ width: '160px' }} />
-          <div className="chart-controls">
-            <Skeleton.Button size="small" />
-            <Skeleton.Button size="small" />
-          </div>
-        </div>
-        <Skeleton.Image style={{ width: '100%', height: '280px' }} />
-      </div>
-      
-      <div className="sidebar-sections">
-        <div className="activity-section">
-          <div className="skeleton-line" style={{ width: '120px' }} />
-          {[1, 2, 3, 4].map((item) => (
-            <Skeleton.Node key={item} />
-          ))}
-        </div>
-      </div>
-    </div>
-  </div>
-) : (
-  <RealDashboardContent />
-)}`}</pre>
-          </div>
-        </div>
-
-        <div className="example-container">
-          <h3>Interactive Demo</h3>
-          <p>Try different configurations and see real-time changes.</p>
-          <div className="example-demo">
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '16px', padding: '16px', background: 'var(--bg-secondary)', borderRadius: '8px' }}>
-                <FormItem label="Show Animation">
-                  <Switch checked={active} onChange={setActive} />
-                </FormItem>
-                <FormItem label="Avatar Size">
-                  <select 
-                    style={{ 
-                      padding: '6px 8px', 
-                      border: '1px solid var(--border-color)', 
-                      borderRadius: '4px',
-                      background: 'var(--bg-color)',
-                      color: 'var(--text-color)',
-                      fontSize: '14px'
-                    }}
-                    defaultValue="medium"
-                  >
-                    <option value="small">Small</option>
-                    <option value="medium">Medium</option>
-                    <option value="large">Large</option>
-                    <option value="xlarge">X-Large</option>
-                  </select>
-                </FormItem>
-                <FormItem label="Paragraph Rows">
-                  <select 
-                    style={{ 
-                      padding: '6px 8px', 
-                      border: '1px solid var(--border-color)', 
-                      borderRadius: '4px',
-                      background: 'var(--bg-color)',
-                      color: 'var(--text-color)',
-                      fontSize: '14px'
-                    }}
-                    defaultValue="3"
-                  >
-                    <option value="1">1 Row</option>
-                    <option value="2">2 Rows</option>
-                    <option value="3">3 Rows</option>
-                    <option value="4">4 Rows</option>
-                    <option value="5">5 Rows</option>
-                  </select>
-                </FormItem>
-              </div>
-
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '24px' }}>
-                {/* Article Card */}
-                <div style={{ border: '1px solid var(--border-light)', borderRadius: '8px', overflow: 'hidden', background: 'var(--bg-color)' }}>
-                  <SkeletonImage active={active} style={{ width: '100%', height: '160px', borderRadius: '0' }} />
-                  <div style={{ padding: '16px' }}>
-                    <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ height: '18px', width: '80%', marginBottom: '12px' }} />
-                    <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ height: '14px', width: '100%', marginBottom: '8px' }} />
-                    <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ height: '14px', width: '70%', marginBottom: '16px' }} />
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                        <SkeletonAvatar size="small" active={active} />
-                        <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ height: '12px', width: '60px' }} />
-                      </div>
-                      <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ height: '12px', width: '40px' }} />
-                    </div>
-                  </div>
-                </div>
-
-                {/* Profile Card */}
-                <div style={{ border: '1px solid var(--border-light)', borderRadius: '8px', padding: '20px', background: 'var(--bg-color)' }}>
-                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
-                    <SkeletonAvatar size="xlarge" active={active} style={{ marginBottom: '16px' }} />
-                    <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ height: '18px', width: '60%', marginBottom: '8px' }} />
-                    <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ height: '14px', width: '40%', marginBottom: '16px' }} />
-                    <div style={{ display: 'flex', gap: '8px', marginBottom: '16px' }}>
-                      <SkeletonButton size="small" active={active} />
-                      <SkeletonButton size="small" active={active} />
-                    </div>
-                    <div style={{ width: '100%' }}>
-                      <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ height: '12px', width: '100%', marginBottom: '6px' }} />
-                      <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ height: '12px', width: '80%', marginBottom: '6px' }} />
-                      <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ height: '12px', width: '60%' }} />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="example-code">
-            <pre>{`// Article card skeleton
-<div className="article-card">
-  <Skeleton.Image style={{ width: '100%', height: '160px' }} />
-  <div className="article-content">
-    <div className="skeleton-line" style={{ height: '18px', width: '80%' }} />
-    <div className="skeleton-line" style={{ width: '100%' }} />
-    <div className="skeleton-line" style={{ width: '70%' }} />
-    <div className="article-meta">
-      <Skeleton.Avatar size="small" />
-      <div className="skeleton-line" style={{ width: '60px' }} />
-    </div>
-  </div>
-</div>`}</pre>
-          </div>
-        </div>
-
-        <div className="example-container">
-          <h3>Custom Shapes and Sizes</h3>
-          <p>Create custom skeleton layouts with different shapes and sizes.</p>
-          <div className="example-demo">
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-              <div>
-                <h4 style={{ marginBottom: '12px', color: 'var(--text-color)' }}>Custom Shapes</h4>
-                <div style={{ display: 'flex', gap: '16px', alignItems: 'center', flexWrap: 'wrap' }}>
-                  <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ width: '100px', height: '20px', borderRadius: '2px' }} />
-                  <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ width: '80px', height: '30px', borderRadius: '15px' }} />
-                  <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ width: '60px', height: '60px', borderRadius: '50%' }} />
-                  <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ width: '120px', height: '40px', borderRadius: '8px' }} />
-                </div>
-              </div>
-
-              <div>
-                <h4 style={{ marginBottom: '12px', color: 'var(--text-color)' }}>Form Skeleton</h4>
-                <div style={{ maxWidth: '400px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
-                  <div>
-                    <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ height: '14px', width: '25%', marginBottom: '8px' }} />
-                    <SkeletonInput size="medium" active={active} />
-                  </div>
-                  <div>
-                    <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ height: '14px', width: '30%', marginBottom: '8px' }} />
-                    <SkeletonInput size="medium" active={active} />
-                  </div>
-                  <div>
-                    <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ height: '14px', width: '20%', marginBottom: '8px' }} />
-                    <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ height: '80px', width: '100%', borderRadius: '6px' }} />
-                  </div>
-                  <div style={{ display: 'flex', gap: '8px', justifyContent: 'flex-end' }}>
-                    <SkeletonButton size="medium" active={active} />
-                    <SkeletonButton size="medium" active={active} />
-                  </div>
-                </div>
-              </div>
-
-              <div>
-                <h4 style={{ marginBottom: '12px', color: 'var(--text-color)' }}>Table Skeleton</h4>
-                <div style={{ border: '1px solid var(--border-light)', borderRadius: '8px', overflow: 'hidden', background: 'var(--bg-color)' }}>
-                  {/* Table Header */}
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 80px', gap: '16px', padding: '12px 16px', background: 'var(--bg-secondary)', borderBottom: '1px solid var(--border-light)' }}>
-                    <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ height: '14px', width: '60%' }} />
-                    <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ height: '14px', width: '50%' }} />
-                    <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ height: '14px', width: '40%' }} />
-                    <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ height: '14px', width: '100%' }} />
-                  </div>
-                  {/* Table Rows */}
-                  {[1, 2, 3, 4].map((row) => (
-                    <div key={row} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 80px', gap: '16px', padding: '12px 16px', borderBottom: row < 4 ? '1px solid var(--border-light)' : 'none' }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                        <SkeletonAvatar size="small" active={active} />
-                        <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ height: '14px', width: '80%' }} />
-                      </div>
-                      <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ height: '14px', width: '70%' }} />
-                      <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ height: '14px', width: '50%' }} />
-                      <SkeletonButton size="small" shape="round" active={active} />
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="example-code">
-            <pre>{`// Custom skeleton shapes
-<div className="ui-skeleton-element" style={{ 
-  width: '100px', 
-  height: '20px', 
-  borderRadius: '2px' 
-}} />
-
-<div className="ui-skeleton-element" style={{ 
-  width: '60px', 
-  height: '60px', 
-  borderRadius: '50%' 
-}} />
-
-// Form skeleton
-<div className="form-skeleton">
-  <div className="field">
-    <div className="skeleton-line" style={{ width: '25%' }} />
-    <Skeleton.Input size="medium" />
-  </div>
-  <div className="field">
-    <div className="skeleton-line" style={{ width: '30%' }} />
-    <div className="skeleton-line" style={{ height: '80px' }} />
-  </div>
-  <div className="actions">
-    <Skeleton.Button size="medium" />
-    <Skeleton.Button size="medium" />
   </div>
 </div>`}</pre>
           </div>
@@ -1357,8 +294,8 @@ const [dashboardLoading, setDashboardLoading] = useState(true);
             </tr>
             <tr>
               <td>avatar</td>
-              <td>Show avatar placeholder</td>
-              <td>boolean | object</td>
+              <td>Show avatar placeholder or avatar configuration</td>
+              <td>boolean | {`{ size?: 'small' | 'medium' | 'large' | 'xlarge', shape?: 'circle' | 'square', active?: boolean, className?: string, style?: CSSProperties }`}</td>
               <td>false</td>
               <td></td>
             </tr>
@@ -1371,14 +308,14 @@ const [dashboardLoading, setDashboardLoading] = useState(true);
             </tr>
             <tr>
               <td>paragraph</td>
-              <td>Show paragraph placeholder</td>
-              <td>boolean | object</td>
+              <td>Show paragraph placeholder or paragraph configuration</td>
+              <td>boolean | {`{ rows?: number, width?: number | string | Array<number | string> }`}</td>
               <td>true</td>
               <td></td>
             </tr>
             <tr>
               <td>round</td>
-              <td>Show paragraph and title radius when true</td>
+              <td>Show skeleton element with round corner</td>
               <td>boolean</td>
               <td>false</td>
               <td></td>
@@ -1392,15 +329,15 @@ const [dashboardLoading, setDashboardLoading] = useState(true);
             </tr>
             <tr>
               <td>title</td>
-              <td>Show title placeholder</td>
-              <td>boolean | object</td>
+              <td>Show title placeholder or title configuration</td>
+              <td>boolean | {`{ width?: number | string }`}</td>
               <td>true</td>
               <td></td>
             </tr>
           </tbody>
         </table>
 
-        <h3>Skeleton.Avatar</h3>
+        <h3>SkeletonAvatar</h3>
         <table className="api-table">
           <thead>
             <tr>
@@ -1432,7 +369,7 @@ const [dashboardLoading, setDashboardLoading] = useState(true);
           </tbody>
         </table>
 
-        <h3>Skeleton.Button</h3>
+        <h3>SkeletonButton</h3>
         <table className="api-table">
           <thead>
             <tr>
@@ -1464,7 +401,7 @@ const [dashboardLoading, setDashboardLoading] = useState(true);
           </tbody>
         </table>
 
-        <h3>Skeleton.Input</h3>
+        <h3>SkeletonInput</h3>
         <table className="api-table">
           <thead>
             <tr>
@@ -1490,7 +427,7 @@ const [dashboardLoading, setDashboardLoading] = useState(true);
           </tbody>
         </table>
 
-        <h3>Skeleton.Image</h3>
+        <h3>SkeletonImage</h3>
         <table className="api-table">
           <thead>
             <tr>
@@ -1522,37 +459,29 @@ const [dashboardLoading, setDashboardLoading] = useState(true);
         
         <h3>Usage Principles</h3>
         <ul>
-          <li><strong>Perceived Performance:</strong> Use skeletons to improve perceived loading performance</li>
-          <li><strong>Content Structure:</strong> Match the skeleton structure to the actual content layout</li>
-          <li><strong>Progressive Loading:</strong> Show skeletons for slow-loading content only</li>
-          <li><strong>Consistent Timing:</strong> Use consistent animation timing across all skeletons</li>
+          <li><strong>Predictable:</strong> Use skeleton shapes that match the final content layout</li>
+          <li><strong>Contextual:</strong> Show skeleton only during actual loading states</li>
+          <li><strong>Consistent:</strong> Use consistent skeleton patterns across your application</li>
+          <li><strong>Performance:</strong> Use skeleton to improve perceived performance</li>
         </ul>
 
         <h3>Best Practices</h3>
         <ul>
-          <li>Use skeleton screens for content that takes more than 1 second to load</li>
-          <li>Match the skeleton structure as closely as possible to the final content</li>
-          <li>Use appropriate sizes and shapes for different content types</li>
-          <li>Consider using static skeletons for very fast loading content</li>
-          <li>Combine different skeleton components for complex layouts</li>
-          <li>Use the loading prop to conditionally show skeletons vs real content</li>
+          <li>Match skeleton structure to actual content layout</li>
+          <li>Use appropriate animation timing (not too fast, not too slow)</li>
+          <li>Consider using different skeleton variants for different content types</li>
+          <li>Don't show skeleton for very short loading times (&lt;200ms)</li>
+          <li>Use skeleton for initial page loads and data fetching</li>
+          <li>Combine with actual loading indicators for long operations</li>
         </ul>
 
         <h3>Accessibility</h3>
         <ul>
-          <li>Skeletons include proper ARIA labels and roles</li>
-          <li>Loading states are announced to screen readers</li>
-          <li>Animation can be disabled for users who prefer reduced motion</li>
+          <li>Skeleton elements include proper ARIA labels and roles</li>
+          <li>Loading state is announced to screen readers</li>
+          <li>Animation can be disabled for users with motion sensitivity</li>
           <li>High contrast mode support for better visibility</li>
-          <li>Semantic HTML structure for better screen reader navigation</li>
-        </ul>
-
-        <h3>Performance Tips</h3>
-        <ul>
-          <li>Use CSS animations instead of JavaScript for better performance</li>
-          <li>Limit the number of animated elements on screen simultaneously</li>
-          <li>Consider using static skeletons for very short loading times</li>
-          <li>Use the active prop to control animation based on user preferences</li>
+          <li>Proper semantic structure for content hierarchy</li>
         </ul>
       </div>
     </div>

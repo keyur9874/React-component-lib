@@ -5,10 +5,13 @@ import './Skeleton.css';
 export interface SkeletonProps {
   /** Whether to show animation */
   active?: boolean;
-  /** Whether to show avatar placeholder */
+  /** Whether to show avatar placeholder or avatar configuration */
   avatar?: boolean | {
     size?: 'small' | 'medium' | 'large' | 'xlarge';
     shape?: 'circle' | 'square';
+    active?: boolean;
+    className?: string;
+    style?: React.CSSProperties;
   };
   /** Whether to show loading state */
   loading?: boolean;
