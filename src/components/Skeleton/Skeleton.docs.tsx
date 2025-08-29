@@ -453,90 +453,684 @@ export const SkeletonDocs: React.FC = () => {
           <h3>Dashboard Loading</h3>
           <p>Complex dashboard layout with multiple skeleton components.</p>
           <div className="example-demo">
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '16px' }}>
-              {/* Stats Cards */}
-              {[1, 2, 3, 4].map((item) => (
-                <div key={item} style={{ padding: '16px', border: '1px solid var(--border-light)', borderRadius: '8px', background: 'var(--bg-color)' }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '12px' }}>
-                    <div style={{ flex: 1 }}>
-                      <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ height: '12px', width: '60%', marginBottom: '8px' }} />
-                      <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ height: '24px', width: '40%' }} />
-                    </div>
-                    <SkeletonButton shape="circle" size="medium" active={active} />
-                  </div>
-                  <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ height: '12px', width: '80%' }} />
-                </div>
-              ))}
-            </div>
-            
-            <div style={{ marginTop: '24px', display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '16px' }}>
-              {/* Chart Area */}
-              <div style={{ padding: '16px', border: '1px solid var(--border-light)', borderRadius: '8px', background: 'var(--bg-color)' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-                  <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ height: '16px', width: '25%' }} />
-                  <div style={{ display: 'flex', gap: '8px' }}>
-                    <SkeletonButton size="small" active={active} />
-                    <SkeletonButton size="small" active={active} />
-                  </div>
-                </div>
-                <SkeletonImage active={active} style={{ width: '100%', height: '200px' }} />
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+              <div style={{ display: 'flex', gap: '16px', alignItems: 'center', marginBottom: '16px' }}>
+                <FormItem label="Dashboard Loading">
+                  <Switch checked={listLoading} onChange={setListLoading} />
+                </FormItem>
+                <button 
+                  onClick={() => simulateLoading(setListLoading)}
+                  style={{ 
+                    padding: '8px 16px', 
+                    border: '1px solid var(--primary-color)', 
+                    borderRadius: '6px',
+                    background: 'var(--primary-color)',
+                    color: 'white',
+                    cursor: 'pointer',
+                    fontSize: '14px',
+                    fontWeight: '500'
+                  }}
+                >
+                  Reload Dashboard
+                </button>
               </div>
-              
-              {/* Activity Feed */}
-              <div style={{ padding: '16px', border: '1px solid var(--border-light)', borderRadius: '8px', background: 'var(--bg-color)' }}>
-                <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ height: '16px', width: '60%', marginBottom: '16px' }} />
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                  {[1, 2, 3].map((item) => (
-                    <div key={item} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                      <SkeletonAvatar size="small" active={active} />
-                      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                        <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ height: '12px', width: '70%' }} />
-                        <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ height: '10px', width: '40%' }} />
+
+              {listLoading ? (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+                  {/* Header */}
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0 4px' }}>
+                    <div>
+                      <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ height: '28px', width: '200px', marginBottom: '8px' }} />
+                      <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ height: '16px', width: '300px' }} />
+                    </div>
+                    <div style={{ display: 'flex', gap: '8px' }}>
+                      <SkeletonButton size="medium" active={active} />
+                      <SkeletonAvatar size="medium" active={active} />
+                    </div>
+                  </div>
+
+                  {/* Stats Cards */}
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px' }}>
+                    {[
+                      { title: 'Total Revenue', icon: '💰', trend: '↗️' },
+                      { title: 'Active Users', icon: '👥', trend: '↗️' },
+                      { title: 'Orders', icon: '📦', trend: '↘️' },
+                      { title: 'Conversion Rate', icon: '📊', trend: '↗️' }
+                    ].map((stat, index) => (
+                      <div key={index} style={{ 
+                        padding: '24px', 
+                        border: '1px solid var(--border-light)', 
+                        borderRadius: '12px', 
+                        background: 'var(--bg-color)',
+                        boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)'
+                      }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '16px' }}>
+                          <div style={{ flex: 1 }}>
+                            <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ height: '14px', width: '70%', marginBottom: '12px' }} />
+                            <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ height: '32px', width: '50%', marginBottom: '8px' }} />
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                              <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ height: '12px', width: '20px' }} />
+                              <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ height: '12px', width: '60px' }} />
+                            </div>
+                          </div>
+                          <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ width: '48px', height: '48px', borderRadius: '12px' }} />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  
+                  {/* Main Content Grid */}
+                  <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '24px' }}>
+                    {/* Chart Area */}
+                    <div style={{ 
+                      padding: '24px', 
+                      border: '1px solid var(--border-light)', 
+                      borderRadius: '12px', 
+                      background: 'var(--bg-color)',
+                      boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)'
+                    }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
+                        <div>
+                          <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ height: '20px', width: '160px', marginBottom: '8px' }} />
+                          <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ height: '14px', width: '240px' }} />
+                        </div>
+                        <div style={{ display: 'flex', gap: '8px' }}>
+                          <SkeletonButton size="small" active={active} />
+                          <SkeletonButton size="small" active={active} />
+                          <SkeletonButton size="small" shape="circle" active={active} />
+                        </div>
+                      </div>
+                      
+                      {/* Chart Legend */}
+                      <div style={{ display: 'flex', gap: '24px', marginBottom: '20px' }}>
+                        {[1, 2, 3].map((item) => (
+                          <div key={item} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                            <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ width: '12px', height: '12px', borderRadius: '50%' }} />
+                            <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ height: '12px', width: '60px' }} />
+                          </div>
+                        ))}
+                      </div>
+                      
+                      <SkeletonImage active={active} style={{ width: '100%', height: '280px', borderRadius: '8px' }} />
+                    </div>
+                    
+                    {/* Right Sidebar */}
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                      {/* Recent Activity */}
+                      <div style={{ 
+                        padding: '20px', 
+                        border: '1px solid var(--border-light)', 
+                        borderRadius: '12px', 
+                        background: 'var(--bg-color)',
+                        boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)'
+                      }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+                          <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ height: '18px', width: '120px' }} />
+                          <SkeletonButton size="small" shape="circle" active={active} />
+                        </div>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                          {[1, 2, 3, 4].map((item) => (
+                            <div key={item} style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                              <SkeletonAvatar size="small" active={active} />
+                              <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                                <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ height: '14px', width: `${Math.random() * 40 + 60}%` }} />
+                                <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ height: '12px', width: `${Math.random() * 30 + 40}%` }} />
+                              </div>
+                              <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ height: '10px', width: '40px' }} />
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Quick Actions */}
+                      <div style={{ 
+                        padding: '20px', 
+                        border: '1px solid var(--border-light)', 
+                        borderRadius: '12px', 
+                        background: 'var(--bg-color)',
+                        boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)'
+                      }}>
+                        <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ height: '18px', width: '100px', marginBottom: '16px' }} />
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                          {[1, 2, 3].map((item) => (
+                            <div key={item} style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: '8px', borderRadius: '6px', background: 'var(--bg-secondary)' }}>
+                              <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ width: '32px', height: '32px', borderRadius: '8px' }} />
+                              <div style={{ flex: 1 }}>
+                                <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ height: '14px', width: '80%', marginBottom: '4px' }} />
+                                <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ height: '12px', width: '60%' }} />
+                              </div>
+                              <SkeletonButton size="small" shape="circle" active={active} />
+                            </div>
+                          ))}
+                        </div>
                       </div>
                     </div>
-                  ))}
+                  </div>
+
+                  {/* Bottom Section */}
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px', marginTop: '24px' }}>
+                    {/* Recent Orders Table */}
+                    <div style={{ 
+                      padding: '20px', 
+                      border: '1px solid var(--border-light)', 
+                      borderRadius: '12px', 
+                      background: 'var(--bg-color)',
+                      boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)'
+                    }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+                        <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ height: '18px', width: '140px' }} />
+                        <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ height: '14px', width: '80px' }} />
+                      </div>
+                      
+                      {/* Table Header */}
+                      <div style={{ 
+                        display: 'grid', 
+                        gridTemplateColumns: '2fr 1fr 1fr 80px', 
+                        gap: '16px', 
+                        padding: '12px 0', 
+                        borderBottom: '1px solid var(--border-light)',
+                        marginBottom: '12px'
+                      }}>
+                        <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ height: '12px', width: '60%' }} />
+                        <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ height: '12px', width: '50%' }} />
+                        <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ height: '12px', width: '40%' }} />
+                        <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ height: '12px', width: '100%' }} />
+                      </div>
+                      
+                      {/* Table Rows */}
+                      {[1, 2, 3, 4, 5].map((row) => (
+                        <div key={row} style={{ 
+                          display: 'grid', 
+                          gridTemplateColumns: '2fr 1fr 1fr 80px', 
+                          gap: '16px', 
+                          padding: '12px 0',
+                          borderBottom: row < 5 ? '1px solid var(--border-light)' : 'none'
+                        }}>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                            <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ width: '24px', height: '24px', borderRadius: '4px' }} />
+                            <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ height: '14px', width: '120px' }} />
+                          </div>
+                          <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ height: '14px', width: '70%' }} />
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                            <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ width: '8px', height: '8px', borderRadius: '50%' }} />
+                            <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ height: '12px', width: '50px' }} />
+                          </div>
+                          <SkeletonButton size="small" shape="round" active={active} />
+                        </div>
+                      ))}
+                    </div>
+
+                    {/* Performance Metrics */}
+                    <div style={{ 
+                      padding: '20px', 
+                      border: '1px solid var(--border-light)', 
+                      borderRadius: '12px', 
+                      background: 'var(--bg-color)',
+                      boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)'
+                    }}>
+                      <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ height: '18px', width: '160px', marginBottom: '20px' }} />
+                      
+                      {/* Metric Items */}
+                      {[1, 2, 3, 4].map((item) => (
+                        <div key={item} style={{ 
+                          display: 'flex', 
+                          justifyContent: 'space-between', 
+                          alignItems: 'center',
+                          padding: '16px 0',
+                          borderBottom: item < 4 ? '1px solid var(--border-light)' : 'none'
+                        }}>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                            <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ width: '36px', height: '36px', borderRadius: '8px' }} />
+                            <div>
+                              <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ height: '14px', width: '100px', marginBottom: '6px' }} />
+                              <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ height: '12px', width: '60px' }} />
+                            </div>
+                          </div>
+                          <div style={{ textAlign: 'right' }}>
+                            <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ height: '16px', width: '40px', marginBottom: '4px' }} />
+                            <div className={`ui-skeleton-element ${active ? 'ui-skeleton-element--active' : ''}`} style={{ height: '12px', width: '30px' }} />
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
                 </div>
-              </div>
+              ) : (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+                  {/* Real Dashboard Header */}
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0 4px' }}>
+                    <div>
+                      <h1 style={{ margin: '0 0 8px 0', color: 'var(--text-color)', fontSize: '28px', fontWeight: '600' }}>Dashboard</h1>
+                      <p style={{ margin: '0', color: 'var(--text-secondary)', fontSize: '16px' }}>Welcome back! Here's what's happening with your business today.</p>
+                    </div>
+                    <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                      <button style={{ 
+                        padding: '8px 16px', 
+                        border: '1px solid var(--border-color)', 
+                        borderRadius: '6px',
+                        background: 'var(--bg-color)',
+                        color: 'var(--text-color)',
+                        cursor: 'pointer',
+                        fontSize: '14px'
+                      }}>
+                        Export
+                      </button>
+                      <img 
+                        src="https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=64&h=64&dpr=2"
+                        alt="User"
+                        style={{ width: '32px', height: '32px', borderRadius: '50%', objectFit: 'cover' }}
+                      />
+                    </div>
+                  </div>
+
+                  {/* Real Stats Cards */}
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px' }}>
+                    {[
+                      { title: 'Total Revenue', value: '$45,231.89', change: '+20.1%', icon: '💰', positive: true },
+                      { title: 'Active Users', value: '2,350', change: '+180.1%', icon: '👥', positive: true },
+                      { title: 'Orders', value: '12,234', change: '-19%', icon: '📦', positive: false },
+                      { title: 'Conversion Rate', value: '3.2%', change: '+12%', icon: '📊', positive: true }
+                    ].map((stat, index) => (
+                      <div key={index} style={{ 
+                        padding: '24px', 
+                        border: '1px solid var(--border-light)', 
+                        borderRadius: '12px', 
+                        background: 'var(--bg-color)',
+                        boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)'
+                      }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '16px' }}>
+                          <div style={{ flex: 1 }}>
+                            <p style={{ margin: '0 0 12px 0', color: 'var(--text-secondary)', fontSize: '14px' }}>{stat.title}</p>
+                            <p style={{ margin: '0 0 8px 0', color: 'var(--text-color)', fontSize: '32px', fontWeight: '600' }}>{stat.value}</p>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                              <span style={{ color: stat.positive ? 'var(--success-color)' : 'var(--danger-color)', fontSize: '12px' }}>
+                                {stat.positive ? '↗️' : '↘️'}
+                              </span>
+                              <span style={{ color: stat.positive ? 'var(--success-color)' : 'var(--danger-color)', fontSize: '12px', fontWeight: '500' }}>
+                                {stat.change}
+                              </span>
+                            </div>
+                          </div>
+                          <div style={{ 
+                            width: '48px', 
+                            height: '48px', 
+                            borderRadius: '12px', 
+                            background: 'var(--bg-secondary)',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            fontSize: '20px'
+                          }}>
+                            {stat.icon}
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Real Content Grid */}
+                  <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '24px' }}>
+                    {/* Chart Area */}
+                    <div style={{ 
+                      padding: '24px', 
+                      border: '1px solid var(--border-light)', 
+                      borderRadius: '12px', 
+                      background: 'var(--bg-color)',
+                      boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)'
+                    }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
+                        <div>
+                          <h3 style={{ margin: '0 0 8px 0', color: 'var(--text-color)', fontSize: '20px', fontWeight: '600' }}>Revenue Analytics</h3>
+                          <p style={{ margin: '0', color: 'var(--text-secondary)', fontSize: '14px' }}>Track your revenue performance over time</p>
+                        </div>
+                        <div style={{ display: 'flex', gap: '8px' }}>
+                          <button style={{ 
+                            padding: '6px 12px', 
+                            border: '1px solid var(--primary-color)', 
+                            borderRadius: '4px',
+                            background: 'var(--primary-color)',
+                            color: 'white',
+                            cursor: 'pointer',
+                            fontSize: '12px'
+                          }}>7D</button>
+                          <button style={{ 
+                            padding: '6px 12px', 
+                            border: '1px solid var(--border-color)', 
+                            borderRadius: '4px',
+                            background: 'var(--bg-color)',
+                            color: 'var(--text-color)',
+                            cursor: 'pointer',
+                            fontSize: '12px'
+                          }}>30D</button>
+                          <button style={{ 
+                            padding: '6px 8px', 
+                            border: '1px solid var(--border-color)', 
+                            borderRadius: '4px',
+                            background: 'var(--bg-color)',
+                            color: 'var(--text-color)',
+                            cursor: 'pointer'
+                          }}>⚙️</button>
+                        </div>
+                      </div>
+                      
+                      {/* Chart Legend */}
+                      <div style={{ display: 'flex', gap: '24px', marginBottom: '20px' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                          <div style={{ width: '12px', height: '12px', borderRadius: '50%', background: 'var(--primary-color)' }} />
+                          <span style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>Revenue</span>
+                        </div>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                          <div style={{ width: '12px', height: '12px', borderRadius: '50%', background: 'var(--success-color)' }} />
+                          <span style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>Profit</span>
+                        </div>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                          <div style={{ width: '12px', height: '12px', borderRadius: '50%', background: 'var(--warning-color)' }} />
+                          <span style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>Expenses</span>
+                        </div>
+                      </div>
+                      
+                      <div style={{ 
+                        width: '100%', 
+                        height: '280px', 
+                        borderRadius: '8px',
+                        background: 'linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-hover) 100%)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        color: 'var(--text-tertiary)',
+                        fontSize: '14px'
+                      }}>
+                        📈 Interactive Chart Area
+                      </div>
+                    </div>
+                    
+                    {/* Right Sidebar */}
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                      {/* Recent Activity */}
+                      <div style={{ 
+                        padding: '20px', 
+                        border: '1px solid var(--border-light)', 
+                        borderRadius: '12px', 
+                        background: 'var(--bg-color)',
+                        boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)'
+                      }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+                          <h3 style={{ margin: '0', color: 'var(--text-color)', fontSize: '18px', fontWeight: '600' }}>Recent Activity</h3>
+                          <button style={{ 
+                            width: '24px', 
+                            height: '24px', 
+                            border: 'none', 
+                            borderRadius: '4px',
+                            background: 'var(--bg-hover)',
+                            color: 'var(--text-tertiary)',
+                            cursor: 'pointer'
+                          }}>⋯</button>
+                        </div>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                          {[
+                            { user: 'Alice Johnson', action: 'completed order #1234', time: '2 min ago', avatar: 'https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=48&h=48&dpr=2' },
+                            { user: 'Bob Smith', action: 'left a review', time: '5 min ago', avatar: 'https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=48&h=48&dpr=2' },
+                            { user: 'Carol Davis', action: 'updated profile', time: '12 min ago', avatar: 'https://images.pexels.com/photos/1680172/pexels-photo-1680172.jpeg?auto=compress&cs=tinysrgb&w=48&h=48&dpr=2' },
+                            { user: 'David Wilson', action: 'made a purchase', time: '1 hour ago', avatar: 'https://images.pexels.com/photos/1043471/pexels-photo-1043471.jpeg?auto=compress&cs=tinysrgb&w=48&h=48&dpr=2' }
+                          ].map((activity, index) => (
+                            <div key={index} style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                              <img 
+                                src={activity.avatar}
+                                alt={activity.user}
+                                style={{ width: '24px', height: '24px', borderRadius: '50%', objectFit: 'cover' }}
+                              />
+                              <div style={{ flex: 1, minWidth: 0 }}>
+                                <p style={{ margin: '0 0 2px 0', color: 'var(--text-color)', fontSize: '14px', fontWeight: '500' }}>
+                                  {activity.user}
+                                </p>
+                                <p style={{ margin: '0', color: 'var(--text-secondary)', fontSize: '12px' }}>
+                                  {activity.action}
+                                </p>
+                              </div>
+                              <span style={{ color: 'var(--text-tertiary)', fontSize: '10px', whiteSpace: 'nowrap' }}>
+                                {activity.time}
+                              </span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Quick Actions */}
+                      <div style={{ 
+                        padding: '20px', 
+                        border: '1px solid var(--border-light)', 
+                        borderRadius: '12px', 
+                        background: 'var(--bg-color)',
+                        boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)'
+                      }}>
+                        <h3 style={{ margin: '0 0 16px 0', color: 'var(--text-color)', fontSize: '18px', fontWeight: '600' }}>Quick Actions</h3>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                          {[
+                            { title: 'Create Product', desc: 'Add new product to catalog', icon: '📦', color: 'var(--primary-color)' },
+                            { title: 'Send Invoice', desc: 'Generate and send invoice', icon: '📄', color: 'var(--success-color)' },
+                            { title: 'View Reports', desc: 'Access detailed analytics', icon: '📊', color: 'var(--info-color)' }
+                          ].map((action, index) => (
+                            <div key={index} style={{ 
+                              display: 'flex', 
+                              alignItems: 'center', 
+                              gap: '12px', 
+                              padding: '12px', 
+                              borderRadius: '8px', 
+                              background: 'var(--bg-secondary)',
+                              cursor: 'pointer',
+                              transition: 'background-color 0.2s ease'
+                            }}>
+                              <div style={{ 
+                                width: '32px', 
+                                height: '32px', 
+                                borderRadius: '8px', 
+                                background: action.color,
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                fontSize: '16px'
+                              }}>
+                                {action.icon}
+                              </div>
+                              <div style={{ flex: 1 }}>
+                                <p style={{ margin: '0 0 4px 0', color: 'var(--text-color)', fontSize: '14px', fontWeight: '500' }}>{action.title}</p>
+                                <p style={{ margin: '0', color: 'var(--text-secondary)', fontSize: '12px' }}>{action.desc}</p>
+                              </div>
+                              <button style={{ 
+                                width: '24px', 
+                                height: '24px', 
+                                border: 'none', 
+                                borderRadius: '50%',
+                                background: 'var(--bg-hover)',
+                                color: 'var(--text-tertiary)',
+                                cursor: 'pointer'
+                              }}>→</button>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Bottom Section */}
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px' }}>
+                    {/* Recent Orders Table */}
+                    <div style={{ 
+                      padding: '20px', 
+                      border: '1px solid var(--border-light)', 
+                      borderRadius: '12px', 
+                      background: 'var(--bg-color)',
+                      boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)'
+                    }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+                        <h3 style={{ margin: '0', color: 'var(--text-color)', fontSize: '18px', fontWeight: '600' }}>Recent Orders</h3>
+                        <a href="#" style={{ color: 'var(--primary-color)', fontSize: '14px', textDecoration: 'none' }}>View all</a>
+                      </div>
+                      
+                      {/* Table Header */}
+                      <div style={{ 
+                        display: 'grid', 
+                        gridTemplateColumns: '2fr 1fr 1fr 80px', 
+                        gap: '16px', 
+                        padding: '12px 0', 
+                        borderBottom: '1px solid var(--border-light)',
+                        marginBottom: '12px'
+                      }}>
+                        <span style={{ fontSize: '12px', color: 'var(--text-tertiary)', fontWeight: '600', textTransform: 'uppercase' }}>Product</span>
+                        <span style={{ fontSize: '12px', color: 'var(--text-tertiary)', fontWeight: '600', textTransform: 'uppercase' }}>Customer</span>
+                        <span style={{ fontSize: '12px', color: 'var(--text-tertiary)', fontWeight: '600', textTransform: 'uppercase' }}>Status</span>
+                        <span style={{ fontSize: '12px', color: 'var(--text-tertiary)', fontWeight: '600', textTransform: 'uppercase' }}>Action</span>
+                      </div>
+                      
+                      {/* Table Rows */}
+                      {[
+                        { product: 'MacBook Pro', customer: 'John Doe', status: 'Completed', statusColor: 'var(--success-color)' },
+                        { product: 'iPhone 15', customer: 'Jane Smith', status: 'Processing', statusColor: 'var(--warning-color)' },
+                        { product: 'AirPods Pro', customer: 'Bob Johnson', status: 'Shipped', statusColor: 'var(--info-color)' },
+                        { product: 'iPad Air', customer: 'Alice Brown', status: 'Pending', statusColor: 'var(--secondary-color)' },
+                        { product: 'Apple Watch', customer: 'Mike Wilson', status: 'Cancelled', statusColor: 'var(--danger-color)' }
+                      ].map((order, index) => (
+                        <div key={index} style={{ 
+                          display: 'grid', 
+                          gridTemplateColumns: '2fr 1fr 1fr 80px', 
+                          gap: '16px', 
+                          padding: '12px 0',
+                          borderBottom: index < 4 ? '1px solid var(--border-light)' : 'none'
+                        }}>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                            <div style={{ width: '24px', height: '24px', borderRadius: '4px', background: 'var(--bg-secondary)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '12px' }}>
+                              📱
+                            </div>
+                            <span style={{ fontSize: '14px', color: 'var(--text-color)', fontWeight: '500' }}>{order.product}</span>
+                          </div>
+                          <span style={{ fontSize: '14px', color: 'var(--text-secondary)' }}>{order.customer}</span>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                            <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: order.statusColor }} />
+                            <span style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>{order.status}</span>
+                          </div>
+                          <button style={{ 
+                            padding: '4px 8px', 
+                            border: '1px solid var(--border-color)', 
+                            borderRadius: '4px',
+                            background: 'var(--bg-color)',
+                            color: 'var(--text-color)',
+                            cursor: 'pointer',
+                            fontSize: '12px'
+                          }}>View</button>
+                        </div>
+                      ))}
+                    </div>
+
+                    {/* Performance Metrics */}
+                    <div style={{ 
+                      padding: '20px', 
+                      border: '1px solid var(--border-light)', 
+                      borderRadius: '12px', 
+                      background: 'var(--bg-color)',
+                      boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)'
+                    }}>
+                      <h3 style={{ margin: '0 0 20px 0', color: 'var(--text-color)', fontSize: '18px', fontWeight: '600' }}>Performance</h3>
+                      
+                      {[
+                        { title: 'Page Views', value: '24.5k', change: '+12%', icon: '👁️', positive: true },
+                        { title: 'Bounce Rate', value: '2.4%', change: '-8%', icon: '⚡', positive: true },
+                        { title: 'Session Duration', value: '4m 32s', change: '+15%', icon: '⏱️', positive: true },
+                        { title: 'Load Time', value: '1.2s', change: '-5%', icon: '🚀', positive: true }
+                      ].map((metric, index) => (
+                        <div key={index} style={{ 
+                          display: 'flex', 
+                          justifyContent: 'space-between', 
+                          alignItems: 'center',
+                          padding: '16px 0',
+                          borderBottom: index < 3 ? '1px solid var(--border-light)' : 'none'
+                        }}>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                            <div style={{ 
+                              width: '36px', 
+                              height: '36px', 
+                              borderRadius: '8px',
+                              background: 'var(--bg-secondary)',
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              fontSize: '16px'
+                            }}>
+                              {metric.icon}
+                            </div>
+                            <div>
+                              <p style={{ margin: '0 0 4px 0', color: 'var(--text-color)', fontSize: '14px', fontWeight: '500' }}>{metric.title}</p>
+                              <p style={{ margin: '0', color: 'var(--text-secondary)', fontSize: '12px' }}>Last 30 days</p>
+                            </div>
+                          </div>
+                          <div style={{ textAlign: 'right' }}>
+                            <p style={{ margin: '0 0 4px 0', color: 'var(--text-color)', fontSize: '16px', fontWeight: '600' }}>{metric.value}</p>
+                            <p style={{ margin: '0', color: metric.positive ? 'var(--success-color)' : 'var(--danger-color)', fontSize: '12px', fontWeight: '500' }}>
+                              {metric.change}
+                            </p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
           <div className="example-code">
-            <pre>{`// Dashboard skeleton layout
-<div className="dashboard-skeleton">
-  {/* Stats Cards */}
-  <div className="stats-grid">
-    {[1, 2, 3, 4].map((item) => (
-      <div key={item} className="stat-card">
-        <div className="stat-header">
-          <div className="skeleton-line" style={{ width: '60%' }} />
-          <Skeleton.Button shape="circle" size="medium" />
-        </div>
-        <div className="skeleton-line" style={{ height: '24px', width: '40%' }} />
-        <div className="skeleton-line" style={{ width: '80%' }} />
-      </div>
-    ))}
-  </div>
-  
-  {/* Chart and Activity */}
-  <div className="main-content">
-    <div className="chart-area">
-      <div className="chart-header">
-        <div className="skeleton-line" style={{ width: '25%' }} />
-        <div className="chart-controls">
-          <Skeleton.Button size="small" />
-          <Skeleton.Button size="small" />
-        </div>
-      </div>
-      <Skeleton.Image style={{ width: '100%', height: '200px' }} />
+            <pre>{`// Interactive Dashboard Loading
+const [dashboardLoading, setDashboardLoading] = useState(true);
+
+{dashboardLoading ? (
+  <div className="dashboard-skeleton">
+    {/* Header */}
+    <div className="dashboard-header">
+      <div className="skeleton-line" style={{ height: '28px', width: '200px' }} />
+      <div className="skeleton-line" style={{ height: '16px', width: '300px' }} />
     </div>
-    
-    <div className="activity-feed">
-      <div className="skeleton-line" style={{ width: '60%' }} />
-      {[1, 2, 3].map((item) => (
-        <Skeleton.Node key={item} />
+
+    {/* Stats Grid */}
+    <div className="stats-grid">
+      {[1, 2, 3, 4].map((item) => (
+        <div key={item} className="stat-card-skeleton">
+          <div className="stat-content">
+            <div className="skeleton-line" style={{ width: '70%' }} />
+            <div className="skeleton-line" style={{ height: '32px', width: '50%' }} />
+            <div className="skeleton-trend">
+              <div className="skeleton-line" style={{ width: '20px' }} />
+              <div className="skeleton-line" style={{ width: '60px' }} />
+            </div>
+          </div>
+          <div className="skeleton-icon" />
+        </div>
       ))}
     </div>
+
+    {/* Main Content */}
+    <div className="dashboard-main">
+      <div className="chart-section">
+        <div className="chart-header">
+          <div className="skeleton-line" style={{ width: '160px' }} />
+          <div className="chart-controls">
+            <Skeleton.Button size="small" />
+            <Skeleton.Button size="small" />
+          </div>
+        </div>
+        <Skeleton.Image style={{ width: '100%', height: '280px' }} />
+      </div>
+      
+      <div className="sidebar-sections">
+        <div className="activity-section">
+          <div className="skeleton-line" style={{ width: '120px' }} />
+          {[1, 2, 3, 4].map((item) => (
+            <Skeleton.Node key={item} />
+          ))}
+        </div>
+      </div>
+    </div>
   </div>
-</div>`}</pre>
+) : (
+  <RealDashboardContent />
+)}`}</pre>
           </div>
         </div>
 
