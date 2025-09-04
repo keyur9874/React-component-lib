@@ -13,3 +13,7 @@ export type { AlertProps } from "./Alert";
 // Upload
 export { Upload } from "./Upload";
 export type { UploadProps, UploadFile, UploadRef } from "./Upload";
+
+// Popover
+export { Popover } from "./Popover";
+export type { PopoverProps } from "./Popover";
