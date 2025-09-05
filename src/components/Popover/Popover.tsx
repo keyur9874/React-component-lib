@@ -74,12 +74,14 @@ export const Popover = forwardRef<HTMLElement, PopoverProps>(({
   const [internalOpen, setInternalOpen] = useState(defaultOpen);
   const [position, setPosition] = useState({ top: 0, left: 0 });
   const [actualPlacement, setActualPlacement] = useState(placement);
+  const [isVisible, setIsVisible] = useState(false);
   
   const triggerRef = useRef<HTMLElement>(null);
   const popoverRef = useRef<HTMLElement>(null);
   const enterTimerRef = useRef<NodeJS.Timeout>();
   const leaveTimerRef = useRef<NodeJS.Timeout>();
   const containerRef = useRef<HTMLElement | null>(null);
+  const positionTimerRef = useRef<NodeJS.Timeout>();
 
   const isControlled = controlledOpen !== undefined;
   const isOpen = isControlled ? controlledOpen : internalOpen;
@@ -99,6 +101,8 @@ export const Popover = forwardRef<HTMLElement, PopoverProps>(({
     const triggerRect = triggerRef.current.getBoundingClientRect();
     const popoverRect = popoverRef.current.getBoundingClientRect();
     const viewport = { width: window.innerWidth, height: window.innerHeight };
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
 
     let finalPlacement = placement;
     let top = 0;
@@ -107,52 +111,52 @@ export const Popover = forwardRef<HTMLElement, PopoverProps>(({
     // Calculate base position
     switch (placement) {
       case 'top':
-        top = triggerRect.top - popoverRect.height - 8;
-        left = triggerRect.left + (triggerRect.width - popoverRect.width) / 2;
+        top = triggerRect.top + scrollTop - popoverRect.height - 8;
+        left = triggerRect.left + scrollLeft + (triggerRect.width - popoverRect.width) / 2;
         break;
       case 'topLeft':
-        top = triggerRect.top - popoverRect.height - 8;
-        left = triggerRect.left;
+        top = triggerRect.top + scrollTop - popoverRect.height - 8;
+        left = triggerRect.left + scrollLeft;
         break;
       case 'topRight':
-        top = triggerRect.top - popoverRect.height - 8;
-        left = triggerRect.right - popoverRect.width;
+        top = triggerRect.top + scrollTop - popoverRect.height - 8;
+        left = triggerRect.right + scrollLeft - popoverRect.width;
         break;
       case 'bottom':
-        top = triggerRect.bottom + 8;
-        left = triggerRect.left + (triggerRect.width - popoverRect.width) / 2;
+        top = triggerRect.bottom + scrollTop + 8;
+        left = triggerRect.left + scrollLeft + (triggerRect.width - popoverRect.width) / 2;
         break;
       case 'bottomLeft':
-        top = triggerRect.bottom + 8;
-        left = triggerRect.left;
+        top = triggerRect.bottom + scrollTop + 8;
+        left = triggerRect.left + scrollLeft;
         break;
       case 'bottomRight':
-        top = triggerRect.bottom + 8;
-        left = triggerRect.right - popoverRect.width;
+        top = triggerRect.bottom + scrollTop + 8;
+        left = triggerRect.right + scrollLeft - popoverRect.width;
         break;
       case 'left':
-        top = triggerRect.top + (triggerRect.height - popoverRect.height) / 2;
-        left = triggerRect.left - popoverRect.width - 8;
+        top = triggerRect.top + scrollTop + (triggerRect.height - popoverRect.height) / 2;
+        left = triggerRect.left + scrollLeft - popoverRect.width - 8;
         break;
       case 'leftTop':
-        top = triggerRect.top;
-        left = triggerRect.left - popoverRect.width - 8;
+        top = triggerRect.top + scrollTop;
+        left = triggerRect.left + scrollLeft - popoverRect.width - 8;
         break;
       case 'leftBottom':
-        top = triggerRect.bottom - popoverRect.height;
-        left = triggerRect.left - popoverRect.width - 8;
+        top = triggerRect.bottom + scrollTop - popoverRect.height;
+        left = triggerRect.left + scrollLeft - popoverRect.width - 8;
         break;
       case 'right':
-        top = triggerRect.top + (triggerRect.height - popoverRect.height) / 2;
-        left = triggerRect.right + 8;
+        top = triggerRect.top + scrollTop + (triggerRect.height - popoverRect.height) / 2;
+        left = triggerRect.right + scrollLeft + 8;
         break;
       case 'rightTop':
-        top = triggerRect.top;
-        left = triggerRect.right + 8;
+        top = triggerRect.top + scrollTop;
+        left = triggerRect.right + scrollLeft + 8;
         break;
       case 'rightBottom':
-        top = triggerRect.bottom - popoverRect.height;
-        left = triggerRect.right + 8;
+        top = triggerRect.bottom + scrollTop - popoverRect.height;
+        left = triggerRect.right + scrollLeft + 8;
         break;
     }
 
@@ -164,19 +168,19 @@ export const Popover = forwardRef<HTMLElement, PopoverProps>(({
         left = viewport.width - popoverRect.width - 8;
       }
 
-      if (top < 8) {
-        if (placement.startsWith('top') && triggerRect.bottom + popoverRect.height + 16 < viewport.height) {
-          top = triggerRect.bottom + 8;
+      if (top - scrollTop < 8) {
+        if (placement.startsWith('top') && triggerRect.bottom + popoverRect.height + 16 < viewport.height + scrollTop) {
+          top = triggerRect.bottom + scrollTop + 8;
           finalPlacement = placement.replace('top', 'bottom') as typeof placement;
         } else {
-          top = 8;
+          top = scrollTop + 8;
         }
-      } else if (top + popoverRect.height > viewport.height - 8) {
+      } else if (top + popoverRect.height > viewport.height + scrollTop - 8) {
         if (placement.startsWith('bottom') && triggerRect.top - popoverRect.height - 16 > 0) {
-          top = triggerRect.top - popoverRect.height - 8;
+          top = triggerRect.top + scrollTop - popoverRect.height - 8;
           finalPlacement = placement.replace('bottom', 'top') as typeof placement;
         } else {
-          top = viewport.height - popoverRect.height - 8;
+          top = viewport.height + scrollTop - popoverRect.height - 8;
         }
       }
     }
@@ -233,6 +237,24 @@ export const Popover = forwardRef<HTMLElement, PopoverProps>(({
     setOpen(true);
   }, [triggers, setOpen]);
 
+  // Handle popover mouse events to prevent closing when hovering over popover
+  const handlePopoverMouseEnter = useCallback(() => {
+    if (!triggers.includes('hover')) return;
+    
+    if (leaveTimerRef.current) {
+      clearTimeout(leaveTimerRef.current);
+      leaveTimerRef.current = undefined;
+    }
+  }, [triggers]);
+
+  const handlePopoverMouseLeave = useCallback(() => {
+    if (!triggers.includes('hover')) return;
+    
+    leaveTimerRef.current = setTimeout(() => {
+      setOpen(false);
+    }, mouseLeaveDelay * 1000);
+  }, [triggers, mouseLeaveDelay, setOpen]);
+
   // Set up container
   useEffect(() => {
     if (triggerRef.current) {
@@ -243,11 +265,26 @@ export const Popover = forwardRef<HTMLElement, PopoverProps>(({
     }
   }, [getPopupContainer]);
 
+  // Handle visibility state
+  useEffect(() => {
+    if (isOpen) {
+      setIsVisible(true);
+    } else {
+      // Delay hiding to allow for animations
+      const timer = setTimeout(() => {
+        setIsVisible(false);
+      }, 150);
+      return () => clearTimeout(timer);
+    }
+  }, [isOpen]);
+
   // Calculate position when open
   useEffect(() => {
     if (isOpen) {
-      // Small delay to ensure DOM is ready
-      const timer = setTimeout(calculatePosition, 0);
+      // Small delay to ensure DOM is ready and visible
+      positionTimerRef.current = setTimeout(() => {
+        calculatePosition();
+      }, 10);
       
       const handleResize = () => calculatePosition();
       const handleScroll = () => calculatePosition();
@@ -256,7 +293,9 @@ export const Popover = forwardRef<HTMLElement, PopoverProps>(({
       window.addEventListener('scroll', handleScroll, true);
       
       return () => {
-        clearTimeout(timer);
+        if (positionTimerRef.current) {
+          clearTimeout(positionTimerRef.current);
+        }
         window.removeEventListener('resize', handleResize);
         window.removeEventListener('scroll', handleScroll, true);
       };
@@ -278,8 +317,15 @@ export const Popover = forwardRef<HTMLElement, PopoverProps>(({
       }
     };
 
-    document.addEventListener('mousedown', handleOutsideClick);
-    return () => document.removeEventListener('mousedown', handleOutsideClick);
+    // Use a small delay to prevent immediate closing when clicking the trigger
+    const timer = setTimeout(() => {
+      document.addEventListener('mousedown', handleOutsideClick);
+    }, 0);
+
+    return () => {
+      clearTimeout(timer);
+      document.removeEventListener('mousedown', handleOutsideClick);
+    };
   }, [isOpen, triggers, setOpen]);
 
   // Close on escape key
@@ -301,17 +347,36 @@ export const Popover = forwardRef<HTMLElement, PopoverProps>(({
     return () => {
       if (enterTimerRef.current) clearTimeout(enterTimerRef.current);
       if (leaveTimerRef.current) clearTimeout(leaveTimerRef.current);
+      if (positionTimerRef.current) clearTimeout(positionTimerRef.current);
     };
   }, []);
 
   // Clone trigger element with event handlers
   const triggerElement = React.cloneElement(children, {
-    onMouseEnter: handleMouseEnter,
-    onMouseLeave: handleMouseLeave,
-    onClick: handleClick,
-    onFocus: handleFocus,
-    onBlur: handleBlur,
-    onContextMenu: handleContextMenu,
+    onMouseEnter: (e: React.MouseEvent) => {
+      handleMouseEnter();
+      children.props.onMouseEnter?.(e);
+    },
+    onMouseLeave: (e: React.MouseEvent) => {
+      handleMouseLeave();
+      children.props.onMouseLeave?.(e);
+    },
+    onClick: (e: React.MouseEvent) => {
+      handleClick();
+      children.props.onClick?.(e);
+    },
+    onFocus: (e: React.FocusEvent) => {
+      handleFocus();
+      children.props.onFocus?.(e);
+    },
+    onBlur: (e: React.FocusEvent) => {
+      handleBlur();
+      children.props.onBlur?.(e);
+    },
+    onContextMenu: (e: React.MouseEvent) => {
+      handleContextMenu(e);
+      children.props.onContextMenu?.(e);
+    },
     ref: (node: HTMLElement) => {
       triggerRef.current = node;
       if (ref) {
@@ -334,7 +399,7 @@ export const Popover = forwardRef<HTMLElement, PopoverProps>(({
   });
 
   // Don't render popover if not open and destroyOnHidden is true
-  if (!isOpen && destroyOnHidden) {
+  if (!isVisible && destroyOnHidden) {
     return triggerElement;
   }
 
@@ -348,6 +413,7 @@ export const Popover = forwardRef<HTMLElement, PopoverProps>(({
     !showArrow && 'ui-popover--no-arrow',
     pointAtCenter && 'ui-popover--point-at-center',
     color && 'ui-popover--custom-color',
+    isOpen ? 'ui-popover-enter-active' : 'ui-popover-exit-active',
     className,
   ].filter(Boolean).join(' ');
 
@@ -356,6 +422,8 @@ export const Popover = forwardRef<HTMLElement, PopoverProps>(({
     top: position.top,
     left: position.left,
     zIndex,
+    opacity: isOpen ? 1 : 0,
+    visibility: isVisible ? 'visible' : 'hidden',
     ...(color && { '--popover-bg-color': color } as any),
   };
 
@@ -377,8 +445,8 @@ export const Popover = forwardRef<HTMLElement, PopoverProps>(({
         style={popoverStyle}
         role="tooltip"
         aria-hidden={!isOpen}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
+        onMouseEnter={handlePopoverMouseEnter}
+        onMouseLeave={handlePopoverMouseLeave}
       >
         <div className="ui-popover-content">
           {/* Arrow */}
@@ -407,7 +475,7 @@ export const Popover = forwardRef<HTMLElement, PopoverProps>(({
   return (
     <>
       {triggerElement}
-      {(isOpen || !destroyOnHidden) && containerRef.current && 
+      {isVisible && containerRef.current && 
         createPortal(popoverContent, containerRef.current)
       }
     </>

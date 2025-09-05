@@ -22,6 +22,7 @@
   font-size: 14px;
   word-wrap: break-word;
   pointer-events: auto;
+  transition: opacity 0.15s cubic-bezier(0.645, 0.045, 0.355, 1), visibility 0.15s cubic-bezier(0.645, 0.045, 0.355, 1);
 }
 
 /* Popover Content */
@@ -232,24 +233,22 @@
 /* Animation States */
 .ui-popover-enter {
   opacity: 0;
-  transform: scale(0.8);
+  visibility: hidden;
 }
 
 .ui-popover-enter-active {
   opacity: 1;
-  transform: scale(1);
-  transition: opacity 0.15s cubic-bezier(0.645, 0.045, 0.355, 1), transform 0.15s cubic-bezier(0.645, 0.045, 0.355, 1);
+  visibility: visible;
 }
 
 .ui-popover-exit {
   opacity: 1;
-  transform: scale(1);
+  visibility: visible;
 }
 
 .ui-popover-exit-active {
   opacity: 0;
-  transform: scale(0.8);
-  transition: opacity 0.15s cubic-bezier(0.645, 0.045, 0.355, 1), transform 0.15s cubic-bezier(0.645, 0.045, 0.355, 1);
+  visibility: hidden;
 }
 
 /* Dark Theme */
@@ -307,6 +306,7 @@
 /* Reduced Motion */
 @media (prefers-reduced-motion: reduce) {
   .ui-popover-content,
+  .ui-popover,
   .ui-popover-enter-active,
   .ui-popover-exit-active {
     transition: none;
