@@ -5,13 +5,14 @@ import { SwitchDocs } from "./components/Switch/Switch.docs";
 import { AlertDocs } from "./components/Alert/Alert.docs";
 import { UploadDocs } from "./components/Upload/Upload.docs";
 import { PopoverDocs } from "./components/Popover/Popover.docs";
-import { Switch } from "./components";
+import { SkeletonDocs } from "./components/Skeleton/Skeleton.docs";
 
 type ActiveComponent =
   | "switch"
   | "alert"
   | "upload"
-  | "popover";
+  | "popover"
+  | "skeleton";
 
 function App() {
   const [activeComponent, setActiveComponent] =
@@ -22,6 +23,7 @@ function App() {
     { id: "alert" as const, label: "Alert", component: AlertDocs },
     { id: "upload" as const, label: "Upload", component: UploadDocs },
     { id: "popover" as const, label: "Popover", component: PopoverDocs },
+    { id: "skeleton" as const, label: "Skeleton", component: SkeletonDocs },
   ];
 
   const ActiveComponentDoc =

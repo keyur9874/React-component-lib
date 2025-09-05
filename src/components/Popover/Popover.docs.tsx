@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Popover } from './Popover';
-import { Button } from '../Button/Button';
 import { 
   Settings, 
   User, 
@@ -151,11 +150,15 @@ export const PopoverDocs: React.FC = () => {
           <div className="example-demo">
             <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
               <Popover content={content} title="Title">
-                <Button>Hover me</Button>
+                <button className="ui-alert-action" style={{ backgroundColor: 'var(--primary-color)', color: 'white', borderColor: 'var(--primary-color)' }}>
+                  Hover me
+                </button>
               </Popover>
               
               <Popover content="This is a simple popover content">
-                <Button variant="secondary">Simple Popover</Button>
+                <button className="ui-alert-action">
+                  Simple Popover
+                </button>
               </Popover>
             </div>
           </div>
@@ -183,19 +186,27 @@ export const PopoverDocs: React.FC = () => {
           <div className="example-demo">
             <div style={{ display: 'flex', gap: '16px', alignItems: 'center', flexWrap: 'wrap' }}>
               <Popover content={content} title="Title" trigger="hover">
-                <Button>Hover</Button>
+                <button className="ui-alert-action" style={{ backgroundColor: 'var(--primary-color)', color: 'white', borderColor: 'var(--primary-color)' }}>
+                  Hover
+                </button>
               </Popover>
               
               <Popover content={content} title="Title" trigger="focus">
-                <Button>Focus</Button>
+                <button className="ui-alert-action" style={{ backgroundColor: 'var(--info-color)', color: 'white', borderColor: 'var(--info-color)' }}>
+                  Focus
+                </button>
               </Popover>
               
               <Popover content={content} title="Title" trigger="click">
-                <Button>Click</Button>
+                <button className="ui-alert-action" style={{ backgroundColor: 'var(--success-color)', color: 'white', borderColor: 'var(--success-color)' }}>
+                  Click
+                </button>
               </Popover>
               
               <Popover content={content} title="Title" trigger="contextMenu">
-                <Button>Right Click</Button>
+                <button className="ui-alert-action" style={{ backgroundColor: 'var(--warning-color)', color: 'white', borderColor: 'var(--warning-color)' }}>
+                  Right Click
+                </button>
               </Popover>
             </div>
           </div>
@@ -225,56 +236,56 @@ export const PopoverDocs: React.FC = () => {
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '16px', maxWidth: '600px' }}>
               {/* Top Row */}
               <Popover content={content} placement="topLeft">
-                <Button size="small">TL</Button>
+                <button className="ui-alert-action" style={{ fontSize: '12px', padding: '4px 8px' }}>TL</button>
               </Popover>
               <Popover content={content} placement="top">
-                <Button size="small">Top</Button>
+                <button className="ui-alert-action" style={{ fontSize: '12px', padding: '4px 8px' }}>Top</button>
               </Popover>
               <Popover content={content} placement="topRight">
-                <Button size="small">TR</Button>
+                <button className="ui-alert-action" style={{ fontSize: '12px', padding: '4px 8px' }}>TR</button>
               </Popover>
               <div></div>
               
               {/* Left Column */}
               <Popover content={content} placement="leftTop">
-                <Button size="small">LT</Button>
+                <button className="ui-alert-action" style={{ fontSize: '12px', padding: '4px 8px' }}>LT</button>
               </Popover>
               <div></div>
               <div></div>
               <Popover content={content} placement="rightTop">
-                <Button size="small">RT</Button>
+                <button className="ui-alert-action" style={{ fontSize: '12px', padding: '4px 8px' }}>RT</button>
               </Popover>
               
               {/* Middle Row */}
               <Popover content={content} placement="left">
-                <Button size="small">Left</Button>
+                <button className="ui-alert-action" style={{ fontSize: '12px', padding: '4px 8px' }}>Left</button>
               </Popover>
               <div></div>
               <div></div>
               <Popover content={content} placement="right">
-                <Button size="small">Right</Button>
+                <button className="ui-alert-action" style={{ fontSize: '12px', padding: '4px 8px' }}>Right</button>
               </Popover>
               
               {/* Right Column */}
               <Popover content={content} placement="leftBottom">
-                <Button size="small">LB</Button>
+                <button className="ui-alert-action" style={{ fontSize: '12px', padding: '4px 8px' }}>LB</button>
               </Popover>
               <div></div>
               <div></div>
               <Popover content={content} placement="rightBottom">
-                <Button size="small">RB</Button>
+                <button className="ui-alert-action" style={{ fontSize: '12px', padding: '4px 8px' }}>RB</button>
               </Popover>
               
               {/* Bottom Row */}
               <div></div>
               <Popover content={content} placement="bottomLeft">
-                <Button size="small">BL</Button>
+                <button className="ui-alert-action" style={{ fontSize: '12px', padding: '4px 8px' }}>BL</button>
               </Popover>
               <Popover content={content} placement="bottom">
-                <Button size="small">Bottom</Button>
+                <button className="ui-alert-action" style={{ fontSize: '12px', padding: '4px 8px' }}>Bottom</button>
               </Popover>
               <Popover content={content} placement="bottomRight">
-                <Button size="small">BR</Button>
+                <button className="ui-alert-action" style={{ fontSize: '12px', padding: '4px 8px' }}>BR</button>
               </Popover>
             </div>
           </div>
@@ -298,15 +309,21 @@ export const PopoverDocs: React.FC = () => {
           <div className="example-demo">
             <div style={{ display: 'flex', gap: '16px', alignItems: 'center', flexWrap: 'wrap' }}>
               <Popover content={content} title="Title" arrow={true}>
-                <Button>With Arrow</Button>
+                <button className="ui-alert-action" style={{ backgroundColor: 'var(--primary-color)', color: 'white', borderColor: 'var(--primary-color)' }}>
+                  With Arrow
+                </button>
               </Popover>
               
               <Popover content={content} title="Title" arrow={false}>
-                <Button>No Arrow</Button>
+                <button className="ui-alert-action">
+                  No Arrow
+                </button>
               </Popover>
               
               <Popover content={content} title="Title" arrow={{ pointAtCenter: true }}>
-                <Button>Point at Center</Button>
+                <button className="ui-alert-action" style={{ backgroundColor: 'var(--success-color)', color: 'white', borderColor: 'var(--success-color)' }}>
+                  Point at Center
+                </button>
               </Popover>
             </div>
           </div>
@@ -355,16 +372,18 @@ export const PopoverDocs: React.FC = () => {
                 open={open}
                 onOpenChange={setOpen}
               >
-                <Button>Controlled Popover</Button>
+                <button className="ui-alert-action" style={{ backgroundColor: 'var(--primary-color)', color: 'white', borderColor: 'var(--primary-color)' }}>
+                  Controlled Popover
+                </button>
               </Popover>
               
-              <Button 
-                variant="secondary" 
-                size="small"
+              <button 
+                className="ui-alert-action"
+                style={{ fontSize: '12px', padding: '4px 8px' }}
                 onClick={() => setOpen(!open)}
               >
                 {open ? 'Close' : 'Open'} Popover
-              </Button>
+              </button>
             </div>
           </div>
           <div className="example-code">
@@ -395,16 +414,16 @@ export const PopoverDocs: React.FC = () => {
           <div className="example-demo">
             <div style={{ display: 'flex', gap: '16px', alignItems: 'center', flexWrap: 'wrap' }}>
               <Popover content={richContent} trigger="click">
-                <Button>
+                <button className="ui-alert-action" style={{ backgroundColor: 'var(--primary-color)', color: 'white', borderColor: 'var(--primary-color)', display: 'flex', alignItems: 'center', gap: '8px' }}>
                   <User size={16} style={{ marginRight: '8px' }} />
                   User Menu
-                </Button>
+                </button>
               </Popover>
               
               <Popover content={menuContent} trigger="click" title="Actions">
-                <Button variant="secondary">
+                <button className="ui-alert-action" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '40px', height: '32px', padding: '0' }}>
                   <MoreHorizontal size={16} />
-                </Button>
+                </button>
               </Popover>
               
               <Popover 
@@ -446,10 +465,10 @@ export const PopoverDocs: React.FC = () => {
                 title="Advanced Search"
                 trigger="click"
               >
-                <Button variant="secondary">
+                <button className="ui-alert-action" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                   <Search size={16} style={{ marginRight: '8px' }} />
                   Search
-                </Button>
+                </button>
               </Popover>
             </div>
           </div>
@@ -484,7 +503,7 @@ export const PopoverDocs: React.FC = () => {
                 color="#f6ffed"
                 title="Custom Background"
               >
-                <Button variant="secondary">Green Background</Button>
+                <button className="ui-alert-action">Green Background</button>
               </Popover>
               
               <Popover 
@@ -492,7 +511,7 @@ export const PopoverDocs: React.FC = () => {
                 color="#001529"
                 title={<span style={{ color: 'white' }}>Dark Theme</span>}
               >
-                <Button variant="secondary">Dark Background</Button>
+                <button className="ui-alert-action">Dark Background</button>
               </Popover>
               
               <Popover 
@@ -500,7 +519,7 @@ export const PopoverDocs: React.FC = () => {
                 color="#faad14"
                 title={<span style={{ color: 'white' }}>Warning</span>}
               >
-                <Button variant="secondary">Warning Background</Button>
+                <button className="ui-alert-action">Warning Background</button>
               </Popover>
             </div>
           </div>
@@ -534,7 +553,9 @@ export const PopoverDocs: React.FC = () => {
                 mouseEnterDelay={0}
                 mouseLeaveDelay={0}
               >
-                <Button>Fast (0s)</Button>
+                <button className="ui-alert-action" style={{ backgroundColor: 'var(--success-color)', color: 'white', borderColor: 'var(--success-color)' }}>
+                  Fast (0s)
+                </button>
               </Popover>
               
               <Popover 
@@ -543,7 +564,9 @@ export const PopoverDocs: React.FC = () => {
                 mouseEnterDelay={0.1}
                 mouseLeaveDelay={0.1}
               >
-                <Button>Normal (0.1s)</Button>
+                <button className="ui-alert-action" style={{ backgroundColor: 'var(--primary-color)', color: 'white', borderColor: 'var(--primary-color)' }}>
+                  Normal (0.1s)
+                </button>
               </Popover>
               
               <Popover 
@@ -552,7 +575,9 @@ export const PopoverDocs: React.FC = () => {
                 mouseEnterDelay={0.5}
                 mouseLeaveDelay={0.5}
               >
-                <Button>Slow (0.5s)</Button>
+                <button className="ui-alert-action" style={{ backgroundColor: 'var(--warning-color)', color: 'white', borderColor: 'var(--warning-color)' }}>
+                  Slow (0.5s)
+                </button>
               </Popover>
             </div>
           </div>
@@ -753,9 +778,9 @@ export const PopoverDocs: React.FC = () => {
                 trigger="click"
                 placement="bottomRight"
               >
-                <Button variant="ghost">
+                <button className="ui-alert-action" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '40px', height: '32px', padding: '0', background: 'transparent', border: '1px solid transparent' }}>
                   <MoreHorizontal size={16} />
-                </Button>
+                </button>
               </Popover>
 
               {/* Notification Popover */}
@@ -790,9 +815,9 @@ export const PopoverDocs: React.FC = () => {
                 trigger="click"
                 placement="bottomRight"
               >
-                <Button variant="ghost">
+                <button className="ui-alert-action" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '40px', height: '32px', padding: '0', background: 'transparent', border: '1px solid transparent' }}>
                   <Bell size={16} />
-                </Button>
+                </button>
               </Popover>
             </div>
           </div>
@@ -815,9 +840,9 @@ export const PopoverDocs: React.FC = () => {
   trigger="click"
   placement="bottomRight"
 >
-  <Button variant="ghost">
+  <button className="ui-alert-action">
     <MoreHorizontal size={16} />
-  </Button>
+  </button>
 </Popover>`}</pre>
           </div>
         </div>
